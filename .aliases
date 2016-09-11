@@ -1,0 +1,9 @@
+eval $(dircolors -b)
+alias color_grep='sed -e "s/^\([^:]*\):\([^:]*\):/`tput setaf 7`\1 `tput setaf 6`\2`tput sgr0` /"'
+alias grep='grep -n --color=always'
+alias less='less -R'
+alias load_alias='source ~/.bash_aliases'
+alias ls='ls -Glah --color=auto'
+alias more='more -R'
+alias tree='tree -C -I "*.pyc"'
+
