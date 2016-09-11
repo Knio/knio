@@ -1,0 +1,23 @@
+[alias]
+    lg = log --color --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset'
+    st = status -sb
+[user]
+    email = tom@zkpq.ca
+    name = Tom Flanagan
+[pull]
+    rebase = interactive
+[fetch]
+    prune = true
+[push]
+    default = simple
+[core]
+    editor = vim
+    autocrlf = false
+[diff]
+    renames = copies
+    algorithm = patience
+[merge]
+    conflictStyle = diff3
+[color]
+    ui = always
+
