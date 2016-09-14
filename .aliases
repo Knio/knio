@@ -28,3 +28,25 @@ function ss_area () {
 
 alias githash="VanityCommit aa`date '+%g%V'`a"
 
+
+## Zoox
+
+function mkcd()
+{
+    mkdir -p -- "$1";
+    cd "$1"
+}
+
+function name()
+{
+    if [ $# -eq 1 ]; then
+        echo `date "+%g%V-$1"`;
+    else
+        echo `date "+%g%V-%d-%H%M"`;
+    fi
+}
+
+alias screens="xrandr --output DP-0 --rotate left; xrandr --output DP-4 --rotate left; xrandr --output DP-4 --left-of DP-2"
+
+## end Zoox
+
