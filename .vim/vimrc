@@ -11,6 +11,10 @@ set number " Line numbering
 set noerrorbells " Disable terminal bells/beeps on error
 set t_Co=256 " 256 Color Terminal
 set wildmenu " A menu for command completion
+set tabstop     =4
+set softtabstop =4
+set shiftwidth  =4
+set expandtab
 
 " Vundle
 filetype off
