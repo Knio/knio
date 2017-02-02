@@ -21,4 +21,6 @@
 	conflictStyle = diff3
 [color]
 	ui = always
+[rebase]
+    autoSquash = true
 

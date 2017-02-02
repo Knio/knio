@@ -8,6 +8,6 @@ from pygments.lexers import JsonLexer
 from pygments.formatters import Terminal256Formatter
 
 data = json.loads(sys.stdin.read())
-pp = json.dumps(data, indent=2)
+pp = json.dumps(data, indent=2, sort_keys=True)
 
 print(highlight(pp, JsonLexer(), Terminal256Formatter()))
