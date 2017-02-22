@@ -23,4 +23,5 @@
 	ui = always
 [rebase]
     autoSquash = true
-
+[grep]
+    lineNumber = true
