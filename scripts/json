@@ -7,7 +7,14 @@ from pygments import highlight
 from pygments.lexers import JsonLexer
 from pygments.formatters import Terminal256Formatter
 
-data = json.loads(sys.stdin.read())
-pp = json.dumps(data, indent=2, sort_keys=True)
+stdin = sys.stdin.read()
 
-print(highlight(pp, JsonLexer(), Terminal256Formatter()))
+try:
+    data = json.loads(stdin)
+    pp = json.dumps(data, indent=2, sort_keys=True)
+    print(highlight(pp, JsonLexer(), Terminal256Formatter()))
+except:
+    import traceback
+    print(traceback.format_exc(), file=sys.stderr)
+    print(stdin)
+

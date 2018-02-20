@@ -1,6 +1,7 @@
 [alias]
 	lg = log --color --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset'
-	st = status -sb
+    st = status -sb
+    b = branch -vv --sort=-committerdate
 [user]
 	email = tom@zkpq.ca
 	name = Tom Flanagan
