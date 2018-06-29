@@ -7,4 +7,4 @@ alias more='more -R'
 alias tree='tree -C -I "*.pyc"'
 alias pb="curl -F 'sprunge=<-' http://sprunge.us"
 alias gs="git lg | head -n 5 ; git status -sb"
-
+alias p="ps auxfw"

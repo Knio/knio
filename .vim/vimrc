@@ -1,107 +1,63 @@
-set shell=/bin/bash " I use fish, and vim doesn't like it.
-set textwidth=80 " Ideally columns should be <= 80 len
-set nocompatible " Vi sucks.
-set laststatus=2 " Always show status bar.
-set hlsearch " Highlight searches
-set incsearch " Start searching as you type
-set ignorecase " Case insensitive searches by default
-set smartcase " But allow case sensitive if caps are used
-set ttyfast " Let VIM know it can send lots of data to the terminal
-set number " Line numbering
-set noerrorbells " Disable terminal bells/beeps on error
-set t_Co=256 " 256 Color Terminal
-set wildmenu " A menu for command completion
-set tabstop     =4
-set softtabstop =4
-set shiftwidth  =4
-set expandtab
+" Because vim
+set nocompatible
 
-" Vundle
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" General
+set autoindent
+set backspace=indent,eol,start
+set colorcolumn=81
+set encoding=utf-8
+set foldmethod=manual
+set history=10000
+set hlsearch
+set ignorecase
+set incsearch
+set laststatus=2
+set nowrap
+set number
+set scrolloff=5
+set shell=/bin/sh
+set smartcase
+set ttyfast
+set wildmenu
 
-Plugin 'VundleVim/Vundle.vim'
-
-" NGINX Support
-Plugin 'nginx.vim'
-
-au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/*,nginx.conf if &ft == '' | setfiletype nginx | endif
-
-" Markdown
-Plugin 'hallison/vim-markdown'
-
-" HTML5, CSS3, JS
-Plugin 'pangloss/vim-javascript'
-Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'othree/html5.vim'
-Plugin 'hail2u/vim-css3-syntax'
-
-
-" Autocomplete
-" Plugin 'Valloric/YouCompleteMe'
-
-nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
-let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_key_list_previous_completion = ['<Up>']
-let g:ycm_autoclose_preview_window_after_completion=1
-
-" Fish Shell
-Plugin 'dag/vim-fish'
-
-" Syntax Highlighting
-Plugin 'scrooloose/syntastic'
-
-let g:syntastic_javascript_checkers = ['jshint']
-
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-" Theme
-highlight link SyntasticError SpellBad
-highlight link SyntasticWarning SpellCap
-" color neonwave
-
-" One color schemes
-Plugin 'rakr/vim-one'
-
-" Status Bar
-Plugin 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-
-let g:airline_theme = 'luna' " or paper
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_powerline_fonts = 0
-
-" Easy Comments with Tab
-Plugin 'tpope/vim-commentary'
-
-xmap \\  <Plug>Commentary
-nmap \\  <CR><Plug>Commentary
-nmap \\\ <Plug>CommentaryLine
-nmap \\u <Plug>CommentaryUndo
-
-" Git
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-
-" Trailing Whitespace
-Plugin 'ntpeters/vim-better-whitespace'
-
-" History
-set undodir=~/.vim/backups
-set undofile
+" Disable all file-based backup
 set nobackup
 set noswapfile
+set nowritebackup
 
-call vundle#end()
+" Tabbing and Indents
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+
+" Set paste mode
+set pastetoggle=<F2>
+noremap <C-c> <Esc>
+inoremap <C-c> <Esc>
+
+" Show tabs and lists
+set listchars=tab:\|\ ,trail:_
 
 filetype plugin indent on
-syntax on
 
+" Automatically open quickfix window
+autocmd QuickFixCmdPost grep cwindow 5
+
+if has("gui_running")
+  " GUI is running or is about to start.
+  set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 16
+  set guioptions-=T "Toolbar
+  set guioptions-=L "Something
+  set guioptions-=l "Left scrollbar
+  set guioptions-=m "Menu
+
+  set background=light
+  colors base16-atelierplateau
+else
+  colors wombat256
+endif
+
+" Syntax and colors
+syntax on
+set t_Co=256

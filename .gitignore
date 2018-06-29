@@ -1,0 +1,14 @@
+.ssh/
+.bash_history
+.bash_logout
+
+.fzf/
+.fzf.bash
+.lesshst
+.profile
+.bashrc
+.sudo_as_admin_successful
+.cache/
+.python_history
+.wget-hsts
+.viminfo
