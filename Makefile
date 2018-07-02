@@ -1,20 +1,19 @@
-REL = $(shell realpath --relative-to ~ ${PWD})
 
-link:
-	@ln -s $(REL)/.gitconfig ~/.gitconfig
-	@ln -s $(REL)/.vim ~/.vim
+mount.media:
+	mkdir -p media
+	sudo mount.cifs \\\\127.0.0.1\\MEDIA media -o "username=Tom Flanagan,uid=tom,gid=tom,file_mode=0750,dir_mode=0750,port=9001,soft"
 
-unlink:
-	if [ "$(shell readlink ~/.gitconfig)" = "config/.gitconfig" ]; then rm ~/.gitconfig; fi;
-	if [ "$(shell readlink ~/.vim)"       = "config/.vim"       ]; then rm ~/.vim;       fi;
+mount.desktop:
+	mkdir -p desktop
+	sudo mount.cifs \\\\127.0.0.1\\\DOCS desktop -o "username=Tom Flanagan,uid=tom,gid=tom,file_mode=0750,dir_mode=0750,port=9001,soft"
 
-vundle:
-	@git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim
+mount.zenbook:
+	mkdir -p zenbook
+	sudo mount.cifs "\\\\127.0.0.1\\DOCS" zenbook -o "username=Tom Flanagan,uid=tom,gid=tom,file_mode=0750,dir_mode=0750,port=9002,soft"
 
-fzf:
-	@git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-	@~/.fzf/install
+mount.docs:
+	veracrypt --mount Docs.tc Docs --protect-hidden=no
 
-
-.PHONY: link unlink vundle fzf
+unmount.docs:
+	veracrypt --dismount Docs
 

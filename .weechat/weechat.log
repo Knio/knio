@@ -1,0 +1,18 @@
+[2018-06-28 21:55:15] WeeChat 1.9.1 (compiled on Mar  1 2018 12:16:44)
+[2018-06-28 21:55:15] Reading configuration file sec.conf
+[2018-06-28 21:55:15] Reading configuration file weechat.conf
+[2018-06-28 21:55:15] Reading configuration file plugins.conf
+[2018-06-28 21:55:15] Reading configuration file charset.conf
+[2018-06-28 21:55:15] Reading configuration file logger.conf
+[2018-06-28 21:55:15] Reading configuration file exec.conf
+[2018-06-28 21:55:15] Reading configuration file trigger.conf
+[2018-06-28 21:55:15] Reading configuration file aspell.conf
+[2018-06-28 21:55:15] Reading configuration file alias.conf
+[2018-06-28 21:55:15] Reading configuration file buflist.conf
+[2018-06-28 21:55:15] Reading configuration file fifo.conf
+[2018-06-28 21:55:15] Reading configuration file xfer.conf
+[2018-06-28 21:55:15] Reading configuration file irc.conf
+[2018-06-28 21:55:15] Reading configuration file relay.conf
+[2018-06-28 21:55:15] Reading configuration file script.conf
+[2018-06-28 21:55:15] irc: connecting to server zkpq.ca/6667 (SSL)...
+[2018-06-29 21:18:18] irc: connecting to server zkpq.ca/6667 (SSL)...
