@@ -1,10 +1,23 @@
-#eval (dircolors -b)
+eval $(dircolors -b)
 alias color_grep='sed -e "s/^\([^:]*\):\([^:]*\):/`tput setaf 7`\1 `tput setaf 6`\2`tput sgr0` /"'
 #alias grep='grep -n --color=always'
-alias less='less -R'
 alias ls='ls -Glah --color=auto'
 alias more='more -R'
 alias tree='tree -C -I "*.pyc"'
 alias pb="curl -F 'sprunge=<-' http://sprunge.us"
-alias gs="git lg | head -n 5 ; git status -sb"
-alias p="ps auxfw"
+alias gs="git lg | head -n 5 ; git status -sb -uno"
+alias p="ps auxfww"
+alias less="less -mmR"
+
+function ss_win () {
+  name="$HOME/Pictures/screenshot-`name`.png"
+  gnome-screenshot -w -b -d 1 --file $name
+  echo $name
+}
+
+function ss_area () {
+  name="$HOME/Pictures/screenshot-`name`.png"
+  gnome-screenshot -a --file $name
+  echo $name
+}
+

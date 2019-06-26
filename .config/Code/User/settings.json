@@ -1,0 +1,18 @@
+{
+    "editor.renderWhitespace": "boundary",
+    "files.exclude": {
+        "**/.cache": true,
+        "bazel-*": true,
+        "test": true
+    },
+    "editor.copyWithSyntaxHighlighting": false,
+    "editor.hover.delay": 100,
+    "editor.renderControlCharacters": true,
+    "workbench.commandPalette.history": 500,
+    "window.title": "${activeEditorLong}${separator}${rootName}",
+    "files.trimTrailingWhitespace": true,
+    "files.associations": {
+        "BUILD": "python"
+    },
+    "editor.minimap.enabled": false
+}

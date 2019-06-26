@@ -14,6 +14,8 @@
 [core]
 	editor = vim
 	autocrlf = false
+[help]
+	autoCorrect = 1
 [diff]
 	renames = copies
 	algorithm = patience
