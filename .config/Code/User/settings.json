@@ -14,5 +14,8 @@
     "files.associations": {
         "BUILD": "python"
     },
-    "editor.minimap.enabled": false
+    "editor.minimap.enabled": false,
+    "files.watcherExclude": {
+        "**/bazel-*/**": true
+    }
 }
