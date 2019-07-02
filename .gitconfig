@@ -23,7 +23,7 @@
 [merge]
 	conflictStyle = diff3
 [color]
-	ui = always
+	ui = auto
 [rebase]
     autoSquash = true
 [grep]
