@@ -24,6 +24,7 @@
 	conflictStyle = diff3
 [color]
 	ui = auto
+	branch = always
 [rebase]
     autoSquash = true
 [grep]
