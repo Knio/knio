@@ -127,6 +127,8 @@ def main():
 
   hunks = list(load_hunks(diffs))
   n = len(hunks)
+  if not n:
+    raise Exception('Failed to load any hunks')
 
   orig_term = termios.tcgetattr(sys.stdin)
   new_term = list(orig_term)
@@ -140,10 +142,18 @@ def main():
   outputs = sorted(set(output.values()))
   for o in outputs:
     hunk_set = [hunks[i] for i in range(n) if output.get(i) == o]
-    patched_file_copy = copy.deepcopy(hunk_set[0][0])
-    patched_file_copy[:] = [h for _, h in hunk_set]
+    files = {}
+    for patched_file, hunk in hunk_set:
+      if not id(patched_file) in files:
+        patched_file_copy = copy.deepcopy(patched_file)
+        patched_file_copy[:] = []
+        files[id(patched_file)] = patched_file_copy
+      files[id(patched_file)].append(hunk)
+
+    patch = unidiff.PatchSet('')
+    patch.extend(files.values())
     fname = 'patch_{}.diff'.format(o)
-    open(fname, 'w').write(str(patched_file_copy))
+    open(fname, 'w').write(str(patch))
     print('Wrote {}'.format(fname))
 
 
