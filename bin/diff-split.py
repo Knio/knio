@@ -63,7 +63,7 @@ def interact(hunks):
   i = 0
   while len(output) != n:
     display(i)
-    c = sys.stdin.buffer.raw.read(4)
+    c = sys.stdin.buffer.raw.read(3)
     if c == KEY_RIGHT:
       i = (i + 1) % n
     elif c == KEY_LEFT:

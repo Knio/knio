@@ -17,3 +17,9 @@ echo 20000 | sudo tee /proc/sys/vm/dirty_writeback_centisecs
 
 # don't kill shit at random
 echo 1 | sudo tee /proc/sys/vm/oom_kill_allocating_task
+
+# limit overcommit
+echo 2 | sudo tee /proc/sys/vm/overcommit_memory
+
+# to swap + (X% of RAM)
+echo 500 | sudo tee /proc/sys/vm/overcommit_ratio
