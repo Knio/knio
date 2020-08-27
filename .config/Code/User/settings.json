@@ -1,9 +1,10 @@
 {
     "editor.renderWhitespace": "boundary",
     "files.exclude": {
+        "**/__pycache__": true,
         "**/.cache": true,
-        "bazel-*": true,
-        "test": true
+        "**/*.pyc": true,
+        "bazel-*": true
     },
     "editor.copyWithSyntaxHighlighting": false,
     "editor.hover.delay": 100,
@@ -12,10 +13,54 @@
     "window.title": "${activeEditorLong}${separator}${rootName}",
     "files.trimTrailingWhitespace": true,
     "files.associations": {
-        "BUILD": "python"
+        "BUILD": "python",
+        "*.cu": "cpp"
     },
     "editor.minimap.enabled": false,
     "files.watcherExclude": {
         "**/bazel-*/**": true
-    }
+    },
+    "files.autoSave": "off",
+    "arduino.additionalUrls": [
+        "https://dl.espressif.com/dl/package_esp32_dev_index.json"
+    ],
+    "git.autofetch": true,
+    "arduino.ignoreBoards": [
+        "Adafruit HUZZAH ESP8266"
+    ],
+    "git.confirmSync": false,
+    "window.zoomLevel": -1,
+    "editor.largeFileOptimizations": false,
+    "workbench.tree.indent": 20,
+    "editor.rulers": [
+        79
+    ],
+    "remote.SSH.remotePlatform": {
+        "tom-zoox": "linux"
+    },
+    "workbench.editor.closeEmptyGroups": false,
+    "editor.cursorSurroundingLines": 30,
+    "workbench.colorCustomizations": {
+
+        "editor.lineHighlightBackground": "#423b1b",
+        "editorGroupHeader.tabsBackground": "#444444",
+        "tab.activeBackground": "#696b5a",
+        "tab.inactiveBackground": "#3a3b32",
+    },
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "name": "Function name",
+                "scope": [
+                    "entity.name.function.definition.cpp",
+                    "entity.name.function.python",
+                ],
+                "settings": {
+                    "fontStyle": "bold",
+                    "foreground": "#3ff545",
+                }
+            }
+        ]
+    },
+    "workbench.colorTheme": "Visual Studio Dark"
 }
