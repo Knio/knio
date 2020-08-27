@@ -1,36 +1,55 @@
 [alias]
 	lg = log --color --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset'
-    st = status -sb
-    b = branch -vv --sort=-committerdate
+  st = status -sb
+  b = branch -vv --sort=-committerdate
+
+[status]
+	untracked = no
+
 [user]
 	email = tom@zkpq.ca
 	name = Tom Flanagan
+
 [pull]
 	rebase = interactive
+
 [fetch]
 	prune = true
+
 [push]
 	default = simple
+
 [core]
 	editor = vim
 	autocrlf = false
+
 [help]
 	autoCorrect = 1
+
 [diff]
 	renames = copies
 	algorithm = patience
 	compactionHeuristic = true
+
 [merge]
 	conflictStyle = diff3
+
 [color]
 	ui = auto
 	branch = always
+
 [rebase]
     autoSquash = true
+
 [grep]
     lineNumber = true
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
-	required = true
+  required = true
+
+[advice]
+  detachedHead = false
+

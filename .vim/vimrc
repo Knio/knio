@@ -61,3 +61,6 @@ endif
 " Syntax and colors
 syntax on
 set t_Co=256
+set bg=dark
+
+
