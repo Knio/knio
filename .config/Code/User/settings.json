@@ -44,6 +44,8 @@
 
         "editor.lineHighlightBackground": "#423b1b",
         "editorGroupHeader.tabsBackground": "#444444",
+        "editor.findMatchBackground": "#ff00aa",
+        "editor.findMatchHighlightBackground": "#ff83d6",
         "tab.activeBackground": "#696b5a",
         "tab.inactiveBackground": "#3a3b32",
     },
