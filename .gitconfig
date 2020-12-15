@@ -43,6 +43,11 @@
 
 [grep]
     lineNumber = true
+[color "grep"]
+  linenumber = yellow bold
+  match = red
+  filename = magenta
+
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
