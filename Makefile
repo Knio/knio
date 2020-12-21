@@ -1,7 +1,7 @@
 
 mount.media:
 	mkdir -p media
-	sudo mount.cifs \\\\127.0.0.1\\MEDIA media -o "username=Tom Flanagan,uid=tom,gid=tom,file_mode=0750,dir_mode=0750,port=9001,soft"
+	sudo mount.cifs \\\\127.0.0.1\\MEDIA media -o "username=Tom Flanagan,uid=tom,gid=0,file_mode=0755,dir_mode=0755,port=9001,soft"
 
 mount.desktop:
 	mkdir -p desktop
