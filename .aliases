@@ -11,6 +11,9 @@ alias p="ps -AO user,ppid,pgid,sess,start --forest -w -w"
 alias less="less -mmSRj.5"
 alias view="view -S ~/.vim/view.rc -"
 
+# https://github.com/sharkdp/bat/releases
+alias bat="bat --color=always --wrap=never --decorations=always --style=full"
+
 function ss_win () {
   name="$HOME/Pictures/screenshot-`name`.png"
   gnome-screenshot -w -b -d 1 --file $name

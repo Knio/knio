@@ -1,60 +1,60 @@
 [alias]
-	lg = log --color --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset'
+  lg = log --color --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset'
   st = status -sb
   b = branch -vv --sort=-committerdate
 
 [status]
-	untracked = no
+  untracked = no
 
 [user]
-	email = tom@zkpq.ca
-	name = Tom Flanagan
+  email = tom@zkpq.ca
+  name = Tom Flanagan
 
 [pull]
-	rebase = interactive
+  rebase = interactive
 
 [fetch]
-	prune = true
+  prune = true
 
 [push]
-	default = simple
+  default = simple
 
 [core]
-	editor = vim
-	autocrlf = false
+  editor = vim
+  autocrlf = false
+  pager = bat -l diff
 
 [help]
-	autoCorrect = 1
+  autoCorrect = 1
 
 [diff]
-	renames = copies
-	algorithm = patience
-	compactionHeuristic = true
+  renames = copies
+  algorithm = patience
+  compactionHeuristic = true
 
 [merge]
-	conflictStyle = diff3
+  conflictStyle = diff3
 
 [color]
-	ui = auto
-	branch = always
+  ui = auto
+  branch = always
 
 [rebase]
-    autoSquash = true
+  autoSquash = true
 
 [grep]
-    lineNumber = true
+  lineNumber = true
+
 [color "grep"]
   linenumber = yellow bold
   match = red
   filename = magenta
 
-
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
   required = true
 
 [advice]
   detachedHead = false
-
