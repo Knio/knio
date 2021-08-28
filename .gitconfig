@@ -22,6 +22,8 @@
 [core]
   editor = vim
   autocrlf = false
+  # pager = bat -l diff
+  pager = less -mmSRj.5
 
 [help]
   autoCorrect = 1
