@@ -22,7 +22,6 @@
 [core]
   editor = vim
   autocrlf = false
-  pager = bat -l diff
 
 [help]
   autoCorrect = 1

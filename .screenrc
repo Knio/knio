@@ -17,6 +17,8 @@ defbce "on"
 # Enable 256 color term
 term xterm-256color
 
+shell -$SHELL
+
 # Cache 30000 lines for scroll back
 defscrollback 10000
 
