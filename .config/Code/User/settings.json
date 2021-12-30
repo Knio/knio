@@ -29,14 +29,14 @@
         "Adafruit HUZZAH ESP8266"
     ],
     "git.confirmSync": false,
-    "window.zoomLevel": -1,
     "editor.largeFileOptimizations": false,
     "workbench.tree.indent": 20,
     "editor.rulers": [
         79
     ],
     "remote.SSH.remotePlatform": {
-        "tom-zoox": "linux"
+        "tom-zoox": "linux",
+        "zkpq.ca": "linux"
     },
     "workbench.editor.closeEmptyGroups": false,
     "editor.cursorSurroundingLines": 30,
