@@ -30,3 +30,8 @@ hardstatus string '%{= Kd} %{= Kd}%-w%{= Kr}[%{= KW}%n %t%{= Kr}]%{= Kd}%+w %-= 
 bind f eval "hardstatus ignore"
 # Show hardstatus: ctrl-a F
 bind F eval "hardstatus alwayslastline"
+
+# this traps mouse events, meaning you can't select text
+# mousetrack on
+# defmousetrack on
+
