@@ -16,7 +16,7 @@ Login as you:
 
 ### Edit ssh config:
 
-`nano /etd/ssh/sshd_config`
+`nano /etc/ssh/sshd_config`
 ```
 HostKey /etc/ssh/ssh_host_rsa_key
 #HostKey /etc/ssh/ssh_host_ecdsa_key
