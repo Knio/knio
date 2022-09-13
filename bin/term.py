@@ -1,13 +1,17 @@
-#! /usr/env/python3
+#! /usr/bin/python3.10
 # -*- coding: utf-8 -*-
 
 
-from enum import Enum, IntEnum
+import argparse
 import locale
+import os
 import sys
+from enum import Enum, IntEnum
+
+import termios
 
 
-def term():
+def t_term():
     print('** Terminal settings ' + '*' * 40)
     print()
     print(f'System default encoding:    {sys.getdefaultencoding()}')
@@ -22,10 +26,20 @@ def term():
     print(f'    encoding: {sys.stdout.encoding}')
     print(f'    tty:      {sys.stdout.isatty()}')
     print(f'    errors:   {sys.stdout.errors}')
-    print()
+    print('termios attrs:')
+    attrs = termios.tcgetattr(sys.stdin.fileno())
+    print(f'    input:    {attrs[0]:016b}  {attrs[0]:04x}')
+    print(f'    output:   {attrs[1]:016b}  {attrs[1]:04x}')
+    print(f'    control:  {attrs[2]:016b}  {attrs[2]:04x}')
+    print(f'    local:    {attrs[3]:016b}  {attrs[3]:04x}')
+    print(f'    ispeed:   {attrs[4]}')
+    print(f'    ospeed:   {attrs[5]}')
+    print(f'    chars:    {b"".join(attrs[6]).hex(" ")}')
+    # TODO: termcap
 
 
-def unicode():
+
+def t_unicode():
     # https://emojipedia.org/unicode-10.0/
     print('** Unicode support ' + '*' * 40)
     print()
@@ -111,9 +125,13 @@ class ANSI:
     CSI = '['       # control sequence introducer
     OSC = ']'       # operating system command
 
+    # CSI codes
     class CONTROL:
-        SGR = 'm'   # select graphical representation
-        RESET = 'c'
+        SGR         = 'm'   # select graphical representation
+        MOUSE_ON    = 'h'
+        MOUSE_OFF   = 'l'
+        RESET       = 'c'
+
 
     class GRAPHICS(IntEnum):
         RESET   = 0
@@ -145,6 +163,20 @@ class ANSI:
         MAGENTA = 5
         CYAN    = 6
         WHITE   = 7
+
+    class MOUSE(IntEnum):
+        X10               = 9       # doesn't work in mobaxterm
+        VT200             = 1000    # button clicks
+        VT200_HIGHLIGHT   = 1001    # doesn't work in mobaxterm
+        BTN_EVENT         = 1002    # button clicks plus motion when button down
+        ANY_EVENT         = 1003    # doesn't work in mobaxterm
+        FOCUS_EVENT       = 1004    # doesn't work in mobaxterm
+
+        ALTERNATE_SCROLL  = 1007    # ??
+        EXT_MODE          = 1005
+        SGR_EXT_MODE      = 1006    # different encoding for larger coordinates
+        URXVT_EXT_MODE    = 1015
+        PIXEL_POSITION    = 1016
 
 
     @staticmethod
@@ -181,8 +213,19 @@ class ANSI:
         return ANSI.graphics(ANSI.GRAPHICS.RESET)
 
 
-def colors():
+    @staticmethod
+    def mouse(x):
+        return f'{ANSI.ESC}{ANSI.CSI}?{x}{ANSI.CONTROL.MOUSE_ON}'
+
+    def mouse_off(x):
+        return f'{ANSI.ESC}{ANSI.CSI}?{x}{ANSI.CONTROL.MOUSE_OFF}'
+
+
+def t_colors():
     print('** Color support ' + '*' * 40)
+    bpx = '⬛'
+    box = '▀▄'
+
 
     print('8 Color FG:    ', end=' ')
     for color in ANSI.COLOR8:
@@ -211,7 +254,7 @@ def colors():
     print('\n 8x8 Color:')
     for fg in ANSI.COLOR8:
         for bg in ANSI.COLOR8:
-            print(f'{ANSI.color_fg8(fg.value)}{ANSI.color_bg8(bg.value)}⬛{ANSI.graphics_reset()}', end='')
+            print(f'{ANSI.color_fg8(fg.value)}{ANSI.color_bg8(bg.value)}{box}{ANSI.graphics_reset()}', end='')
         print()
 
     print('\n256 Color:')
@@ -220,21 +263,21 @@ def colors():
         for x in range(6): # R/G
             r, g, b = y, x, 0
             c = 16 + 36 * r + 6 * g + b
-            print(f'{ANSI.color_fg256(c)}⬛{ANSI.graphics_reset()}', end='')
+            print(f'{ANSI.color_fg256(c)}{box}{ANSI.graphics_reset()}', end='')
         print('    ', end=' ')
         for x in range(6): # G/B
             r, g, b = 0, y, x
             c = 16 + 36 * r + 6 * g + b
-            print(f'{ANSI.color_fg256(c)}⬛{ANSI.graphics_reset()}', end='')
+            print(f'{ANSI.color_fg256(c)}{box}{ANSI.graphics_reset()}', end='')
         print('    ', end=' ')
         for x in range(6): # G/B
             r, g, b = x, 0, y
             c = 16 + 36 * r + 6 * g + b
-            print(f'{ANSI.color_fg256(c)}⬛{ANSI.graphics_reset()}', end='')
+            print(f'{ANSI.color_fg256(c)}{box}{ANSI.graphics_reset()}', end='')
         print('    ', end=' ')
         for x in range(4): # G/B
             c = 232 + y * 4 + x
-            print(f'{ANSI.color_fg256(c)}⬛{ANSI.graphics_reset()}', end='')
+            print(f'{ANSI.color_fg256(c)}{box}{ANSI.graphics_reset()}', end='')
         print()
 
     print('\n24-Bit Color:')
@@ -242,31 +285,80 @@ def colors():
     for y in range(X):
         for x in range(X):
             r, g, b = y * X + x, 0, 0
-            print(f'{ANSI.color_fg24b(r,g,b)}⬛{ANSI.graphics_reset()}', end='')
+            print(f'{ANSI.color_fg24b(r,g,b)}{box}{ANSI.graphics_reset()}', end='')
         print('    ', end=' ')
         for x in range(X):
             r, g, b = 0, y *X + x, 0
-            print(f'{ANSI.color_fg24b(r,g,b)}⬛{ANSI.graphics_reset()}', end='')
+            print(f'{ANSI.color_fg24b(r,g,b)}{box}{ANSI.graphics_reset()}', end='')
         print('    ', end=' ')
         for x in range(X):
             r, g, b = 0, 0, y * X + x
-            print(f'{ANSI.color_fg24b(r,g,b)}⬛{ANSI.graphics_reset()}', end='')
+            print(f'{ANSI.color_fg24b(r,g,b)}{box}{ANSI.graphics_reset()}', end='')
         print('    ', end=' ')
         for x in range(X):
             r = g = b = y * X + x
-            print(f'{ANSI.color_fg24b(r,g,b)}⬛{ANSI.graphics_reset()}', end='')
+            print(f'{ANSI.color_fg24b(r,g,b)}{box}{ANSI.graphics_reset()}', end='')
         print()
 
 
+def t_mouse():
+    # https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h2-Mouse-Tracking
+
+
+    def getch():
+        # TODO make windows version
+        import tty, termios
+        orig_settings = termios.tcgetattr(sys.stdin)
+        tty.setraw(sys.stdin)
+        c = os.read(sys.stdin.fileno(), 128)
+        # c = sys.stdin.read(1)
+        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, orig_settings)
+        return c
+
+    def parse_mouse_event(b):
+        return b[0] == 0x1b
+
+    mode = ANSI.MOUSE.BTN_EVENT
+    mode = ANSI.MOUSE.VT200_HIGHLIGHT
+    try:
+        # enable mouse tracking
+        print(ANSI.mouse(mode), end='', flush=True)
+        print(ANSI.mouse(ANSI.MOUSE.SGR_EXT_MODE), end='', flush=True)
+
+        while 1:
+            print('Press a key: ([q] to quit)', end=' ', flush=True)
+            c = getch()
+            print(f'Got input: {c!r}\n')
+            if b'q' in c:
+                break
+            if parse_mouse_event(c):
+                # handle highlight tracking?
+                print(f'{ANSI.ESC}{ANSI.CSI}1;10;10;20;20T')
+
+
+
+
+
+    finally:
+        # reset mouse tracking
+        print(ANSI.mouse_off(mode), end='', flush=True)
+        print(ANSI.mouse_off(ANSI.MOUSE.SGR_EXT_MODE), end='', flush=True)
 
 
 def main():
-    print('*' * 79)
-    print('Hello world\n')
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawTextHelpFormatter
+    )
+    tests = [f[2:] for f in globals() if f.startswith('t_')]
+    parser.add_argument('tests',
+        nargs='*',
+        choices=tests,
+        default=tests,
+    )
+    args = parser.parse_args()
 
-    term()
-    unicode()
-    colors()
+    for i in args.tests:
+        globals()[f't_{i}']()
 
 if __name__ == '__main__':
     main()
