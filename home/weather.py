@@ -1,9 +1,4 @@
 #! /usr/bin/python3
-'''
-To proxy usb to WSL2:
-usbipd  wsl attach  -b 11-4 -d Ubuntu-20.04
-'''
-
 import json
 import logging
 import requests
@@ -43,19 +38,30 @@ def f_to_c(x):
 
 
 def main():
-  rtl = subprocess.Popen(['sudo', 'rtl_433', '-F', 'json', '-C', 'si'], stdout=subprocess.PIPE)
-  for line in rtl.stdout:
+  rtl = subprocess.Popen([
+    'sudo',
+    'rtl_433',
+      '-F', 'json',
+      '-C', 'si',
+      # '-Y', 'autolevel',
+      # '-Y', 'minmax',
+      # '-Y', 'magest',
+      '-M', 'level',
+      '-M', 'noise',
+  ], stdout=subprocess.PIPE)
+
+  def process(line):
     data = json.loads(line)
     line_s = line.decode('ascii').strip()
     if data.get('model') == 'Ambientweather-F007TH':
       id_ch_to_name_x = {
         (1, 222): ('House_Common', -0.200, -7.0),
-        (2, 104): ('Outside_Back',  0.086, -3.0),
+        (2, 108): ('Outside_Back',  0.086, -3.0),
         (3, 51):  ('Inside_House',  0.146,  1.0),
 
         (1, 174):  ('Room',        -0.034, -1.0),
-        (2, 75):   ('AC_Intake',   -0.114,  1.0),
-        (3, 107):  ('AC_Cool',     -0.084,  0.0),
+        (2, 14):   ('AC_Intake',   -0.114,  1.0),
+        (3, 13):   ('AC_Cool',     -0.084,  0.0),
 
         (2,   3):  ('Freezer',        0.,  0.0),
         (1,  52):  ('Fridge',         0.,  0.0),
@@ -72,6 +78,20 @@ def main():
         post_grafana(f'Humidity_{name}', data['humidity'] - h_c)
     else:
       log.warning('Unknown sensor: %s', line)
+
+  try:
+    for line in rtl.stdout:
+      process(line)
+    if rtl.wait() != 0:
+      print('''
+  To proxy usb to WSL2:
+  usbipd wsl attach  -b 11-4 -d Ubuntu-20.04
+  ''')
+
+  except KeyboardInterrupt:
+    # rtl.send_signal(2)
+    return
+
 
 
 if __name__ == '__main__':
