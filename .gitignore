@@ -1,1 +1,11 @@
 *
+
+# projects
+!home/
+!home/**
+
+# python
+*.egg
+*.egg-info
+*.py[cod]
+__pycache__
