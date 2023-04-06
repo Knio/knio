@@ -11,7 +11,7 @@ LOG = logging.getLogger(__name__)
 
 
 class DL24M:
-    class Query(enum.IntEnum):
+    class Query(enum.Enum):
         ISON        = 0x10
         MILLIVOLTS  = 0x11
         MILLIAMPS   = 0x12
@@ -27,7 +27,7 @@ class DL24M:
         TEST_DATA   = 0x22
         TEMP2       = 0x36
 
-    class Command(enum.IntEnum):
+    class Command(enum.Enum):
         POWER               = 0x01
         SET_LIMIT_VAL       = 0x02
         SET_LIMIT_VOLTS     = 0x03
@@ -36,11 +36,11 @@ class DL24M:
         MODE                = 0x06
         BATTERY_SIZE        = 0x08
 
-    class Power(enum.IntEnum):
+    class Power(enum.Enum):
         ENABLED     = 0x01
         DISABLED    = 0x00
 
-    class Mode(enum.IntEnum):
+    class Mode(enum.Enum):
         CURRENT     = 0x00
         VOLTAGE     = 0x01
         RESISTANCE  = 0x02
@@ -49,7 +49,7 @@ class DL24M:
         POWER_SUPPLY= 0x05
         CABLE       = 0x06
 
-    class BatterySize(enum.IntEnum):
+    class BatterySize(enum.Enum):
         BIG     = 0x00
         SMALL   = 0x01
 

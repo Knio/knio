@@ -1,4 +1,0 @@
-dominate
-pyserial
-toml
-git+https://github.com/Knio/whirl.git

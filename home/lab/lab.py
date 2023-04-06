@@ -24,7 +24,7 @@ import xdm1041
 
 log = logging.getLogger('lab')
 
-config = toml.load("../config.toml")['lab']
+config = toml.load("../config.toml")['grafana']
 
 ROOT = pathlib.Path('.')
 
@@ -46,6 +46,7 @@ def post_grafana(ns, **kv):
       headers={'Authorization': auth, 'Content-Type':'application/json'},
       json=data
     )
+    log.info(p.json())
   except Exception as e:
     log.error(e)
 
@@ -154,7 +155,6 @@ def main():
   parser.add_argument('--xdm1041', type=str)
   args = parser.parse_args()
 
-  # Load
   if (args.dl24m):
     log.info(f'Using DL24M from {args.dl24m}')
     global dl_dev
