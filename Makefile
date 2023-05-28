@@ -17,3 +17,11 @@ mount.docs:
 unmount.docs:
 	sudo veracrypt --dismount Docs
 
+rpizw.mount:
+	mkdir -p k
+	mkdir -p f
+	sudo mount.cifs '\\10.0.0.10\docs' k -o "username=Tom,uid=tom,gid=0,file_mode=0755,dir_mode=0755,soft"
+	sudo mount.cifs '\\10.0.0.10\media' f -o "username=Tom,uid=tom,gid=0,file_mode=0755,dir_mode=0755,soft"
+
+
+
