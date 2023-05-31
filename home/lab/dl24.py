@@ -6,8 +6,55 @@ import enum
 import datetime
 import logging
 
-
 LOG = logging.getLogger(__name__)
+
+
+class DL24M_Serial:
+    def __init__(self, ser):
+        self.ser = ser
+
+    def read(self, n=0, t=0):
+        b = self.ser.read_all()
+        if len(b) >= n or t == 0:
+            return b
+        self.ser.timeout = t
+        b += self.ser.read(n - len(b))
+        return b
+
+    def flush(self):
+        self.ser.timeout = 0
+        b = self.ser.read(128)
+        if b:
+            LOG.info(f'extra bytes: {b.hex(" ", 4)}')
+        return b
+
+    def write(self, b):
+        self.ser.write(b)
+
+
+class DL24M_Socket:
+    def __init__(self, addr):
+        self.ser = ser
+
+    def read(self, n=0, t=0):
+        b = self.ser.read_all()
+        if len(b) >= n or t == 0:
+            return b
+        self.ser.timeout = t
+        b += self.ser.read(n - len(b))
+        return b
+
+    def flush(self):
+        self.ser.timeout = 0
+        b = self.ser.read(128)
+        if b:
+            LOG.info(f'extra bytes: {b.hex(" ", 4)}')
+        return b
+
+    def write(self, b):
+        self.ser.write(b)
+
+
 
 
 class DL24M:
@@ -53,8 +100,8 @@ class DL24M:
         BIG     = 0x00
         SMALL   = 0x01
 
-    def __init__(self, ser):
-        self.ser = ser
+    def __init__(self, io):
+        self.io = io
         self.l = threading.Lock()
 
     @staticmethod
@@ -63,34 +110,19 @@ class DL24M:
             (0xb1, 0xb2, q, a, b, c, d, e, 0xb6)
         )
 
-    def read(self, n=0, t=0):
-        b = self.ser.read_all()
-        if len(b) >= n or t == 0:
-            return b
-        self.ser.timeout = t
-        b += self.ser.read(n - len(b))
-        return b
-
-
-    def flush(self):
-        self.ser.timeout = 0
-        b = self.ser.read(128)
-        if b:
-            LOG.info(f'extra bytes: {b.hex(" ", 4)}')
-        return b
 
     def get_value(self, que, **qs):
         # self.flush()
         q = self.query(que, **qs)
         with self.l:
-            n = self.ser.write(q)
+            n = self.io.write(q)
             assert n == 9
-            self.ser.flush()
+            self.io.flush()
             r = b''
             for i in range(4):
-                # self.ser.timeout = 0.1
+                # self.io.timeout = 0.1
                 r += self.read(10, .1)
-                # r += self.ser.read_until('\0\0\xCE\xCF')
+                # r += self.io.read_until('\0\0\xCE\xCF')
                 n1 = r.find(b'\xCA\xCB')
                 n2 = r.find(b'\0\0\xCE\xCF')
                 if (0 <= n1 < n2 < len(r)):
@@ -210,9 +242,9 @@ class DL24M:
     def set_cmd(self, cmd, *val, **kv):
         with self.l:
             q = self.query(cmd, *val, **kv)
-            n = self.ser.write(q)
+            n = self.io.write(q)
         assert n == 9
-        self.ser.flush()
+        self.io.flush()
         LOG.info(f'write: {q.hex(" ",3)}')
 
     def set_power_on(self):
