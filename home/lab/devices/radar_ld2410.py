@@ -1,0 +1,161 @@
+
+import argparse
+import enum
+import logging
+import struct
+import time
+
+import serial
+
+from . import utils
+
+LOG = logging.getLogger(__name__)
+
+
+class RadarLD2410:
+
+  class Command(enum.Enum):
+    CONFIG_START                = 0x00FF,
+    CONFIG_END                  = 0x00FE,
+    SET_DISTANCE_AND_DURATION   = 0x0060,
+    READ_PARAMETER              = 0x0061,
+    ENGINEERING_START           = 0x0062,
+    ENGINEERING_END             = 0x0063,
+    SET_GATE_SENSITIVITY        = 0x0064,
+    READ_FIRMWARE_VERSION       = 0x00A0,
+    SET_BAUD_RATE               = 0x00A1,
+    FACTORY_RESET               = 0x00A2,
+    RESTART                     = 0x00A3,
+    SET_BLUETOOTH               = 0x00A4,
+    READ_MAC_ADDRESS            = 0x00A5,
+
+  RESPONSE = 0x0100
+
+
+  class TargetDataFrame:
+    HEADER = b'\xf4\xf3\xf2\xf1'
+    FOOTER = b'\xf8\xf7\xf6\xf5'
+    fields = dict(
+      header  = 'I',
+      header2 = 'H', # 0d00
+      type    = 'B',  # 02
+      head    = 'B',  # aa
+
+      target_state      = 'B',
+      motion_target_distance   = 'H',
+      motion_target_energy     = 'B',
+      static_target_distance   = 'H',
+      static_target_energy     = 'B',
+      detection_distance = 'H',
+
+      motion_max = 'B',
+      static_max = 'B',
+      # motion_energy = '8B',
+      # static_energy = '8B',
+      footer  = 'I',
+    )
+    STRUCT = struct.Struct('<' + ''.join(fields.values()))
+
+    @classmethod
+    def unpack(cls, data):
+      return dict(zip(
+        cls.fields.keys(),
+        cls.STRUCT.unpack(data)
+      ))
+
+  def __init__(self, ser):
+    self.ser = ser
+
+  def poll(self):
+    data = self.ser.read_until(self.TargetDataFrame.FOOTER)
+    assert len(data) == self.TargetDataFrame.STRUCT.size, (len(data), self.TargetDataFrame.STRUCT.size)
+
+    print(data.hex(' ', 23))
+    frame = self.TargetDataFrame.unpack(data)
+
+    assert frame.pop('header') == int.from_bytes(self.TargetDataFrame.HEADER, 'little')
+    assert frame.pop('footer') == int.from_bytes(self.TargetDataFrame.FOOTER, 'little')
+    assert frame.pop('header2') == 13
+    assert frame.pop('type') == 2
+    assert frame.pop('head') == 170
+
+
+    assert frame.pop('static_max') == 0
+    assert frame.pop('motion_max') == 85
+    # assert frame.pop('detection_distance') == 0
+
+
+    return frame
+
+
+
+
+import toml
+import requests
+config = toml.load("../config.toml")['grafana']
+
+def post_grafana(ns, **kv):
+  auth = 'Bearer {}:{}'.format(59684, config['grafana_token'])
+  now = int(time.time())
+  data = [{
+    'name': '.'.join((ns, k)),
+    'value': v,
+    'time': now,
+    'interval': 2,
+  } for k,v in kv.items()]
+  try:
+    p = requests.post(
+      config['grafana_uri'],
+      headers={'Authorization': auth, 'Content-Type':'application/json'},
+      json=data
+    )
+    LOG.info(p.json())
+  except Exception as e:
+    LOG.error(e)
+
+
+
+def main():
+  parser = argparse.ArgumentParser(
+    formatter_class=argparse.RawTextHelpFormatter,
+    description=__doc__)
+
+  parser.add_argument('port', type=str, default='COM13')
+  args = parser.parse_args()
+
+  ser = serial.Serial(
+    args.port,
+    baudrate=256000,
+    parity='N',
+    bytesize=8,
+    stopbits=1,
+    timeout=.1
+  )
+  ss = utils.PySerial(ser, timeout=0.2)
+
+  ld2410 = RadarLD2410(ss)
+  last = time.time()
+  try:
+    while 1:
+      now = time.time()
+      frame = ld2410.poll()
+      print(frame)
+      if now > last + 1:
+        post_grafana('radar_ld2410', **frame)
+        last = now
+
+  except KeyboardInterrupt:
+    pass
+
+
+
+# to run: (from parent dir)
+# python -m devices.radar_ld2410 COM13
+
+if __name__ == '__main__':
+  logging.basicConfig(
+    format='%(asctime)s:%(levelname)s:%(name)s:%(funcName)s:%(lineno)d %(message)s',
+    level=logging.DEBUG,
+    # level=logging.INFO,
+  )
+  main()

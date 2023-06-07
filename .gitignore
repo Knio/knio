@@ -1,8 +1,13 @@
+# default ignore all
 *
 
-# projects
+# add projects
+!misc/
+!misc/**
+
 !home/
 !home/**
+
 
 # python
 *.egg

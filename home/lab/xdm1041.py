@@ -6,9 +6,9 @@ Thanks to https://github.com/TheHWcave/OWON-XDM1041/blob/main/SCPI/XDM1041-SCPI.
 '''
 
 import argparse
-import time
 import enum
 import logging
+import time
 
 import serial
 
