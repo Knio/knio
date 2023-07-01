@@ -8,7 +8,16 @@ import os
 import sys
 from enum import Enum, IntEnum
 
-import termios
+try:
+    import termios
+except ImportError:
+    termios = None
+
+try:
+    import colorama
+except ImportError:
+    colorama = None
+
 
 
 def t_term():
@@ -26,15 +35,29 @@ def t_term():
     print(f'    encoding: {sys.stdout.encoding}')
     print(f'    tty:      {sys.stdout.isatty()}')
     print(f'    errors:   {sys.stdout.errors}')
-    print('termios attrs:')
-    attrs = termios.tcgetattr(sys.stdin.fileno())
-    print(f'    input:    {attrs[0]:016b}  {attrs[0]:04x}')
-    print(f'    output:   {attrs[1]:016b}  {attrs[1]:04x}')
-    print(f'    control:  {attrs[2]:016b}  {attrs[2]:04x}')
-    print(f'    local:    {attrs[3]:016b}  {attrs[3]:04x}')
-    print(f'    ispeed:   {attrs[4]}')
-    print(f'    ospeed:   {attrs[5]}')
-    print(f'    chars:    {b"".join(attrs[6]).hex(" ")}')
+    if termios:
+        print('termios attrs:')
+        attrs = termios.tcgetattr(sys.stdin.fileno())
+        print(f'    input:    {attrs[0]:016b}  {attrs[0]:04x}')
+        print(f'    output:   {attrs[1]:016b}  {attrs[1]:04x}')
+        print(f'    control:  {attrs[2]:016b}  {attrs[2]:04x}')
+        print(f'    local:    {attrs[3]:016b}  {attrs[3]:04x}')
+        print(f'    ispeed:   {attrs[4]}')
+        print(f'    ospeed:   {attrs[5]}')
+        print(f'    chars:    {b"".join(attrs[6]).hex(" ")}')
+    else:
+        print('termios not available')
+    try:
+      x = os.get_terminal_size(0)
+      print(f'stdin  size: {x}')
+    except OSError as e:
+      print(f'stdin  size: {e}')
+    try:
+      x = os.get_terminal_size(1)
+      print(f'stdout size: {x}')
+    except OSError as e:
+      print(f'stdout size: {e}')
+
     # TODO: termcap
 
 
@@ -223,6 +246,7 @@ class ANSI:
 
 def t_colors():
     print('** Color support ' + '*' * 40)
+    colorama.init()
     bpx = '⬛'
     box = '▀▄'
 
@@ -275,7 +299,7 @@ def t_colors():
             c = 16 + 36 * r + 6 * g + b
             print(f'{ANSI.color_fg256(c)}{box}{ANSI.graphics_reset()}', end='')
         print('    ', end=' ')
-        for x in range(4): # G/B
+        for x in range(4): # Grey
             c = 232 + y * 4 + x
             print(f'{ANSI.color_fg256(c)}{box}{ANSI.graphics_reset()}', end='')
         print()

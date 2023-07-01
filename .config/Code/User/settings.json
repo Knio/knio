@@ -22,7 +22,8 @@
     },
     "files.autoSave": "off",
     "arduino.additionalUrls": [
-        "https://dl.espressif.com/dl/package_esp32_dev_index.json"
+        "https://dl.espressif.com/dl/package_esp32_dev_index.json",
+        "http://arduino.esp8266.com/stable/package_esp8266com_index.json"
     ],
     "git.autofetch": true,
     "arduino.ignoreBoards": [
@@ -36,7 +37,7 @@
     ],
     "remote.SSH.remotePlatform": {
         "tom-zoox": "linux",
-        "zkpq.ca": "linux"
+        "zkpq": "linux"
     },
     "workbench.editor.closeEmptyGroups": false,
     "editor.cursorSurroundingLines": 30,
@@ -64,5 +65,22 @@
             }
         ]
     },
-    "workbench.colorTheme": "Visual Studio Dark"
+    "workbench.colorTheme": "Visual Studio Dark",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "extensions.ignoreRecommendations": true,
+    "debug.onTaskErrors": "showErrors",
+    "security.workspace.trust.untrustedFiles": "open",
+    "files.insertFinalNewline": true,
+    "editor.stickyScroll.enabled": true,
+    "editor.tabSize": 2,
+    "arduino.useArduinoCli": true,
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "cmake.configureOnOpen": false,
+    "git.openRepositoryInParentFolders": "never",
+    "window.zoomLevel": 1,
+    "explorer.confirmDragAndDrop": false
 }

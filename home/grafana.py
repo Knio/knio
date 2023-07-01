@@ -27,3 +27,4 @@ def post_grafana(ns, **kv):
     LOG.info(p.json())
   except Exception as e:
     LOG.error(e)
+

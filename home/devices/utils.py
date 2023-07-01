@@ -11,6 +11,11 @@ class Serial:
       return self.rq.pop(0)
     return self.read_raw(1024)
 
+  def send(self, data):
+    while data:
+      n = self.write_raw(data)
+      data = data[n:]
+
   def read_until(self, footer):
     end = time.time() + self.timeout
     buf = b''
@@ -28,6 +33,21 @@ class Serial:
     self.set_timeout(self.timeout)
     self.rq.append(buf[n:])
     return buf[:n]
+
+
+class SocketSerial(Serial):
+  def __init__(self, sock, *args, **kwargs):
+    self.sock = sock
+    super().__init__(*args, **kwargs)
+
+  def set_timeout(self, t):
+    self.sock.settimeout(t)
+
+  def read_raw(self, n):
+    return self.sock.recv(n)
+
+  def write_raw(self, data):
+    return self.sock.send(data)
 
 
 class PySerial(Serial):

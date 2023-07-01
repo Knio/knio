@@ -12,6 +12,8 @@ from . import utils
 LOG = logging.getLogger(__name__)
 
 
+
+
 class RadarLD2410:
 
   class Command(enum.Enum):
@@ -28,13 +30,30 @@ class RadarLD2410:
     RESTART                     = 0x00A3,
     SET_BLUETOOTH               = 0x00A4,
     READ_MAC_ADDRESS            = 0x00A5,
+    RESPONSE = 0x0100,
 
-  RESPONSE = 0x0100
+  class Command(Datum):
+    header: 'I' = 0xfafbfcfd
+    length: 'H'
+    cmd:    'H'
+    data:   F(bytes, length='length')
+    footer: 'I' = 0x01020304
 
+
+  class FirmwareVersionFrame:
+    fields = dict(
+      command = 'H',
+      ack     = 'H',
+      type    = 'H',
+      major1  = 'B',
+      major2  = 'B',
+      minor   = 'B',
+    )
+    STRUCT = struct.Struct('<' + ''.join(fields.values()))
 
   class TargetDataFrame:
-    HEADER = b'\xf4\xf3\xf2\xf1'
-    FOOTER = b'\xf8\xf7\xf6\xf5'
+    HEADER = 0xf1f2f3f4
+    FOOTER = 0xf5f6f7f8
     fields = dict(
       header  = 'I',
       header2 = 'H', # 0d00
@@ -66,15 +85,19 @@ class RadarLD2410:
   def __init__(self, ser):
     self.ser = ser
 
+  def command(self, cmd):
+    pass
+
+
   def poll(self):
-    data = self.ser.read_until(self.TargetDataFrame.FOOTER)
+    data = self.ser.read_until(self.TargetDataFrame.FOOTER.to_bytes(4, byteorder='little'))
     assert len(data) == self.TargetDataFrame.STRUCT.size, (len(data), self.TargetDataFrame.STRUCT.size)
 
     print(data.hex(' ', 23))
     frame = self.TargetDataFrame.unpack(data)
 
-    assert frame.pop('header') == int.from_bytes(self.TargetDataFrame.HEADER, 'little')
-    assert frame.pop('footer') == int.from_bytes(self.TargetDataFrame.FOOTER, 'little')
+    assert frame.pop('header') == self.TargetDataFrame.HEADER
+    assert frame.pop('footer') == self.TargetDataFrame.FOOTER
     assert frame.pop('header2') == 13
     assert frame.pop('type') == 2
     assert frame.pop('head') == 170
@@ -122,6 +145,9 @@ def main():
 
   parser.add_argument('port', type=str, default='COM13')
   args = parser.parse_args()
+
+  cmd = RadarLD2410.Command()
+  print(cmd)
 
   ser = serial.Serial(
     args.port,
