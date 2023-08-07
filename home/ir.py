@@ -5,6 +5,7 @@ import logging
 import subprocess
 import threading
 import time
+import toml
 
 import msvcrt
 import pynput.keyboard
@@ -73,8 +74,11 @@ class AC(object):
   TIMER       = 'N.6681.9F'
 
 
+config = toml.load("config.toml")['grafana']
+
+
 def post_grafana(kv):
-  auth = 'Bearer {}:{}'.format(59684, GRAFANA_TOKEN)
+  auth = 'Bearer {}:{}'.format(59684, config['grafana_token'])
   data = [{
     'name': 'cir.' + k,
     'value': v,
@@ -83,7 +87,7 @@ def post_grafana(kv):
   } for k,v in kv.items()]
   try:
     p = requests.post(
-      GRAFANA_URI,
+      config['grafana_uri'],
       headers={'Authorization': auth, 'Content-Type':'application/json'},
       json=data
     )

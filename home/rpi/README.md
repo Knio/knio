@@ -12,7 +12,7 @@ sudo apt update
 sudo apt upgrade
 
 
-sudo apt install git
+sudo apt install git python3-dev python3-pip
 
 git clone git@github.com:Knio/knio.git
 
