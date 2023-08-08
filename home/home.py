@@ -6,6 +6,7 @@ Web frontend to control home devices
 import argparse
 import logging
 import time
+import asyncio
 
 import dominate
 import whirl
@@ -14,6 +15,7 @@ from whirl.domx import dx
 
 from devices import denon_avr
 
+import kasa
 
 amp = None
 
@@ -30,6 +32,11 @@ def index(url, handler, match):
   for v in range(-70, -20, 5):
     tags.button(f'{v:2d}db', dx(target='#content', get=f'/avr/vol/{v}'))
 
+  for i in range(2):
+    with tags.div(f'light {i}'):
+      tags.button('on', dx(target='#content', get=f'/light/{i}/on'))
+      tags.button('off', dx(target='#content', get=f'/light/{i}/off'))
+
   with tags.div(id='content'):
     foo(None, None, None)
 
@@ -42,7 +49,6 @@ def foo(url, handler, match):
   time.sleep(0.1)
   v = amp.get_vol()
   tags.h3(f'Vol?: {v} dB')
-
 
 
 @whirl.domx.route('/avr/on')
@@ -65,6 +71,19 @@ def avr_vol(url, handler, match):
   amp.set_vol(v)
   tags.p(f'Vol set to {v:d}')
 
+@whirl.domx.route('^/light/(\d+)/(\w+)$')
+def light(url, handler, match):
+  l = int(match.group(1))
+  s = match.group(2)
+  if s == 'on':
+    aiol.run_until_complete(lights[l].turn_on())
+    tags.p(f'light {l} turned on')
+  elif s == 'off':
+    aiol.run_until_complete(lights[l].turn_off())
+    tags.p(f'light {l} turned off')
+  else:
+    tags.p(f'bad command: {s!r}')
+
 
 def main():
   logging.basicConfig(level=logging.DEBUG,
@@ -78,6 +97,19 @@ def main():
 
   global amp
   amp = denon_avr.DenonAVR('10.0.0.22')
+
+  global lights
+  lights = [
+    kasa.SmartPlug('10.0.0.202'),
+    kasa.SmartPlug('10.0.0.201'),
+  ]
+  # fuck you
+  global aiol
+  aiol = asyncio.get_event_loop()
+
+
+  for l in lights:
+    aiol.run_until_complete(l.update())
 
   whirl.domx.run(('', 8000))
 
