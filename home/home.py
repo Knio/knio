@@ -9,6 +9,7 @@ import time
 import asyncio
 
 import dominate
+import requests
 import whirl
 from dominate import tags
 from whirl.domx import dx
@@ -23,19 +24,27 @@ amp = None
 @tags.div
 def index(url, handler, match):
   tags.h1('Hello world')
-  tags.button('foo', dx(target='#content', get='/foo'))
-  tags.button('bar', dx(target='#content', get='/bar'))
-  tags.br()
-  tags.button('on', dx(target='#content', get='/avr/on'))
-  tags.button('off', dx(target='#content', get='/avr_off'))
-  tags.br()
-  for v in range(-70, -20, 5):
-    tags.button(f'{v:2d}db', dx(target='#content', get=f'/avr/vol/{v}'))
+  with tags.div(tags.h2('Sound')):
+    tags.button('foo', dx(target='#content', get='/foo'))
+    tags.button('bar', dx(target='#content', get='/bar'))
+    tags.br()
+    tags.button('on', dx(target='#content', get='/avr/on'))
+    tags.button('off', dx(target='#content', get='/avr_off'))
+    tags.br()
+    for v in range(-70, -20, 5):
+      tags.button(f'{v:2d}db', dx(target='#content', get=f'/avr/vol/{v}'))
 
-  for i in range(2):
-    with tags.div(f'light {i}'):
-      tags.button('on', dx(target='#content', get=f'/light/{i}/on'))
-      tags.button('off', dx(target='#content', get=f'/light/{i}/off'))
+  with tags.div(tags.h2('Lights')):
+    for i in range(2):
+      with tags.div(f'light {i}'):
+        tags.button('on', dx(target='#content', get=f'/light/{i}/on'))
+        tags.button('off', dx(target='#content', get=f'/light/{i}/off'))
+
+  with tags.div(tags.h2('Music')):
+    tags.button('play', dx(target='#content', get='/foobar/play'))
+    tags.button('pause', dx(target='#content', get='/foobar/pause'))
+    tags.button('random', dx(target='#content', get='/foobar/random'))
+
 
   with tags.div(id='content'):
     foo(None, None, None)
@@ -83,6 +92,22 @@ def light(url, handler, match):
     tags.p(f'light {l} turned off')
   else:
     tags.p(f'bad command: {s!r}')
+
+@whirl.domx.route('^/foobar/(\d+)$')
+def foobar(url, handler, match):
+  cmd = match.group(1)
+  if cmd == 'play':
+    r = requests.post('http://10.0.0.10:8880/api/player/play')
+  elif cmd == 'pause':
+    r = requests.post('http://10.0.0.10:8880/api/player/pause/toggle')
+  elif cmd == 'random':
+    r = requests.post('http://10.0.0.10:8880/api/player/play/random')
+  else:
+    tags.p(f'bad command: {cmd!r}')
+    return
+  tags.p(r.status_code)
+
+
 
 
 def main():
