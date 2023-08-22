@@ -1,8 +1,13 @@
 '''
 Usage:
 
-$env:PYTHONPATH = "."
+$Env:PYTHONPATH = "."
 knio\home> python .\devices\denon_avr.py
+
+
+or maybe:
+
+# python -m devices.denon_avr COM13
 
 '''
 
@@ -24,11 +29,36 @@ class DenonAVR:
     STANDBY = 1
     ON = 2
 
+  class SourceInput(enum.StrEnum):
+    '''
+        SITUNER
+        SIDVD
+        SIBD
+        SITV
+        SISAT/CBL
+        SISMPLAY
+        GAMESIGAME
+        SIAUX1
+        SINET
+        SIPANDORA
+        SISIRIUSXM
+        SISPOTIFY
+        SIFLICKR
+        SIFAVORITES
+        SIIRADIO
+        SISERVER
+        SIUSB/IPOD
+        SIIPD
+        SIIRP
+        SIFVP
+    '''
+    COMPUTER = 'TV'
+
 
   def __init__(self, host):
     self.host = host
     self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    self.socket.settimeout(0.1)
+    self.socket.settimeout(0.1) # for connect
     self.socket.connect((self.host, 23))
     self.ser = utils.SocketSerial(self.socket)
     self.queue = []
@@ -58,13 +88,15 @@ class DenonAVR:
     events, result = self.flush(prefix, timeout)
     for event in events:
       self.process(event)
+    if prefix and (result is None):
+      raise TimeoutError(f'timeout waiting for {prefix!r} response')
     return result
 
   def process(self, event):
     LOG.info(f'AVR: {event}')
 
   def query(self, query):
-    self.poll(timeout=0)
+    self.poll(timeout=0.1)
     self.ser.write(f'{query}?\r'.encode('ascii'))
     return self.poll(query, timeout=0.1)
 
@@ -77,11 +109,16 @@ class DenonAVR:
     LOG.info('get_power')
     r = self.query('PW')
     return self.PowerState[r[2:]]
+
+  def get_source(self):
+    r = self.query('SI')
     return r
 
+  def set_source(self, si):
+    return self.cmd('SI', si)
+
   def set_power(self, pw):
-    # pw = self.PowerState[pw]
-    self.cmd('PW', pw.name)
+    return self.cmd('PW', pw.name)
 
   def get_vol(self):
     LOG.info('get_vol')
@@ -97,7 +134,7 @@ class DenonAVR:
     v = int(round(db))
     v = max(min(v, 18), -80)
     v += 80
-    self.cmd('MV', f'{v:02d}')
+    return self.cmd('MV', f'{v:02d}')
 
 
 def main():

@@ -7,16 +7,14 @@ import time
 
 import serial
 
-from . import utils
+from devices import utils
 
 LOG = logging.getLogger(__name__)
 
 
-
-
 class RadarLD2410:
 
-  class Command(enum.Enum):
+  class Command(enum.IntEnum):
     CONFIG_START                = 0x00FF,
     CONFIG_END                  = 0x00FE,
     SET_DISTANCE_AND_DURATION   = 0x0060,
@@ -32,13 +30,13 @@ class RadarLD2410:
     READ_MAC_ADDRESS            = 0x00A5,
     RESPONSE = 0x0100,
 
-  class Command(Datum):
-    header: 'I' = 0xfafbfcfd
-    length: 'H'
-    cmd:    'H'
-    data:   F(bytes, length='length')
-    footer: 'I' = 0x01020304
 
+  # class Command(Datum):
+  #   header: 'I' = 0xfafbfcfd
+  #   length: 'H'
+  #   cmd:    'H'
+  #   data:   F(bytes, length='length') # plus 2 to account for cmd
+  #   footer: 'I' = 0x01020304
 
   class FirmwareVersionFrame:
     fields = dict(
@@ -56,22 +54,22 @@ class RadarLD2410:
     FOOTER = 0xf5f6f7f8
     fields = dict(
       header  = 'I',
-      header2 = 'H', # 0d00
+      header2 = 'H',  # 0d00
       type    = 'B',  # 02
       head    = 'B',  # aa
 
-      target_state      = 'B',
-      motion_target_distance   = 'H',
-      motion_target_energy     = 'B',
-      static_target_distance   = 'H',
-      static_target_energy     = 'B',
-      detection_distance = 'H',
+      target_state              = 'B',
+      motion_target_distance    = 'H',
+      motion_target_energy      = 'B',
+      static_target_distance    = 'H',
+      static_target_energy      = 'B',
+      detection_distance        = 'H',
 
-      motion_max = 'B',
-      static_max = 'B',
+      motion_max                = 'B',
+      static_max                = 'B',
       # motion_energy = '8B',
       # static_energy = '8B',
-      footer  = 'I',
+      footer                    = 'I',
     )
     STRUCT = struct.Struct('<' + ''.join(fields.values()))
 
@@ -82,8 +80,43 @@ class RadarLD2410:
         cls.STRUCT.unpack(data)
       ))
 
+  COMMAND_HEADER = 0xfafbfcfd
+  COMMAND_FOOTER = 0x01020304
+
   def __init__(self, ser):
     self.ser = ser
+
+    def send_command(cmd, data=b''):
+      params = [
+        struct.pack('<I', self.COMMAND_HEADER), # header
+        struct.pack('<H', len(data) + 2), # length
+        struct.pack('<H', cmd),
+        data, # stuff
+        struct.pack('<I', self.COMMAND_FOOTER), # footer
+      ]
+      b = b''.join(params)
+      self.ser.write(b)
+      LOG.info(f'cmd:       {b.hex(" ", 2)}')
+      response = self.ser.read_until(self.COMMAND_FOOTER.to_bytes(4, byteorder='little'), timeout=2)
+      r = response
+      if len(r) % 2 == 1:
+        r += b'\x00'
+      LOG.info(f'response: {r.hex(" ", 2)}')
+      return response
+
+    return
+    # hack to hardcode config
+    send_command(RadarLD2410.Command.CONFIG_START, b'\x01\x00')
+    # send_command(RadarLD2410.Command.FACTORY_RESET)
+
+    # send_command(RadarLD2410.Command.READ_MAC_ADDRESS)
+    send_command(RadarLD2410.Command.READ_FIRMWARE_VERSION)
+
+    # send_command(RadarLD2410.Command.ENGINEERING_START)
+    send_command(RadarLD2410.Command.CONFIG_END)
+
+
+
 
   def command(self, cmd):
     pass
@@ -91,9 +124,16 @@ class RadarLD2410:
 
   def poll(self):
     data = self.ser.read_until(self.TargetDataFrame.FOOTER.to_bytes(4, byteorder='little'))
+    if not data:
+      LOG.info('no data')
+      return
+
+    # f3f2 f10d 0002 aa03 3c00 3600 0064 0000 5500 f8f7 f6f5
+
+
+    # LOG.info(data.hex(' ', 2))
     assert len(data) == self.TargetDataFrame.STRUCT.size, (len(data), self.TargetDataFrame.STRUCT.size)
 
-    print(data.hex(' ', 23))
     frame = self.TargetDataFrame.unpack(data)
 
     assert frame.pop('header') == self.TargetDataFrame.HEADER
@@ -115,7 +155,7 @@ class RadarLD2410:
 
 import toml
 import requests
-config = toml.load("../config.toml")['grafana']
+config = toml.load("config.toml")['grafana']
 
 def post_grafana(ns, **kv):
   auth = 'Bearer {}:{}'.format(59684, config['grafana_token'])
@@ -146,8 +186,8 @@ def main():
   parser.add_argument('port', type=str, default='COM13')
   args = parser.parse_args()
 
-  cmd = RadarLD2410.Command()
-  print(cmd)
+  # cmd = RadarLD2410.Command()
+  # print(cmd)
 
   ser = serial.Serial(
     args.port,
@@ -157,7 +197,7 @@ def main():
     stopbits=1,
     timeout=.1
   )
-  ss = utils.PySerial(ser, timeout=0.2)
+  ss = utils.PySerial(ser, timeout=0.1)
 
   ld2410 = RadarLD2410(ss)
   last = time.time()
@@ -167,12 +207,11 @@ def main():
       frame = ld2410.poll()
       print(frame)
       if now > last + 1:
-        post_grafana('radar_ld2410', **frame)
+        # post_grafana('radar_ld2410', **frame)
         last = now
 
   except KeyboardInterrupt:
     pass
-
 
 
 # to run: (from parent dir)

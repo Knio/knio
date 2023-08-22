@@ -25,7 +25,7 @@ class Serial:
     return self.read_raw(1024)
 
   def write(self, data):
-    LOG.debug(f'write: {data!r}')
+    # LOG.debug(f'write: {data!r}')
     while data:
       n = self.write_raw(data)
       data = data[n:]
@@ -108,3 +108,24 @@ class PySerial(Serial):
       buf += self.ser.read(k)
     # self.ser.timeout = t
     return buf
+
+  def write_raw(self, data):
+    return self.ser.write(data)
+
+  def read_until(self, footer, timeout=None):
+    if timeout is None:
+      timeout = self.timeout
+    self.ser.timeout = timeout
+    b = b''.join(self.rq)
+    self.rq[:] = []
+    i = b.find(footer)
+    if i == -1:
+      b += self.ser.read_until(footer)
+    i = b.find(footer)
+    if i == -1:
+      self.rq.append(b)
+      return b''
+    i += len(footer)
+    b, q = b[:i], b[i:]
+    self.rq.append(q)
+    return b

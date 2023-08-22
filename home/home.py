@@ -6,7 +6,6 @@ Web frontend to control home devices
 import argparse
 import logging
 import time
-import asyncio
 
 import dominate
 import requests
@@ -15,24 +14,36 @@ from dominate import tags
 from whirl.domx import dx
 
 from devices import denon_avr
+from devices import kasa_light
 
-import kasa
 
-amp = None
+LOG = logging.getLogger('home')
+
+
+home = None
 
 @whirl.domx.route('/')
 @tags.div
 def index(url, handler, match):
   tags.h1('Hello world')
+
+  with tags.div(tags.h2('Scene')):
+    for s in ('Active', 'Work', 'Lounge', 'Movie', 'Sleep', 'Gone'):
+      tags.button(s, dx(target='#content', get=f'/scene/{s.lower()}'))
+
   with tags.div(tags.h2('Sound')):
     tags.button('foo', dx(target='#content', get='/foo'))
     tags.button('bar', dx(target='#content', get='/bar'))
-    tags.br()
-    tags.button('on', dx(target='#content', get='/avr/on'))
-    tags.button('off', dx(target='#content', get='/avr_off'))
-    tags.br()
-    for v in range(-70, -20, 5):
-      tags.button(f'{v:2d}db', dx(target='#content', get=f'/avr/vol/{v}'))
+
+    with tags.div('power'):
+      tags.button('on', dx(target='#content', get='/avr/on'))
+      tags.button('off', dx(target='#content', get='/avr_off'))
+    with tags.div('volume'):
+      for v in range(-70, -20, 5):
+        tags.button(f'{v:2d}db', dx(target='#content', get=f'/avr/vol/{v}'))
+    with tags.div('source'):
+      for s in ('TV', 'NET'):
+        tags.button(s, dx(target='#content', get=f'/avr/si/{s}'))
 
   with tags.div(tags.h2('Lights')):
     for i in range(2):
@@ -41,60 +52,69 @@ def index(url, handler, match):
         tags.button('off', dx(target='#content', get=f'/light/{i}/off'))
 
   with tags.div(tags.h2('Music')):
-    tags.button('play', dx(target='#content', get='/foobar/play'))
-    tags.button('pause', dx(target='#content', get='/foobar/pause'))
-    tags.button('random', dx(target='#content', get='/foobar/random'))
-
+    for c in ('play', 'pause', 'random'):
+      tags.button(c, dx(target='#content', get=f'/foobar/{c}'))
 
   with tags.div(id='content'):
     foo(None, None, None)
 
-@whirl.domx.route('/foo')
+@whirl.domx.route(r'^/foo$')
 @tags.div
 def foo(url, handler, match):
-  # p = 'over 9000'
-  p = amp.get_power()
+  p = home.amp.get_power()
   tags.h3(f'Power?: {p}')
-  time.sleep(0.1)
-  v = amp.get_vol()
+
+  v = home.amp.get_vol()
   tags.h3(f'Vol?: {v} dB')
 
+  s = home.amp.get_source()
+  tags.h3(f'Source?: {s}')
 
-@whirl.domx.route('/avr/on')
+
+@whirl.domx.route(r'^/avr/on$')
 @tags.div
 def avr_on(url, handler, match):
-  amp.set_power(amp.PowerState.ON)
+  home.amp.set_power(home.amp.PowerState.ON)
   tags.p('Power turned on')
 
 
-@whirl.domx.route('/avr_off')
+@whirl.domx.route(r'^/avr_off$')
 @tags.div
 def avr_off(url, handler, match):
-  amp.set_power(amp.PowerState.STANDBY)
+  home.amp.set_power(home.amp.PowerState.STANDBY)
   tags.p('Power turned off')
 
-@whirl.domx.route('^/avr/vol/([+-]?\d+)$')
+@whirl.domx.route(r'^/avr/vol/([+-]?\d+)$')
 @tags.div
 def avr_vol(url, handler, match):
   v = int(match.group(1))
-  amp.set_vol(v)
+  home.amp.set_vol(v)
   tags.p(f'Vol set to {v:d}')
 
-@whirl.domx.route('^/light/(\d+)/(\w+)$')
+@whirl.domx.route(r'^/avr/si/(\w+)$')
+@tags.div
+def avr_si(url, handler, match):
+  si = match.group(1)
+  home.amp.set_source(si)
+  tags.p(f'Source set to {si}')
+
+
+@whirl.domx.route(r'^/light/(\d+)/(\w+)$')
 def light(url, handler, match):
   l = int(match.group(1))
   s = match.group(2)
   if s == 'on':
-    aiol.run_until_complete(lights[l].turn_on())
+    home.lights[l].turn_on()
     tags.p(f'light {l} turned on')
   elif s == 'off':
-    aiol.run_until_complete(lights[l].turn_off())
+    home.lights[l].turn_off()
     tags.p(f'light {l} turned off')
   else:
     tags.p(f'bad command: {s!r}')
 
-@whirl.domx.route('^/foobar/(\d+)$')
+@whirl.domx.route(r'^/foobar/(\w+)$')
 def foobar(url, handler, match):
+  LOG.info(url)
   cmd = match.group(1)
   if cmd == 'play':
     r = requests.post('http://10.0.0.10:8880/api/player/play')
@@ -108,6 +128,65 @@ def foobar(url, handler, match):
   tags.p(r.status_code)
 
 
+@whirl.domx.route(r'^/scene/(\w+)$')
+def scene(url, handler, match):
+  LOG.info(url)
+  cmd = match.group(1)
+  r = getattr(home, f'scene_{cmd}')()
+  tags.p(f'{r!r}')
+
+
+
+
+class Home:
+  def __init__(self):
+    self.amp = denon_avr.DenonAVR('10.0.0.22')
+    self.lights = [
+      kasa_light.Light('10.0.0.202'),
+      kasa_light.Light('10.0.0.201'),
+    ]
+    self.radar = None
+
+  def scene_active(self):
+    self.amp.set_power(self.amp.PowerState.ON)
+    self.amp.set_source('TV')
+    self.amp.set_vol(-50)
+    self.lights[0].turn_on()
+    self.lights[1].turn_on()
+    return True
+
+  def scene_work(self):
+    self.amp.set_power(self.amp.PowerState.ON)
+    self.amp.set_source('TV')
+    self.amp.set_vol(-55)
+    self.lights[0].turn_on()
+    self.lights[1].turn_on()
+    return True
+
+  def scene_lounge(self):
+    self.amp.set_power(self.amp.PowerState.ON)
+    self.amp.set_source('TV')
+    requests.post('http://10.0.0.10:8880/api/player/play').status_code
+    self.amp.set_vol(-55)
+    self.lights[0].turn_on()
+    self.lights[1].turn_off()
+    return True
+
+  def scene_movie(self):
+    self.amp.set_source('NET')
+    self.lights[0].turn_off()
+    self.lights[1].turn_off()
+    return True
+
+  def scene_sleep(self):
+    self.lights[0].turn_off()
+    self.lights[1].turn_off()
+    return True
+
+  def scene_gone(self):
+    requests.post('http://10.0.0.10:8880/api/player/pause/toggle')
+    return True
+
 
 
 def main():
@@ -120,21 +199,8 @@ def main():
 
   args = parser.parse_args()
 
-  global amp
-  amp = denon_avr.DenonAVR('10.0.0.22')
-
-  global lights
-  lights = [
-    kasa.SmartPlug('10.0.0.202'),
-    kasa.SmartPlug('10.0.0.201'),
-  ]
-  # fuck you
-  global aiol
-  aiol = asyncio.get_event_loop()
-
-
-  for l in lights:
-    aiol.run_until_complete(l.update())
+  global home
+  home = Home()
 
   whirl.domx.run(('', 8000))
 
