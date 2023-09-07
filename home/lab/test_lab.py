@@ -131,7 +131,7 @@ def main():
   dl24m_thread.daemon = True
   # dl24m_thread.start()
 
-  dev = dl24.DL24M(ser)
+  dev = dl24.DL24M(dl24.DL24M_Serial(ser))
   try:
     pass
     # dev.set_mode(dl24.DL24M.Mode.CURRENT)
@@ -141,12 +141,12 @@ def main():
   # dev.set_cmd(dl24.DL24M.Command.BATTERY_SIZE, dl24.DL24M.BatterySize.SMALL)
   # c = dev.get_clear()
   # print(f'clear: {c:x}')
-  dev.set_min_voltage(2)
+  dev.set_min_voltage(2.2)
   dev.set_max_time()
   # dev.set_power_on()
   dev.set_power_off()
   dev.set_mode(dl24.DL24M.Mode.CURRENT)
-  dev.set_limit(10)
+  dev.set_limit(0.250)
   # dev.set_power_on()
   dev.reset_counters()
   return

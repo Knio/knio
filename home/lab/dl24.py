@@ -29,7 +29,7 @@ class DL24M_Serial:
         return b
 
     def write(self, b):
-        self.ser.write(b)
+        return self.ser.write(b)
 
 
 class DL24M_Socket:
@@ -83,11 +83,11 @@ class DL24M:
         MODE                = 0x06
         BATTERY_SIZE        = 0x08
 
-    class Power(enum.Enum):
+    class Power(enum.IntEnum):
         ENABLED     = 0x01
         DISABLED    = 0x00
 
-    class Mode(enum.Enum):
+    class Mode(enum.IntEnum):
         CURRENT     = 0x00
         VOLTAGE     = 0x01
         RESISTANCE  = 0x02
@@ -113,7 +113,7 @@ class DL24M:
 
     def get_value(self, que, **qs):
         # self.flush()
-        q = self.query(que, **qs)
+        q = self.query(que.value, **qs)
         with self.l:
             n = self.io.write(q)
             assert n == 9
@@ -121,7 +121,7 @@ class DL24M:
             r = b''
             for i in range(4):
                 # self.io.timeout = 0.1
-                r += self.read(10, .1)
+                r += self.io.read(10, .1)
                 # r += self.io.read_until('\0\0\xCE\xCF')
                 n1 = r.find(b'\xCA\xCB')
                 n2 = r.find(b'\0\0\xCE\xCF')
@@ -133,9 +133,9 @@ class DL24M:
         if n1:
             LOG.info(f'extra bytes: {r[:n1].hex(" ", 4)}')
         v = r[n1+2:n2]
-        assert v[0] == que
+        assert v[0] == que.value
         LOG.debug(f'got: {r.hex(" ", 4)}')
-        LOG.debug(f'got val {que:02x}: {v[1:].hex(" ", 4)}')
+        LOG.debug(f'got val {que} ({que.value:02x}): {v[1:].hex(" ", 4)}')
         return v[1:]
 
     def get_state(self):
@@ -241,9 +241,9 @@ class DL24M:
 
     def set_cmd(self, cmd, *val, **kv):
         with self.l:
-            q = self.query(cmd, *val, **kv)
+            q = self.query(cmd.value, *val, **kv)
             n = self.io.write(q)
-        assert n == 9
+        assert n == 9, n
         self.io.flush()
         LOG.info(f'write: {q.hex(" ",3)}')
 
@@ -256,7 +256,7 @@ class DL24M:
     def set_mode(self, mode):
         self.set_cmd(DL24M.Command.MODE, 0, 0, mode)
         time.sleep(1)
-        self.flush()
+        self.io.flush()
         m = self.get_mode()
         assert m == mode, (m, mode)
 
@@ -264,7 +264,7 @@ class DL24M:
         v = round(lim * 1000.).to_bytes(3)
         LOG.info(v.hex())
         self.set_cmd(DL24M.Command.SET_LIMIT_VAL, v[0], v[1], v[2])
-        self.flush()
+        self.io.flush()
         time.sleep(0.2)
         lv = self.get_limit_value() / 1000.
         LOG.info(f'set: {lim!r} check: {lv!r}')
@@ -274,7 +274,7 @@ class DL24M:
         v = round(lim * 10.).to_bytes(3)
         LOG.info(v.hex())
         self.set_cmd(DL24M.Command.SET_LIMIT_VOLTS, v[0], v[1], v[2])
-        self.flush()
+        self.io.flush()
         time.sleep(0.2)
         lv = self.get_min_voltage()
         LOG.info(f'set: {lim!r} check: {lv!r}')
@@ -284,7 +284,7 @@ class DL24M:
         v = round(dur.total_seconds()).to_bytes(3)
         LOG.info(v.hex())
         self.set_cmd(DL24M.Command.SET_LIMIT_TIME, v[0], v[1], v[2])
-        self.flush()
+        self.io.flush()
         time.sleep(0.5)
         tv = self.get_max_time()
         LOG.info(f'set: {dur!r} check: {tv!r}')
@@ -292,7 +292,7 @@ class DL24M:
 
     def reset_counters(self):
         self.set_cmd(DL24M.Command.RESET)
-        self.flush()
+        self.io.flush()
         time.sleep(0.2)
         mah = self.get_milliamphours()
         assert mah == 0

@@ -121,7 +121,7 @@ def poll_loop():
 
       if dl_dev:
         try:
-            dl_dev.flush()
+            dl_dev.io.flush()
             metrics = dl_dev.get_all()
             ds = json.dumps(metrics, indent=2)
             log.info(f'metrics {count}:\n{ds}')
@@ -160,7 +160,7 @@ def main():
     global dl_dev
     dl_dev = None
     ser = serial.Serial(args.dl24m, timeout=2.)
-    dl_dev = dl24.DL24M(ser)
+    dl_dev = dl24.DL24M(dl24.DL24M_Serial(ser))
     dl_dev.get_state()
 
 
