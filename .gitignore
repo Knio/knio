@@ -8,6 +8,9 @@
 !home/
 !home/**
 
+!bin/
+!bin/**
+
 
 # python
 *.egg

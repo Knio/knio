@@ -82,5 +82,10 @@
     "cmake.configureOnOpen": false,
     "git.openRepositoryInParentFolders": "never",
     "window.zoomLevel": 1,
-    "explorer.confirmDragAndDrop": false
+    "explorer.confirmDragAndDrop": false,
+    "gitlens.fileAnnotations.command": "blame",
+    "gitlens.plusFeatures.enabled": true,
+    "gitlens.advanced.repositorySearchDepth": 8,
+    "gitlens.blame.ignoreWhitespace": true,
+    "gitlens.telemetry.enabled": false
 }
