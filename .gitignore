@@ -11,6 +11,9 @@
 !bin/
 !bin/**
 
+!config/
+!config/**
+
 
 # python
 *.egg
