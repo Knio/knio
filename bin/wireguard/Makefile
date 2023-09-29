@@ -12,7 +12,7 @@ server_interface:
 
 server_config: server_interface phone_client
 	sudo wg set wg0 listen-port 123
-	sudo wg set wg0 private-key /path/to/private-key
+	sudo wg set wg0 private-key ~.config/wireguard/privatekey
 
 
 phone_client:

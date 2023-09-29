@@ -2,11 +2,6 @@
 *
 
 # add projects
-!misc/
-!misc/**
-
-!home/
-!home/**
 
 !bin/
 !bin/**
@@ -14,6 +9,8 @@
 !config/
 !config/**
 
+!home/
+!home/**
 
 # python
 *.egg
