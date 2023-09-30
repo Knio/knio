@@ -19,7 +19,7 @@ phone_client:
 	sudo wg set wg0 \
 		peer 'LZTCbUadB0/sPnw0UBY3SiNbmjwsnDD491pPTGzZ2Vk=' \
 		allowed-ips 192.168.2.2/32 \
-		persistent-keepalive 1
+		persistent-keepalive 5
 
 
 make_keys:
