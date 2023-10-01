@@ -7,13 +7,19 @@ See: https://www.wireguardconfig.com
 
 '''
 
+DNS = '1.1.1.1, 4.2.2.1, 8.8.8.8, 9.9.9.9'
+MASK = '24'
+SUBPRE = '10.99.0.'
+SUBNET = f'{SUBPRE}0'
+
+
 SERVER = dict(
   PublicKey = '5r/W9FmLHrJ/HXooBn1/x8yvrqBJaltG2vcYuEWy1T8=',
   Endpoint = 'zkpq.ca:123',
 )
 
 SERVER_ONLY = dict(
-  Address = '10.10.0.1',
+  Address = '1',
   ListenPort = '123',
   PostUp = 'iptables -A POSTROUTING -o ens5 -j MASQUERADE -t nat',
   PostDown = 'iptables -D POSTROUTING -o ens5 -j MASQUERADE -t nat',
@@ -23,30 +29,26 @@ CLIENTS = dict(
 
   desktop = dict(
     PublicKey = 'LejwoIzf8L0/kEkI9/KS8zCdhh4kw7+OtI7srd8YDjo=',
-    Address = '10.10.0.2',
+    Address = '10',
   ),
 
   laptop = dict(
     PublicKey = 'YwQ1qRu9tWBmz4d+oYL7u9PlZqEt11u6j+Drrjt2yWY=',
-    Address = '10.10.0.3',
+    Address = '12',
   ),
 
   phone = dict(
     PublicKey = 'LZTCbUadB0/sPnw0UBY3SiNbmjwsnDD491pPTGzZ2Vk=',
-    Address = '10.10.0.4',
+    Address = '15',
   ),
 
   rpizw = dict(
     PublicKey = 'ERYHFwoPJkWRm3PSZMDxaZUJCsxuh5z/M4kL8njyyQc=',
-    Address = '10.10.0.17',
+    Address = '17',
   ),
 
 
 )
-
-DNS = '1.1.1.1, 4.2.2.1, 8.8.8.8, 9.9.9.9'
-MASK = '24'
-SUBNET = f'10.10.0.0'
 
 
 def get_config_for_host(host):
@@ -71,7 +73,7 @@ def get_config_for_host(host):
       section['#Host'] = name
       section |= client
       addr = section.pop('Address')
-      section['AllowedIPs'] = f'{addr}/32'
+      section['AllowedIPs'] = f'{SUBPRE}{addr}/32'
       section['PersistentKeepalive'] = '5'
       conf.append(('Peer', section))
     return conf
@@ -81,7 +83,8 @@ def get_config_for_host(host):
   section['DNS'] = DNS
   section |= CLIENTS[host]
   section.pop('PublicKey')
-  section['Address'] += f'/{MASK}'
+  addr = section['Address']
+  section['Address'] = f'{SUBPRE}{addr}/{MASK}'
   conf.append(('Interface', section))
 
   # server
