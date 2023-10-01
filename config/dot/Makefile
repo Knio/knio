@@ -1,27 +1,6 @@
 
-mount.media:
-	mkdir -p media
-	sudo mount.cifs \\\\127.0.0.1\\MEDIA media -o "username=Tom,uid=tom,gid=0,file_mode=0755,dir_mode=0755,port=9001,soft"
-
-mount.desktop:
-	mkdir -p desktop
-	sudo mount.cifs \\\\127.0.0.1\\\DOCS desktop -o "username=Tom,uid=tom,gid=0,file_mode=0750,dir_mode=0750,port=9001,soft"
-
-mount.zenbook:
-	mkdir -p zenbook
-	sudo mount.cifs "\\\\127.0.0.1\\DOCS" zenbook -o "username=Tom Flanagan,uid=tom,gid=tom,file_mode=0750,dir_mode=0750,port=9002,soft"
-
 mount.docs:
 	sudo veracrypt --mount /dev/nvme1n1 Docs --protect-hidden=no
 
 unmount.docs:
 	sudo veracrypt --dismount Docs
-
-rpizw.mount:
-	mkdir -p k
-	mkdir -p f
-	sudo mount.cifs '\\10.0.0.10\docs' k -o "username=Tom,uid=tom,gid=0,file_mode=0755,dir_mode=0755,soft"
-	sudo mount.cifs '\\10.0.0.10\media' f -o "username=Tom,uid=tom,gid=0,file_mode=0755,dir_mode=0755,soft"
-
-
-
