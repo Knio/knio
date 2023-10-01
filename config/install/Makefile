@@ -2,11 +2,13 @@ REL = $(shell realpath --relative-to ~ ${PWD}/..)
 HOME = $(shell echo ~)
 
 link:
-	@for i in `find ~/$(REL)/dot -maxdepth 1 -type f,d -printf '%P\n'`; do \
-		ln -s "$(REL)/dot/$$i" "$(HOME)/$$i"; \
+	-@for i in `find ~/$(REL)/dot -maxdepth 1 -type f,d -printf '%P\n'`; do \
+		F="$(HOME)/$$i"; \
+		ln -s "$(REL)/dot/$$i" "$$F"; \
 	done
-	@for i in `find ~/$(REL)/dotconfig -maxdepth 1 -type f,d -printf '%P\n'`; do \
-		ln -s "$(REL)/dotconfig/$$i" "$(HOME)/.config/$$i"; \
+	-@for i in `find ~/$(REL)/dotconfig -maxdepth 1 -type f,d -printf '%P\n'`; do \
+		F="$(HOME)/.config/$$i"; \
+		ln -s "$(REL)/dotconfig/$$i" "$$F"; \
 	done
 
 

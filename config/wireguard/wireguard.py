@@ -27,7 +27,7 @@ CLIENTS = dict(
   ),
 
   laptop = dict(
-    PublicKey = 'SlDjBmYqSq8hg9st6HkWOzAVVvu//2XLdNjrpu7HHUI=',
+    PublicKey = 'YwQ1qRu9tWBmz4d+oYL7u9PlZqEt11u6j+Drrjt2yWY=',
     Address = '10.10.0.3',
   ),
 
@@ -52,6 +52,12 @@ def get_config_for_host(host):
     section.pop('Endpoint')
     section.pop('PublicKey')
     section['Address'] += f'/{MASK}'
+
+    # TODO not supported on old wg?
+    section.pop('Address')
+    section.pop('PostUp')
+    section.pop('PostDown')
+
     conf.append(('Interface', section))
 
     for name, client in CLIENTS.items():

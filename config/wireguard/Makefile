@@ -11,7 +11,7 @@ server_interface:
 	sudo ip address add dev wg0 10.10.0.1/24
 
 
-server_config: server_interface
+server_config:
 	python3 wireguard.py server > wg.conf
 	sudo wg setconf wg0 wg.conf
 	sudo wg set wg0 private-key privatekey
