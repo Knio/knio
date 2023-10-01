@@ -1,5 +1,9 @@
 
-server_start: server_config
+server_start: wg.conf
+	sudo ip link add dev wg0 type wireguard
+	sudo wg setconf wg0 wg.conf
+	sudo wg set wg0 private-key private.key
+	sudo ip address add dev wg0 10.99.0.1/24
 	sudo sysctl -w net.ipv4.ip_forward=1
 	sudo iptables -A FORWARD -i wg0 -j ACCEPT
 	sudo iptables -A POSTROUTING -o ens5 -j MASQUERADE -t nat
@@ -9,14 +13,7 @@ server_stop:
 	sudo iptables -D FORWARD -i wg0 -j ACCEPT
 	sudo iptables -D POSTROUTING -o ens5 -j MASQUERADE -t nat
 	sudo ip link set down dev wg0
-
-server_interface:
-	sudo ip link add dev wg0 type wireguard
-	sudo ip address add dev wg0 10.99.0.1/24
-
-server_config: wg.conf
-	sudo wg setconf wg0 wg.conf
-	sudo wg set wg0 private-key private.key
+	sudo ip link del dev wg0
 
 wg.conf: wireguard.py
 	python3 wireguard.py server > $@
@@ -30,7 +27,6 @@ public.key: private.key
 
 listen_inner:
 	sudo tcpdump -i wg0
-
 
 listen_outer:
 	sudo tcpdump -i ens5 'port 123'
