@@ -116,12 +116,13 @@ def light(url, handler, match):
 def foobar(url, handler, match):
   LOG.info(url)
   cmd = match.group(1)
+  # TODO: move this to devices.foobar
   if cmd == 'play':
-    r = requests.post('http://10.0.0.10:8880/api/player/play')
+    r = requests.post('http://10.87.0.10:8880/api/player/play')
   elif cmd == 'pause':
-    r = requests.post('http://10.0.0.10:8880/api/player/pause/toggle')
+    r = requests.post('http://10.87.0.10:8880/api/player/pause/toggle')
   elif cmd == 'random':
-    r = requests.post('http://10.0.0.10:8880/api/player/play/random')
+    r = requests.post('http://10.87.0.10:8880/api/player/play/random')
   else:
     tags.p(f'bad command: {cmd!r}')
     return
@@ -140,10 +141,10 @@ def scene(url, handler, match):
 
 class Home:
   def __init__(self):
-    self.amp = denon_avr.DenonAVR('10.0.0.22')
+    self.amp = denon_avr.DenonAVR('10.87.0.22')
     self.lights = [
-      kasa_light.Light('10.0.0.202'),
-      kasa_light.Light('10.0.0.201'),
+      kasa_light.Light('10.87.0.25'),
+      kasa_light.Light('10.87.0.26'),
     ]
     self.radar = None
 
@@ -166,7 +167,8 @@ class Home:
   def scene_lounge(self):
     self.amp.set_power(self.amp.PowerState.ON)
     self.amp.set_source('TV')
-    requests.post('http://10.0.0.10:8880/api/player/play').status_code
+    # TODO: move this to devices.foobar
+    requests.post('http://10.87.0.10:8880/api/player/play').status_code
     self.amp.set_vol(-55)
     self.lights[0].turn_on()
     self.lights[1].turn_off()
@@ -184,7 +186,8 @@ class Home:
     return True
 
   def scene_gone(self):
-    requests.post('http://10.0.0.10:8880/api/player/pause/toggle')
+    # TODO: move this to devices.foobar
+    requests.post('http://10.87.0.10:8880/api/player/pause/toggle')
     return True
 
 

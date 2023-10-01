@@ -9,7 +9,7 @@ See: https://www.wireguardconfig.com
 
 DNS = '1.1.1.1, 4.2.2.1, 8.8.8.8, 9.9.9.9'
 MASK = '24'
-SUBPRE = '10.99.0.'
+SUBPRE = '10.87.0.'
 SUBNET = f'{SUBPRE}0'
 
 

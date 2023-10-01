@@ -1,9 +1,10 @@
+SUBNET = "10.87.0.1/16"
 
 server_start: wg.conf
 	sudo ip link add dev wg0 type wireguard
 	sudo wg setconf wg0 wg.conf
 	sudo wg set wg0 private-key private.key
-	sudo ip address add dev wg0 10.99.0.1/24
+	sudo ip address add dev wg0 $(SUBNET)
 	sudo sysctl -w net.ipv4.ip_forward=1
 	sudo iptables -A FORWARD -i wg0 -j ACCEPT
 	sudo iptables -A POSTROUTING -o ens5 -j MASQUERADE -t nat
