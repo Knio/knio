@@ -4,11 +4,17 @@ HOME = $(shell echo ~)
 link:
 	-@for i in `find ~/$(REL)/dot -maxdepth 1 -type f,d -printf '%P\n'`; do \
 		F="$(HOME)/$$i"; \
-		ln -s "$(REL)/dot/$$i" "$$F"; \
+		T="$(REL)/dot/$$i"; \
+		echo "$$F -> $$T"; \
+		if test -e "$$F"; then echo "    exists, skipping"; continue; fi; \
+		ln --backup=t --suffix bak -s "$$T" "$$F"; \
 	done
 	-@for i in `find ~/$(REL)/dotconfig -maxdepth 1 -type f,d -printf '%P\n'`; do \
 		F="$(HOME)/.config/$$i"; \
-		ln -s "$(REL)/dotconfig/$$i" "$$F"; \
+		T="../$(REL)/dotconfig/$$i/"; \
+		echo "$$F -> $$T"; \
+		if test -e "$$F"; then echo "    exists, skipping"; continue; fi; \
+		ln --backup=t --suffix bak -s "$$T" "$$F"; \
 	done
 
 
