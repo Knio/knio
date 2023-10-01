@@ -14,7 +14,7 @@ server_interface:
 server_config:
 	python3 wireguard.py server > wg.conf
 	sudo wg setconf wg0 wg.conf
-	sudo wg set wg0 private-key privatekey
+	sudo wg set wg0 private-key private.key
 
 
 make_keys:

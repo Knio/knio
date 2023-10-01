@@ -36,6 +36,12 @@ CLIENTS = dict(
     Address = '10.10.0.4',
   ),
 
+  rpizw = dict(
+    PublicKey = 'ERYHFwoPJkWRm3PSZMDxaZUJCsxuh5z/M4kL8njyyQc=',
+    Address = '10.10.0.17',
+  ),
+
+
 )
 
 DNS = '1.1.1.1, 4.2.2.1, 8.8.8.8, 9.9.9.9'
