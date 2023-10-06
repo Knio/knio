@@ -46,6 +46,11 @@ CLIENTS = dict(
     PublicKey = 'ERYHFwoPJkWRm3PSZMDxaZUJCsxuh5z/M4kL8njyyQc=',
     Address = '17',
   ),
+  lab_sp6 = dict(
+    PublicKey = 'XMG1tDSl63J69uW1/I/UPXlxJt/tJuptPDHFFBtzojE=',
+    Address = '18',
+  ),
+
 
 
 )
