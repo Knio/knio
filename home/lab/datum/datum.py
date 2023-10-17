@@ -21,7 +21,6 @@ class DatumBase(type):
     def to_bytes(self):
       pass
 
-
     x = super().__new__(cls, name, bases, dct)
     T = x
     A = T.__annotations__

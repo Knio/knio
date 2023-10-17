@@ -1,3 +1,42 @@
+'''
+This code provides an implementation of a Serial class for reading and writing data from a serial port or socket. It includes subclasses SocketSerial and PySerial that provide specific implementations for reading and writing from a socket and a serial port respectively.
+
+The Serial class has the following public APIs:
+- __init__(self, timeout=2.0): Initializes the Serial object with an optional timeout value. Sets the timeout for all read operations.
+- read(self, timeout=None): Read the next available bytes. Takes an optional timeout value specific to this read operation. If no bytes are available and no timeout is provided, it uses the default timeout value set in the constructor.
+- write(self, data): Write data to the serial port or socket.
+- read_until(self, footer, timeout=None): Read data until the specified footer is found. Takes an optional timeout value specific to this read operation. If the footer is not found and no timeout is provided, it uses the default timeout value set in the constructor.
+- read_all(self, timeout=None): Read all available bytes until the read times out. Takes an optional timeout value specific to this read operation. If no timeout is provided, it uses the default timeout value set in the constructor.
+
+The Serial class also has internal methods:
+- set_timeout(self, t): Sets the timeout value for the serial port or socket.
+- read_raw(self, n): Implementation of reading raw bytes from the serial port or socket. Subclasses should override this method.
+- write_raw(self, data): Implementation of writing raw bytes to the serial port or socket. Subclasses should override this method.
+
+The Serial class has an internal variable:
+- rq: A list to store any leftover data from incomplete read operations.
+- timeout: The timeout value for all read operations.
+
+The SocketSerial class is a subclass of Serial and provides an implementation for reading and writing from a socket. It has an additional public API:
+- __init__(self, sock, *args, **kwargs): Initializes the SocketSerial object and takes a socket object as a required argument. Any additional arguments and keyword arguments are passed to the parent class constructor.
+
+The SocketSerial class overrides the following internal methods from the Serial class:
+- set_timeout(self, t): Sets the timeout value for the socket.
+- read_raw(self, n): Implementation of reading raw bytes from the socket.
+- write_raw(self, data): Implementation of writing raw bytes to the socket.
+
+The PySerial class is a subclass of Serial and provides an implementation for reading and writing from a serial port using the PySerial library. It has an additional public API:
+- __init__(self, ser, *args, **kwargs): Initializes the PySerial object and takes a PySerial serial port object as a required argument. Any additional arguments and keyword arguments are passed to the parent class constructor.
+
+The PySerial class overrides the following internal methods from the Serial class:
+- set_timeout(self, t): Sets the timeout value for the serial port.
+- read_raw(self, n): Implementation of reading raw bytes from the serial port.
+- write_raw(self, data): Implementation of writing raw bytes to the serial port.
+- read_until(self, footer, timeout=None): Implementation of reading until the specified footer is found from the serial port.
+
+The PySerial class also has an internal variable:
+- ser: The PySerial serial port object.
+'''
 
 import logging
 import time

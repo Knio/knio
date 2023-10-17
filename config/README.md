@@ -17,6 +17,7 @@ Login as you:
 ### Edit ssh config:
 
 `nano /etc/ssh/sshd_config`
+
 ```
 HostKey /etc/ssh/ssh_host_rsa_key
 #HostKey /etc/ssh/ssh_host_ecdsa_key
@@ -40,6 +41,7 @@ PasswordAuthentication yes
 ```
 
 Regenerate host keys
+
 ```
 cd /etc/ssh
 sudo rm ssh_host_*key*
@@ -53,6 +55,7 @@ Restart sshd
 Check with SSHSec: https://sshsec.zkpq.ca/<IP>
 
 Can now login from other shell.
+
 ```
 ssh-copy-id <IP>
 ssh <IP>
@@ -85,3 +88,10 @@ logout
 apt install weechat --no-install-recommends
 ```
 
+
+`visudo`
+Add:
+
+```
+Defaults        timestamp_timeout=1380
+```
