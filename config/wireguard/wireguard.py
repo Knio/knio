@@ -33,7 +33,7 @@ CLIENTS = dict(
   ),
 
   laptop = dict(
-    PublicKey = 'YwQ1qRu9tWBmz4d+oYL7u9PlZqEt11u6j+Drrjt2yWY=',
+    PublicKey = 'sx2iFuWLloIIQpOzfTYd8VYw5OWnjFzGnQB0nwPhsno=',
     Address = '12',
   ),
 
@@ -51,7 +51,10 @@ CLIENTS = dict(
     Address = '18',
   ),
 
-
+  prius  = dict(
+PublicKey="cqo0eput0oaV6yyyH+E9jiCukZVzlUe/rUZMJWxFMFI=",
+Address = "19",
+),
 
 )
 
