@@ -46,14 +46,15 @@ CLIENTS = dict(
     PublicKey = 'ERYHFwoPJkWRm3PSZMDxaZUJCsxuh5z/M4kL8njyyQc=',
     Address = '17',
   ),
+
   lab_sp6 = dict(
     PublicKey = 'XMG1tDSl63J69uW1/I/UPXlxJt/tJuptPDHFFBtzojE=',
     Address = '18',
   ),
 
   prius  = dict(
-PublicKey="cqo0eput0oaV6yyyH+E9jiCukZVzlUe/rUZMJWxFMFI=",
-Address = "19",
+    PublicKey="cqo0eput0oaV6yyyH+E9jiCukZVzlUe/rUZMJWxFMFI=",
+    Address = "19",
 ),
 
 )

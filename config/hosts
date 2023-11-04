@@ -1,17 +1,18 @@
 
 
 
-desktop.zkpq.ca.	300	IN	A	10.87.0.10
-laptop.zkpq.ca.		300	IN	A	10.87.0.12
-phone.zkpq.ca.		300	IN	A	10.87.0.15
-rpizw.zkpq.ca.		300	IN	A	10.87.0.17
-lab.zkpq.ca.		300	IN	A	10.87.0.18
+desktop.zkpq.ca.		300	IN	A	10.87.0.10
+laptop.zkpq.ca.			300	IN	A	10.87.0.12
+phone.zkpq.ca.			300	IN	A	10.87.0.15
+lab-rpizw.zkpq.ca.	300	IN	A	10.87.0.17
+lab-sp6.zkpq.ca.		300	IN	A	10.87.0.18
+prius.zkpq.ca.			300	IN	A	10.87.0.19
 
 
 
 ;	# LAN static map
 ;
-;	2c:f0:5d:7c:9d:c0		tom						.10		tom desktop
+;	2c:f0:5d:7c:9d:c0		tom								.10		tom desktop
 ;	7c:5c:f8:5c:2a:65		118-laptop				.11		tom laptop zoox
 ;	78:2b:46:37:46:4b		tom-laptop				.12		tom sp7
 ;	ca:6c:dc:9f:85:33		tom-iphone				.15		tom iphone se2
@@ -20,6 +21,6 @@ lab.zkpq.ca.		300	IN	A	10.87.0.18
 ;	b8:31:b5:91:06:b9		lab-sp6					.18
 
 ;	00:05:cd:ae:3d:aa		denon-AVR-X2400H		.22
-;	48:22:54:43:ed:2e		light1-hs210			.25
-;	48:22:54:43:ed:3f		light2-hs210 			.26
+;	48:22:54:43:ed:2e		light1-hs210				.25
+;	48:22:54:43:ed:3f		light2-hs210 				.26
 ;

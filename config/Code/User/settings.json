@@ -87,5 +87,8 @@
     "gitlens.plusFeatures.enabled": true,
     "gitlens.advanced.repositorySearchDepth": 8,
     "gitlens.blame.ignoreWhitespace": true,
-    "gitlens.telemetry.enabled": false
+    "gitlens.telemetry.enabled": false,
+    "workbench.activityBar.location": "top",
+    "workbench.editor.doubleClickTabToToggleEditorGroupSizes": "maximize",
+    "editor.multiDocumentOccurrencesHighlight": true
 }
