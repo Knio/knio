@@ -72,7 +72,13 @@ Can now test login from other shell.
 
 ## Update OS software
 
-```sh
+Generate ssh id:
+`ssh-keygen -t ed25519`
+`cat ~/.ssh/id_rsa.pub`
+Copy to GitHub settings
+
+
+```
 sudo apt update
 sudo apt upgrade
 sudo apt dist-upgrade
