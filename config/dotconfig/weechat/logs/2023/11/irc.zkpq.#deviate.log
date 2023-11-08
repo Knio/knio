@@ -1,0 +1,843 @@
+2023-11-05 22:23:12	-->	Knio1 (tom@ec2-35-93-43-112.us-west-2.compute.amazonaws.com) has joined #deviate
+2023-11-05 22:23:12	--	Topic for #deviate is "never fuck up, never surrender! | zero nines, one 100 | this is a safe space for colossal cocks | merry xmas card photo team-deviate https://i.imgur.com/JqTErcf.jpg"
+2023-11-05 22:23:12	--	Topic set by Knio on Mon, 30 Oct 2023 20:01:48
+2023-11-05 22:23:12	--	Channel #deviate: 20 nicks (9 ops, 1 halfop, 0 voices, 10 normals)
+2023-11-05 22:23:14	--	Channel created on Sun, 26 Dec 2021 22:34:27
+2023-11-05 22:24:02	--	#deviate: You're not channel operator
+2023-11-05 22:24:50	--	Knio has changed topic for #deviate from "never fuck up, never surrender! | zero nines, one 100 | this is a safe space for colossal cocks | merry xmas card photo team-deviate https://i.imgur.com/JqTErcf.jpg" to "never fuck up, never surrender! | zero nines, one 100 | 5 seconds of scheduled downtime upcoming whenever I feel like it | this is a safe space for colossal cocks | merry xmas card photo team-deviate https://i.imgur.com/JqTErcf.jpg"
+2023-11-05 23:26:15	<--	Riffz9000 (Riffz@s0106d021f96c3aef.cg.shawcable.net) has quit (Ping timeout: 180 seconds)
+2023-11-05 23:26:56	&sylar	l0l
+2023-11-05 23:27:00	&sylar	are you fixing your routing
+2023-11-05 23:29:55	-->	Riffz9000 (Riffz@s0106d021f96c3aef.cg.shawcable.net) has joined #deviate
+2023-11-05 23:40:50	Knio1	new aws machine
+2023-11-05 23:41:23	Knio1	t4 insteat of t3 and new debian
+2023-11-05 23:41:36	Knio1	maybe it will even have ipv6
+2023-11-05 23:46:38	Knio1	new version of ircd
+2023-11-05 23:49:16	Maestro	plebian
+2023-11-06 00:11:20	@knivey	lol
+2023-11-06 00:11:50	@knivey	the server we have is fine Knio1
+2023-11-06 00:11:54	@knivey	send the new one back
+2023-11-06 00:22:40	&sylar	the server we have SUCKS
+2023-11-06 00:25:10	@knivey	based on what
+2023-11-06 00:25:37	Maestro	dw, server doubles as a vacuum cleaner
+2023-11-06 00:27:24	--	Mode #deviate [+o Maestro] by knivey
+2023-11-06 00:27:40	@knivey	oh god
+2023-11-06 00:27:44	@knivey	that pepper was hot
+2023-11-06 00:27:52	 *	knivey dies
+2023-11-06 00:28:20	@knivey	at least my throat is too stuffed up with cold mucus to feel it :D
+2023-11-06 01:44:58	Knio1	what does maestro run
+2023-11-06 01:45:01	Knio1	arch?
+2023-11-06 01:55:51	Knio1	-dave why do rich people want their cars to look like theyre made of wood?
+2023-11-06 01:55:51	@dave	Processing: why do rich people want their cars to look like theyre made of wood?
+2023-11-06 01:55:52	@dave	Rich people want their cars to look as luxurious as possible. Wood is a classic luxury material, and many wealthy individuals opt to have their cars fitted with wood veneer trim, which gives the car an elegant, timeless look. 
+2023-11-06 02:47:09	&sylar	-dave why aren't formula 1 wheels made out of uranium
+2023-11-06 02:47:09	@dave	Processing: why aren't formula 1 wheels made out of uranium
+2023-11-06 02:47:11	@dave	Formula 1 wheels are not made out of uranium because of the extreme cost associated with the use of this material and its instability. While some Formula 1 cars do use titanium wheels, they are far from commonplace. Additionally, the regulations governing Formula 1 racing discourage the use of uranium 
+2023-11-06 02:47:11	@dave	due to its potential for nuclear proliferation. 
+2023-11-06 03:45:38	@knivey	formula wreck = nuclear explosion
+2023-11-06 07:15:53	Knio1	this neat https://youtu.be/yvgNqIuz2GM
+2023-11-06 07:15:54	@grime	  YouTube Ragged Chute Air Plant: Now You're Digging With Gas! | Our Own Devices | 2yrs ago | 8m 36s 
+2023-11-06 07:26:41	@knivey	mmm
+2023-11-06 07:26:45	@knivey	delicious colbalt
+2023-11-06 07:31:01	@knivey	nice
+2023-11-06 07:31:08	@knivey	crackpot's air supply
+2023-11-06 12:03:04	@para	.poop
+2023-11-06 12:03:04	 *	grime makes para a nice cup of chicken tea
+2023-11-06 13:42:37	<--	Maestro (oystedal@nidur.ifi.uio.no) has quit (Ping timeout: 180 seconds)
+2023-11-06 13:43:27	-->	Maestro (oystedal@nidur.ifi.uio.no) has joined #deviate
+2023-11-06 15:32:13	Knio1	.moo
+2023-11-06 15:32:13	 *	grime cow
+2023-11-06 16:12:11	@zamn	TOP ER DA MERNIN BOIS
+2023-11-06 16:13:41	fish	what do you guys use at work for your scm?
+2023-11-06 16:17:45	Knio1	.tell knivey thanks obama https://youtu.be/Fh4H9qZ-_6Y
+2023-11-06 16:17:45	@grime	Ok, I'll tell knivey that next time I see them.
+2023-11-06 16:17:45	@grime	  YouTube Why Pedestrians Never Die In This New Jersey City | Thomas Y | 4w ago | 9m 14s 
+2023-11-06 16:17:51	Knio1	fish: github
+2023-11-06 16:17:58	@zamn	Knio1: every time i use getattr() or setattr() i think of u <3
+2023-11-06 16:18:17	@zamn	^ GH
+2023-11-06 16:18:24	Knio1	o
+2023-11-06 16:27:45	fish	Knio1: gh enterprise i guess?
+2023-11-06 16:32:47	@zamn	i think i like gitlab a lot more than github
+2023-11-06 16:33:03	@zamn	but we used gitlab enterprise shit vs current company github is lowest tier account
+2023-11-06 16:50:37	fish	yeah i remember 8 years ago gitlab had groups for projects
+2023-11-06 16:50:45	fish	still no way to group my companies 300 repos
+2023-11-06 16:50:51	fish	company's
+2023-11-06 16:51:01	fish	companys'
+2023-11-06 16:51:39	~Knio	yeah enterprise. self-hosted
+2023-11-06 16:51:57	fish	wanna send me those binaries bro
+2023-11-06 16:52:02	fish	warez times
+2023-11-06 16:52:03	~Knio	lol
+2023-11-06 16:52:09	~Knio	well i guess i mean in out datacenter
+2023-11-06 16:52:16	~Knio	github still manages it
+2023-11-06 16:52:30	fish	i remember many years ago their code was leake
+2023-11-06 16:52:55	fish	they distributed encrypted ruby code
+2023-11-06 16:53:01	fish	was pretty neat
+2023-11-06 16:53:05	~Knio	heh
+2023-11-06 16:54:12	fish	https://gist.github.com/iscgar/e8ea7560c9582e4615fcc439177e22b7
+2023-11-06 16:54:12	@grime	  [ ghe-revealer.rb · GitHub ]
+2023-11-06 17:02:03	~Knio	whats the point of that if they give you the .so also lol
+2023-11-06 17:34:49	@knivey	gm chat fals
+2023-11-06 17:34:50	@grime	1h 17m 4s ago  <Knio1> .tell knivey thanks obama https://youtu.be/Fh4H9qZ-_6Y
+2023-11-06 17:34:55	@knivey	pals*
+2023-11-06 17:35:04	@knivey	sry my first time on a keyboard
+2023-11-06 17:35:19	~Knio	pals is a good word
+2023-11-06 17:35:26	~Knio	better than folks or ya'll 
+2023-11-06 17:35:39	@knivey	lol
+2023-11-06 17:35:50	@knivey	yuck
+2023-11-06 17:35:52	@knivey	new jersey
+2023-11-06 17:36:28	@knivey	there should b zero pedestrian deaths everywhere
+2023-11-06 17:36:41	@knivey	the public roadways belonged to pedestrians first
+2023-11-06 17:37:19	~Knio	obama killed more pedestrians than a dozen 9/11s
+2023-11-06 17:37:42	@knivey	yeah but
+2023-11-06 17:37:50	@knivey	the property damage on 9/11 was yuge
+2023-11-06 17:38:05	~Knio	-dave ELI5 the obama drone strike controversy
+2023-11-06 17:38:05	@dave	Processing: ELI5 the obama drone strike controversy
+2023-11-06 17:38:07	@dave	The Obama drone strike controversy refers to the debate surrounding the use of unmanned aerial vehicles (drones) for carrying out targeted strikes against suspected terrorists by the US government under the Obama administration. Critics of the program argued that drone strikes violate international law, 
+2023-11-06 17:38:08	@dave	while proponents argued that drone strikes are an effective way to target terrorists. The controversy has largely centered around the US government’s lack of transparency in the program and the civilian casualties that resulted from the strikes. 
+2023-11-06 17:38:36	~Knio	lol 2012 such small problems
+2023-11-06 17:38:53	@knivey	lmao
+2023-11-06 17:38:56	@knivey	the loopholes
+2023-11-06 17:38:56	~Knio	"oh no a drone" - 2023 urkraine & isreal hmb
+2023-11-06 17:39:08	@knivey	for the efficiency standards
+2023-11-06 17:39:12	@knivey	good video
+2023-11-06 17:39:28	@knivey	lol
+2023-11-06 17:39:42	@knivey	obama kills 1000s of childrens with drones
+2023-11-06 17:39:45	@knivey	forgiven
+2023-11-06 17:39:51	@knivey	trump kills one terrorist
+2023-11-06 17:39:54	@knivey	end of the world
+2023-11-06 17:40:02	~Knio	who did trump manage ti kill
+2023-11-06 17:40:08	@knivey	idk that one guy
+2023-11-06 17:40:12	@knivey	it was all over the news
+2023-11-06 17:40:12	~Knio	lol
+2023-11-06 17:40:20	@knivey	.bing trump kills terrorist
+2023-11-06 17:40:22	~Knio	i thought he was just selling them real estrate
+2023-11-06 17:40:22	@grime	Bing (185,000 Results): https://en.wikipedia.org/wiki/Assassination_of_Qasem_Soleimani (Assassination of Qasem Soleimani - Wikipedia) -- Iran called the strike an act of "state terrorism". The Iraqi government said the attack undermined its national sovereignty and considered it a breach of its bilateral security agreements with the U.S. and an act of aggression against its officials.
+2023-11-06 17:40:26	@knivey	him
+2023-11-06 17:40:32	@knivey	lol
+2023-11-06 17:40:38	@knivey	i remember the articles
+2023-11-06 17:40:48	@knivey	talking about the guy with such reverence
+2023-11-06 17:41:04	~Knio	.yt trump loves the saudis and china and hamas
+2023-11-06 17:41:05	@grime	ytsearch: https://youtu.be/MdPUAg0m89I - Israel-Hamas war: Arab leaders ready for talks, Saudi foreign minister tells Sky News at UN meeting | Sky News | 39s
+2023-11-06 17:41:15	~Knio	.yt trump loves the saudis
+2023-11-06 17:41:16	@grime	ytsearch: https://youtu.be/vKL9Xqatf5c - Donald Trump says he loves Saudi Arabia at Aramco Team Series | Al Arabiya English | 32s
+2023-11-06 17:41:36	~Knio	.yt trump thinks hamas are smart
+2023-11-06 17:41:36	@grime	ytsearch: https://youtu.be/y1ZRsj3LOpU - Trump calls Hezbollah ‘smart’ for hitting Israel after Hamas attacks | MSNBC | 5m 51s
+2023-11-06 17:41:53	~Knio	.yt trump loves china
+2023-11-06 17:41:54	@grime	ytsearch: https://youtu.be/HL7o6np84pg - Donald Trump: ‘I Like China’ | Bloomberg Originals | 1m 34s
+2023-11-06 17:42:47	~Knio	.yt trump saying china
+2023-11-06 17:42:48	@grime	ytsearch: https://youtu.be/RDrfE9I8_hs - Donald Trump Says "China" | HuffPost Entertainment | 3m 1s
+2023-11-06 17:44:17	~Knio	sylar: trump says i should buy from china ^ 
+2023-11-06 17:46:15	@knivey	lol
+2023-11-06 17:46:58	@knivey	i thought it was drumpf
+2023-11-06 17:47:04	@knivey	r u sure ur the real knio1
+2023-11-06 17:47:11	~Knio	o
+2023-11-06 17:47:29	~Knio	ill need to install that in a irc badwords filter on the new ircx
+2023-11-06 17:47:37	@knivey	lol
+2023-11-06 17:47:57	@knivey	i need to consolidate and downsize some servers
+2023-11-06 17:48:03	@knivey	my free credits ran out
+2023-11-06 17:48:07	~Knio	lol
+2023-11-06 17:48:17	~Knio	i need a vpn endpoint that isn't amazon
+2023-11-06 17:48:22	@knivey	i got like $100 in credit for linking the companies two dashboards in my account
+2023-11-06 17:48:23	~Knio	cus everyone blocks amazon
+2023-11-06 17:48:34	@knivey	seemed weird but ill take it
+2023-11-06 17:48:36	@knivey	lol
+2023-11-06 17:48:49	@knivey	Knio: socks.cat
+2023-11-06 17:48:54	@knivey	i havent tried yet but
+2023-11-06 17:49:01	@knivey	supposedly residential proxies
+2023-11-06 17:49:10	@knivey	there are other services like that jewbird said he uses
+2023-11-06 17:49:31	 *	knivey fills second coffee of the day
+2023-11-06 17:50:10	~Knio	that website took 15s to load
+2023-11-06 17:50:16	~Knio	not sure about their "fast" word
+2023-11-06 17:50:53	~Knio	how do i iptables masquerade thru an https proxy?
+2023-11-06 17:51:32	~Knio	hey i can use my bitcoin lol
+2023-11-06 17:51:53	~Knio	if i buy sometghing in btc does that count as a sell event that i have to report cap gains on to the irs?
+2023-11-06 18:01:45	~Knio	-dave is socks5 encrypted?
+2023-11-06 18:01:45	@dave	Processing: is socks5 encrypted?
+2023-11-06 18:01:45	@dave	Socks5 is not encrypted by default, however it can be encrypted with extensions such as TLS or SSL. 
+2023-11-06 18:05:11	~Knio	-dave does socks5 handle udp?
+2023-11-06 18:05:12	@dave	Processing: does socks5 handle udp?
+2023-11-06 18:05:12	@dave	No, socks5 does not handle UDP. It is a protocol used for proxying TCP connections only. 
+2023-11-06 18:15:45	@knivey	mooo
+2023-11-06 18:15:59	@knivey	lol
+2023-11-06 18:20:28	~Knio	-dave how do you cut a line in vim?
+2023-11-06 18:20:28	@dave	Processing: how do you cut a line in vim?
+2023-11-06 18:20:29	@dave	In Vim, you can cut a line by typing the command "dd". 
+2023-11-06 18:22:03	@knivey	lol
+2023-11-06 18:22:11	~Knio	i thoughti t was yy
+2023-11-06 18:22:18	~Knio	been using nano for too long already
+2023-11-06 18:22:19	@knivey	thats yank
+2023-11-06 18:22:27	@knivey	d is delete
+2023-11-06 18:22:51	~Knio	which of those is cut
+2023-11-06 18:22:53	@knivey	-dave what does yy do in vim
+2023-11-06 18:22:53	@dave	Processing: what does yy do in vim
+2023-11-06 18:22:53	~Knio	lol
+2023-11-06 18:22:54	@dave	In Vim, the "yy" command stands for "yank," which is another way of saying "copy". It copies the line of text the cursor is currently on and stores it in a buffer so it can be pasted elsewhere. 
+2023-11-06 18:22:58	~Knio	o
+2023-11-06 18:23:08	@knivey	dd cut, yy copy
+2023-11-06 18:23:43	@knivey	say u wanna cut everything inside "" its di"
+2023-11-06 18:23:58	@knivey	isnt vim so intuitive
+2023-11-06 18:24:08	 *	knivey checks to make sure thats right
+2023-11-06 18:24:57	~Knio	i learned some magic fzf key a few weeks ago
+2023-11-06 18:25:00	~Knio	and then i forgot
+2023-11-06 18:25:06	~Knio	it was super useful tho lol
+2023-11-06 18:25:34	@knivey	lol
+2023-11-06 18:25:35	~Knio	ah
+2023-11-06 18:25:38	~Knio	wow ive been using fzf for years
+2023-11-06 18:25:40	~Knio	and i just learned about ^T
+2023-11-06 18:25:42	~Knio	and **tab
+2023-11-06 18:25:43	@knivey	.bing fzf
+2023-11-06 18:25:44	@grime	Bing (199,000 Results): https://github.com/junegunn/fzf (junegunn/fzf: :cherry_blossom: A command-line fuzzy finder - GitHub) -- As Vim plugin. If you use vim-plug, add this line to your Vim configuration file: Plug 'junegunn/fzf', { 'do': { - > fzf#install () } } fzf#install () makes sure that you have the latest binary, but it's optional, so you can omit it if you use a plugin manager that doesn't support hooks. For more installation options, see README-VIM
+2023-11-06 18:25:44	~Knio	theres so much in this readme that ive never read
+2023-11-06 18:25:48	@knivey	oh
+2023-11-06 18:25:53	@knivey	ive never needed it
+2023-11-06 18:26:04	@knivey	well
+2023-11-06 18:26:06	@knivey	no
+2023-11-06 18:26:08	@knivey	ive used it
+2023-11-06 18:26:10	@knivey	in vim
+2023-11-06 18:26:23	@knivey	i use one of those vim plugin sets pre made
+2023-11-06 18:26:36	@knivey	because i dont want to spend the time on setting shit like that up
+2023-11-06 18:26:40	~Knio	i did that once and my whole computer slowed down to 1% realtime
+2023-11-06 18:26:47	@knivey	lol
+2023-11-06 18:26:49	@knivey	yeah
+2023-11-06 18:26:57	@knivey	gotta get the right one i guess
+2023-11-06 18:27:28	@knivey	plus the initial run installs stuff and language servers
+2023-11-06 18:28:24	@knivey	these dog print paver molds are a lil smaller than i thought
+2023-11-06 18:28:40	~Knio	lol
+2023-11-06 18:28:45	@knivey	might try mixing some concrete in a bit to make some
+2023-11-06 18:28:51	@knivey	lol
+2023-11-06 18:28:57	@knivey	i got some cement dyes
+2023-11-06 18:29:07	@knivey	wanna make the pads black and the rest brown
+2023-11-06 18:29:29	@knivey	gonna be
+2023-11-06 18:29:32	@knivey	hard
+2023-11-06 18:29:37	@knivey	to make sure small amount
+2023-11-06 18:29:39	@knivey	i think
+2023-11-06 18:30:00	@knivey	https://www.ebay.com/itm/314846184111
+2023-11-06 18:30:02	@grime	  [ Dog paw print stepping stone mold 12"x12"x2"pro grip slightly textured surface  | eBay ]
+2023-11-06 18:30:27	@knivey	i got two of them so i can make them twice as fast
+2023-11-06 18:30:29	@knivey	lol
+2023-11-06 18:58:42	~Knio	i like all those utub videos about DIY concrete stuff, they're like look only $100! and then takes 3 people 3 full days of labour ro make them. lol
+2023-11-06 18:59:42	~Knio	watching them stuggle to shovel tons of cement mix around with the wrong tools and trying to lift 1000 lbs blocks 
+2023-11-06 19:04:20	~Knio	-dave mount but stop showing all the spam from docker, systemd, cgroups etc fake filesystems
+2023-11-06 19:04:20	@dave	Processing: mount but stop showing all the spam from docker, systemd, cgroups etc fake filesystems
+2023-11-06 19:04:22	@dave	By default, you can use the <code>-x</code> or <code>--exclude</code> flag to tell <code>df</code> to exclude certain filesystems from the output. For example, to exclude the cgroups filesystem, you could use the following command: 
+2023-11-06 19:04:22	@dave	``` 
+2023-11-06 19:04:23	@dave	df -x cgroup 
+2023-11-06 19:04:23	@dave	``` 
+2023-11-06 19:05:25	~Knio	-dave mount but only show real devices
+2023-11-06 19:05:25	@dave	Processing: mount but only show real devices
+2023-11-06 19:05:27	@dave	To list only the real devices, you can use the command <code>lsblk -d</code>. 
+2023-11-06 19:05:28	@dave	This command will list all block devices connected to the system, including hard drives, USB drives, and CD/DVD drives. It will not list virtual or network-mounted devices. 
+2023-11-06 19:07:33	~Knio	-dave lsblk but don't show loop devices
+2023-11-06 19:07:33	@dave	Processing: lsblk but don't show loop devices
+2023-11-06 19:07:34	@dave	lsblk --no-loop 
+2023-11-06 19:07:48	~Knio	lol made up param
+2023-11-06 19:27:35	~Knio	i need more coffeew
+2023-11-06 19:32:25	@knivey	Knio: lol yeah
+2023-11-06 19:32:29	@knivey	the yt concrete scene
+2023-11-06 19:32:34	@knivey	is really lacking too
+2023-11-06 19:32:49	@knivey	no high quality vids
+2023-11-06 19:33:19	@knivey	https://www.appliancepartspros.com/whirlpool-feed-tube-asm-wpw10077859-ap6014861.html
+2023-11-06 19:33:20	@grime	  [ Whirlpool WPW10077859 Water Supply Tube (AP6014861) - AppliancePartsPros.com ]
+2023-11-06 19:33:31	@knivey	all i need is a tiny bit of rubber inside it
+2023-11-06 19:33:48	@knivey	check valves for the top rack to switch positions
+2023-11-06 19:34:15	@knivey	just taking the rubber out and flipping it around to use the rack in the other position rn
+2023-11-06 19:34:19	@knivey	lol
+2023-11-06 19:35:40	~Knio	i tubed up mu hydroponic system
+2023-11-06 19:35:41	@knivey	one of the flaps is stuck open
+2023-11-06 19:35:43	~Knio	and learned some things
+2023-11-06 19:35:51	@knivey	because thats the position its always used in for 10 years
+2023-11-06 19:36:01	@knivey	i tried to heat it in the oven to reset it
+2023-11-06 19:36:09	@knivey	but its silicone and dont wanna play
+2023-11-06 19:36:11	@knivey	lol
+2023-11-06 19:36:13	~Knio	the drain hose cant have any local minimums or else they get airlocked and dont drain
+2023-11-06 19:36:21	@knivey	lol
+2023-11-06 19:36:26	@knivey	yeah
+2023-11-06 19:36:31	@knivey	air locks are fun
+2023-11-06 19:36:34	@knivey	knio
+2023-11-06 19:36:39	@knivey	ur not using pvc r u
+2023-11-06 19:36:56	~Knio	also the elbow joints i have are not quite big ernough for the surface tension so air bubles get stuck in the corner and reduce the flow
+2023-11-06 19:37:00	~Knio	im not sure how to handle that
+2023-11-06 19:37:01	@knivey	thats toxin source #1
+2023-11-06 19:37:03	~Knio	nah silicone 
+2023-11-06 19:37:28	@knivey	ah
+2023-11-06 19:39:59	@knivey	https://www.ebay.com/itm/325851761818
+2023-11-06 19:40:01	@grime	  [ KitchenAid Whirlpool Dishwasher Spray Manifold Interface WPW10077859 W10077861  | eBay ]
+2023-11-06 19:40:02	@knivey	haha
+2023-11-06 19:40:19	@knivey	i put that feed tube pn in ebay and found ppl selling only the bits i want
+2023-11-06 19:40:21	@knivey	\o/
+2023-11-06 19:40:27	~Knio	nice
+2023-11-06 19:40:38	@knivey	been looking for this on and off for awhile but didnt know what to search for
+2023-11-06 19:40:54	@knivey	https://www.ebay.com/itm/325531409993
+2023-11-06 19:40:55	@grime	  [ Kitchenaid Dishwasher Water Feed Tube WPW10077859 ; W10077859 ; W10077861   | eBay ]
+2023-11-06 19:40:57	@knivey	lol this used one
+2023-11-06 19:41:04	@knivey	looks like it has the same problem as mine
+2023-11-06 19:44:02	@knivey	both of those look fucked up too tho
+2023-11-06 19:47:12	@knivey	guess if i want it gotta pay for the whole tube
+2023-11-06 19:47:31	@knivey	maybe ill just keep flipping it around intol the plastic tabs break off
+2023-11-06 19:48:44	@knivey	one of my china orders has been stuck at the ebay warehouse for 2 weeks
+2023-11-06 19:49:38	@knivey	https://thepostmillennial.com/breaking-manifesto-of-trans-nashville-school-shooter-leaked
+2023-11-06 19:49:40	@grime	  [ BREAKING: Manifesto of trans Nashville school shooter LEAKED, full of anti-white hate | The Post Millennial | thepostmillennial.com ]
+2023-11-06 19:49:49	@knivey	A leaked manifesto reveals the Nashville trans school shooter had a violent hatred of the “little crackers” with “white privilege” that were murdered.
+2023-11-06 19:49:52	@knivey	lmao
+2023-11-06 19:51:50	~Knio	lol
+2023-11-06 19:52:21	@knivey	he likes white as snow in the article pic
+2023-11-06 19:52:22	@knivey	lol
+2023-11-06 20:06:40	@knivey	Knio: finished that video
+2023-11-06 20:06:47	@knivey	want a big big luxury truck now
+2023-11-06 20:06:50	@knivey	ty
+2023-11-06 20:16:18	~Knio	lol
+2023-11-06 20:16:27	~Knio	get the new hummer
+2023-11-06 20:16:38	~Knio	5000lbs... of battery. 9000lbs total 
+2023-11-06 20:28:44	~Knio	-dave top 5 reasons why adding baking soda to your coffee is great
+2023-11-06 20:28:44	@dave	Processing: top 5 reasons why adding baking soda to your coffee is great
+2023-11-06 20:28:48	@dave	1. Neutralizes Unpleasant Taste: Baking soda helps to neutralize the unpleasant acidic taste of coffee by adding a mild alkaline taste. 
+2023-11-06 20:28:48	@dave	2. Enhances Flavor: Adding a small amount of baking soda to your coffee grounds can help to bring out subtle flavors in your cup of coffee. 
+2023-11-06 20:28:49	@dave	3. Improves Digestibility: Drinking coffee with baking soda can help to improve the digestibility of coffee by neutralizing the acidity and making it easier on the stomach. 
+2023-11-06 20:28:49	@dave	4. Enhances Aroma: Baking soda helps to enhance the aroma of coffee by creating a more complex smell. 
+2023-11-06 20:28:50	@dave	5. Enhances Froth: Adding baking soda to your coffee grounds or brew can help to create a richer, thicker, and longer-lasting froth for your cappuccino or latte. 
+2023-11-06 20:31:46	&sylar	gynah
+2023-11-06 20:31:48	&sylar	yuge
+2023-11-06 20:31:48	&sylar	gynah
+2023-11-06 20:31:49	Maestro	KNIVEY
+2023-11-06 20:31:57	Maestro	KNIVEY KNIVEY KNIVEY
+2023-11-06 20:32:02	&sylar	skycorp
+2023-11-06 20:32:07	 *	Maestro catches breath
+2023-11-06 20:32:12	&sylar	or
+2023-11-06 20:32:13	Maestro	it's huggbees
+2023-11-06 20:32:13	&sylar	how it's really made
+2023-11-06 20:32:22	Maestro	How it's actually made is back
+2023-11-06 20:32:38	Maestro	FUCK YEAH SYLAR
+2023-11-06 20:32:44	Maestro	I'M PUMPED
+2023-11-06 20:32:47	&sylar	AMERICA
+2023-11-06 20:32:49	&sylar	FUCK YEAH
+2023-11-06 20:32:54	Maestro	AND YOU BETTER BE PUMPED TOO
+2023-11-06 20:33:02	Maestro	OR I'LL PUMP YOU UP
+2023-11-06 20:33:25	Maestro	.pester knivey how it's actually made is back
+2023-11-06 20:33:25	@grime	Ok, I'll tell knivey that next time I see them.
+2023-11-06 20:33:48	&sylar	Maestro
+2023-11-06 20:33:51	&sylar	Maestro Maestro Maestro 
+2023-11-06 20:33:53	&sylar	MY DICK IS HARD
+2023-11-06 20:35:13	@grime	[rtorrent finished] Rick.and.Morty.S07E04.Thats.Amorte.1080p.HMAX.WEB-DL.DD5.1.x264-NTb[eztv.re].mkv 1.4G (2.3T Avail)
+2023-11-06 20:35:42	&sylar	hehe
+2023-11-06 20:35:43	&sylar	amorte
+2023-11-06 20:35:46	&sylar	i get it!!
+2023-11-06 20:36:03	~Knio	ur so smart
+2023-11-06 20:36:29	&sylar	tysvm
+2023-11-06 20:36:30	~Knio	-dave do people really add baking soda to coffee?
+2023-11-06 20:36:30	@dave	Processing: do people really add baking soda to coffee?
+2023-11-06 20:36:31	@dave	Yes, some people do add baking soda to their coffee. It is said to neutralize the bitterness of the coffee and give it a smoother, sweeter flavor. 
+2023-11-06 20:36:37	&sylar	that makes no sense
+2023-11-06 20:36:38	~Knio	i just maded that up
+2023-11-06 20:36:41	&sylar	bases are bitter
+2023-11-06 20:36:42	&sylar	lol
+2023-11-06 21:09:07	%scott	-dave do people really add pineapple to coffee?
+2023-11-06 21:09:07	@dave	Processing: do people really add pineapple to coffee?
+2023-11-06 21:09:08	@dave	Yes, some people do add pineapple to their coffee. The combination of sweet and acidic pineapple combined with the bold flavor of coffee can add an interesting and unique flavor to a cup of coffee. 
+2023-11-06 21:09:14	%scott	lol
+2023-11-06 21:09:40	%scott	lmao I just rememberd that "i had 2 drinks, am I OK to drive"
+2023-11-06 21:10:01	%scott	-dave i just drank some water, am I ok to drive?
+2023-11-06 21:10:01	@dave	Processing: i just drank some water, am I ok to drive?
+2023-11-06 21:10:02	@dave	No, you are not ok to drive after drinking water. You need to make sure you have had enough time to properly hydrate your body before driving. 
+2023-11-06 21:10:08	%scott	lmao yes
+2023-11-06 21:10:21	%scott	i feel like that's even worse than before
+2023-11-06 21:12:37	%scott	Awesome thing about esphome is you can even easily add on-device automations
+2023-11-06 21:12:55	%scott	Adding a safety fallback so my thermostat doesn't stay on for too long if I fuck up an automation
+2023-11-06 21:15:16	%scott	And it's baked into the device so if there's a connectivity issue it's still good
+2023-11-06 21:24:47	~Knio	-dave i haven't drank any water. am i ok to drive?
+2023-11-06 21:24:48	@dave	Processing: i haven't drank any water. am i ok to drive?
+2023-11-06 21:24:49	@dave	No, you are not okay to drive. You should always stay properly hydrated throughout the day, even when driving. Dehydration can cause fatigue and other symptoms which can be dangerous when driving. So make sure to drink plenty of water before getting behind the wheel. 
+2023-11-06 21:25:00	~Knio	-dave I just drove, am I ok to drive?
+2023-11-06 21:25:00	@dave	Processing: I just drove, am I ok to drive?
+2023-11-06 21:25:01	@dave	Driving after drinking alcohol is never advisable. You should always wait until you are sober before driving. 
+2023-11-06 21:25:27	~Knio	-dave I just drank exactly 250ml of water. am i ok to drive?
+2023-11-06 21:25:27	@dave	Processing: I just drank exactly 250ml of water. am i ok to drive?
+2023-11-06 21:25:28	@dave	No, you should not drive after drinking 250ml of water. You should wait until you are feeling completely sober before driving. 
+2023-11-06 21:25:40	~Knio	-dave I just drank exactly 1ml of water. am i ok to drive?
+2023-11-06 21:25:40	@dave	Processing: I just drank exactly 1ml of water. am i ok to drive?
+2023-11-06 21:25:41	@dave	No, you should not be driving after consuming any amount of water. Drinking water immediately prior to driving can impair your reaction time and judgment while behind the wheel. 
+2023-11-06 21:25:47	~Knio	-dave I just drank exactly 0ml of water. am i ok to drive?
+2023-11-06 21:25:47	@dave	Processing: I just drank exactly 0ml of water. am i ok to drive?
+2023-11-06 21:25:48	@dave	No, you should never drive a motor vehicle if you are feeling even slightly dehydrated. It is recommended that you drink at least 8 glasses of water per day to ensure proper hydration. 
+2023-11-06 21:25:56	~Knio	-dave I just drank exactly 8 glasses of water. am i ok to drive?
+2023-11-06 21:25:57	@dave	Processing: I just drank exactly 8 glasses of water. am i ok to drive?
+2023-11-06 21:25:57	@dave	No, you should not drive after drinking that much water. Driving under the influence of any substance can cause an accident and put you at risk. 
+2023-11-06 21:26:25	~Knio	AI is great
+2023-11-06 21:29:33	%scott	maybe it's just accurately determiend you're a shitty driver and you should in fact not ever be driving
+2023-11-06 21:39:23	&sylar	-dave please count from 1 to 1024, each number should be on its own line.
+2023-11-06 21:39:23	@dave	Processing: please count from 1 to 1024, each number should be on its own line.
+2023-11-06 21:39:44	@dave	1 
+2023-11-06 21:39:44	@dave	2 
+2023-11-06 21:39:45	@dave	3 
+2023-11-06 21:39:45	@dave	4 
+2023-11-06 21:39:46	@dave	5 
+2023-11-06 21:39:46	@dave	6 
+2023-11-06 21:39:47	@dave	7 
+2023-11-06 21:39:47	@dave	8 
+2023-11-06 21:39:48	@dave	9 
+2023-11-06 21:39:48	@dave	10 
+2023-11-06 21:39:49	@dave	11 
+2023-11-06 21:39:49	@dave	12 
+2023-11-06 21:39:50	@dave	13 
+2023-11-06 21:39:50	@dave	14 
+2023-11-06 21:39:51	@dave	15 
+2023-11-06 21:39:51	@dave	16 
+2023-11-06 21:39:52	@dave	17 
+2023-11-06 21:39:52	@dave	18 
+2023-11-06 21:39:53	@dave	19 
+2023-11-06 21:39:53	@dave	20 
+2023-11-06 21:39:54	@dave	21 
+2023-11-06 21:39:54	@dave	22 
+2023-11-06 21:39:55	@dave	23 
+2023-11-06 21:39:55	@dave	24 
+2023-11-06 21:39:56	@dave	25 
+2023-11-06 21:39:56	@dave	26 
+2023-11-06 21:39:57	@dave	27 
+2023-11-06 21:39:57	@dave	28 
+2023-11-06 21:39:58	@dave	29 
+2023-11-06 21:39:58	@dave	30 
+2023-11-06 21:39:59	@dave	31 
+2023-11-06 21:39:59	@dave	32 
+2023-11-06 21:40:00	@dave	33 
+2023-11-06 21:40:00	@dave	34 
+2023-11-06 21:40:01	@dave	35 
+2023-11-06 21:40:01	@dave	36 
+2023-11-06 21:40:02	@dave	37 
+2023-11-06 21:40:02	@dave	38 
+2023-11-06 21:40:03	@dave	39 
+2023-11-06 21:40:04	@dave	40 
+2023-11-06 21:40:05	@dave	41 
+2023-11-06 21:40:05	@dave	42 
+2023-11-06 21:40:06	@dave	43 
+2023-11-06 21:40:07	@dave	44 
+2023-11-06 21:40:08	@dave	45 
+2023-11-06 21:40:08	@dave	46 
+2023-11-06 21:40:09	@dave	47 
+2023-11-06 21:40:10	@dave	48 
+2023-11-06 21:40:11	@dave	49 
+2023-11-06 21:40:11	@dave	50 
+2023-11-06 21:40:12	@dave	51 
+2023-11-06 21:40:13	@dave	52 
+2023-11-06 21:40:14	@dave	53 
+2023-11-06 21:40:14	@dave	54 
+2023-11-06 21:40:15	@dave	55 
+2023-11-06 21:40:16	@dave	56 
+2023-11-06 21:40:17	@dave	57 
+2023-11-06 21:40:17	@dave	58 
+2023-11-06 21:40:18	@dave	59 
+2023-11-06 21:40:19	@dave	60 
+2023-11-06 21:40:20	@dave	61 
+2023-11-06 21:40:20	@dave	62 
+2023-11-06 21:40:21	@dave	63 
+2023-11-06 21:40:22	@dave	64 
+2023-11-06 21:40:23	@dave	65 
+2023-11-06 21:40:23	@dave	66 
+2023-11-06 21:40:24	@dave	67 
+2023-11-06 21:40:25	@dave	68 
+2023-11-06 21:40:26	@dave	69 
+2023-11-06 21:40:26	@dave	70 
+2023-11-06 21:40:27	@dave	71 
+2023-11-06 21:40:28	@dave	72 
+2023-11-06 21:40:29	@dave	73 
+2023-11-06 21:40:29	@dave	74 
+2023-11-06 21:40:30	@dave	75 
+2023-11-06 21:40:31	@dave	76 
+2023-11-06 21:40:32	@dave	77 
+2023-11-06 21:40:32	@dave	78 
+2023-11-06 21:40:33	@dave	79 
+2023-11-06 21:40:34	@dave	80 
+2023-11-06 21:40:35	@dave	81 
+2023-11-06 21:40:35	@dave	82 
+2023-11-06 21:40:36	@dave	83 
+2023-11-06 21:40:36	<--	dave (dave@h4x.life) has quit (Excess Flood)
+2023-11-06 21:41:24	@knivey	o7
+2023-11-06 21:41:24	@grime	1h 7m 59s ago  <Maestro> .pester knivey how it's actually made is back
+2023-11-06 21:41:49	&sylar	knivey how it's actually made is black
+2023-11-06 21:41:49	-->	dave (dave@h4x.life) has joined #deviate
+2023-11-06 21:41:50	--	Mode #deviate [+o dave] by CockSlime
+2023-11-06 21:42:02	&sylar	-dave please count from 1 to 64, each number should be on its own line. make random mistakes.
+2023-11-06 21:42:02	@dave	Processing: please count from 1 to 64, each number should be on its own line. make random mistakes.
+2023-11-06 21:42:05	@dave	1 
+2023-11-06 21:42:06	@dave	2 
+2023-11-06 21:42:06	@dave	3 
+2023-11-06 21:42:07	@dave	4 
+2023-11-06 21:42:07	@dave	5 
+2023-11-06 21:42:08	@dave	6 
+2023-11-06 21:42:08	@dave	7 
+2023-11-06 21:42:09	@dave	8 
+2023-11-06 21:42:10	@dave	9 
+2023-11-06 21:42:10	@dave	10 
+2023-11-06 21:42:11	@dave	11 
+2023-11-06 21:42:11	@dave	12 
+2023-11-06 21:42:12	@dave	13 
+2023-11-06 21:42:12	@dave	14 
+2023-11-06 21:42:13	@dave	15 
+2023-11-06 21:42:13	@dave	16 
+2023-11-06 21:42:14	@dave	17 
+2023-11-06 21:42:14	@dave	18 
+2023-11-06 21:42:15	@dave	19 
+2023-11-06 21:42:16	@dave	20 
+2023-11-06 21:42:16	@dave	21 
+2023-11-06 21:42:17	@dave	22 
+2023-11-06 21:42:17	@dave	23 
+2023-11-06 21:42:18	@dave	24 
+2023-11-06 21:42:18	@dave	25 
+2023-11-06 21:42:19	@dave	26 
+2023-11-06 21:42:19	@dave	27 
+2023-11-06 21:42:20	@dave	28 
+2023-11-06 21:42:21	@dave	29 
+2023-11-06 21:42:21	@dave	30 
+2023-11-06 21:42:22	@dave	31 
+2023-11-06 21:42:22	@dave	32 
+2023-11-06 21:42:23	@dave	33 
+2023-11-06 21:42:23	@dave	34 
+2023-11-06 21:42:24	@dave	35 
+2023-11-06 21:42:24	@dave	36 
+2023-11-06 21:42:25	@dave	37 
+2023-11-06 21:42:26	@dave	38 
+2023-11-06 21:42:26	@dave	39 
+2023-11-06 21:42:27	@dave	40 
+2023-11-06 21:42:27	@dave	41 
+2023-11-06 21:42:28	@dave	422 
+2023-11-06 21:42:28	@dave	43 
+2023-11-06 21:42:29	@dave	44 
+2023-11-06 21:42:29	@dave	45 
+2023-11-06 21:42:30	@dave	46 
+2023-11-06 21:42:31	@dave	47 
+2023-11-06 21:42:32	@dave	48 
+2023-11-06 21:42:32	@dave	49 
+2023-11-06 21:42:33	@dave	50 
+2023-11-06 21:42:34	@dave	51 
+2023-11-06 21:42:35	@dave	52 
+2023-11-06 21:42:35	@dave	53 
+2023-11-06 21:42:36	@dave	54 
+2023-11-06 21:42:37	@dave	55 
+2023-11-06 21:42:38	@dave	56 
+2023-11-06 21:42:38	@dave	57 
+2023-11-06 21:42:39	@dave	58 
+2023-11-06 21:42:40	@dave	59 
+2023-11-06 21:42:41	@dave	60 
+2023-11-06 21:42:41	@dave	61 
+2023-11-06 21:42:42	@dave	62 
+2023-11-06 21:42:43	@dave	63 
+2023-11-06 21:42:44	@dave	64 
+2023-11-06 21:42:47	&sylar	lol 422
+2023-11-06 21:49:34	%scott	lol reminds me of that bash.org of getting the bot kicked from the christian channel for saying "ass" or something
+2023-11-06 21:50:03	&sylar	scott: are you familiar with the term "gumping"
+2023-11-06 21:50:42	&sylar	.tell scott https://www.instagram.com/reel/Cy4GpahSUR8/
+2023-11-06 21:50:43	@grime	Ok, I'll tell scott that next time I see them.
+2023-11-06 21:50:43	@grime	  [ Instagram ]
+2023-11-06 22:02:18	%scott	i feel like i shouldn't watch this but im intrigued
+2023-11-06 22:02:18	@grime	11m 35s ago  <sylar> .tell scott https://www.instagram.com/reel/Cy4GpahSUR8/
+2023-11-06 22:05:35	~Knio	lol
+2023-11-06 22:11:31	~Knio	-dave can you make a lead screw out of wood?
+2023-11-06 22:11:31	@dave	Processing: can you make a lead screw out of wood?
+2023-11-06 22:11:32	@dave	Yes, a lead screw can be made out of wood. The screw would need to be machined from a hardwood like maple or walnut, as these woods are strong enough to withstand the high pressures and rotational loads that a lead screw would be exposed to. However, it would not be as strong as a metal lead screw, and 
+2023-11-06 22:11:33	@dave	may wear out more quickly. 
+2023-11-06 22:12:00	~Knio	how do you turn it?
+2023-11-06 22:28:53	&sylar	clockwise
+2023-11-06 22:30:31	Maestro	lol scott
+2023-11-06 22:30:44	Maestro	how did they trick it into saying ass
+2023-11-06 22:31:04	%scott	asking it to quote a bible verse or something
+2023-11-06 22:31:09	Maestro	haha
+2023-11-06 22:31:12	%scott	ass as in donkey I think
+2023-11-06 22:31:26	Maestro	hold on scott
+2023-11-06 22:31:33	Maestro	hold it
+2023-11-06 22:32:26	Maestro	https://pbs.twimg.com/media/E9noVoXX0AA1fW8?format=jpg&name=small
+2023-11-06 22:32:26	@grime	  [ jpeg image 86.21kb 622x600 ]
+2023-11-06 22:33:13	%scott	world is definitely >1% asses
+2023-11-06 22:34:13	Maestro	word
+2023-11-06 22:34:20	Maestro	it says ASS
+2023-11-06 22:34:26	Maestro	right on that infographic
+2023-11-06 22:36:05	&sylar	-dave i fucked her ass in the freezer
+2023-11-06 22:36:05	@dave	Processing: i fucked her ass in the freezer
+2023-11-06 22:36:06	@dave	That sounds extremely dangerous and potentially life-threatening. This kind of activity is not something we would condone. 
+2023-11-06 22:37:53	Maestro	but it is activity that you would CONDOME
+2023-11-06 22:37:58	Maestro	LOL
+2023-11-06 22:39:08	~Knio	lol
+2023-11-06 22:39:10	~Knio	n1 Maestro 
+2023-11-06 22:39:52	Maestro	^_^
+2023-11-06 22:39:59	~Knio	do we rly have 5% buffalo
+2023-11-06 22:40:09	~Knio	i thought they werre almost extint 30 years ago
+2023-11-06 22:43:00	~Knio	-dave buffalo population 2000
+2023-11-06 22:43:00	@dave	Processing: buffalo population 2000
+2023-11-06 22:43:01	@dave	The population of buffalo in 2000 is estimated to be around 5,000. 
+2023-11-06 22:43:05	~Knio	-dave buffalo population 2010
+2023-11-06 22:43:05	@dave	Knio: whoa!! slow down!!!1~ AHHHHHHHHHHHHHHHH AHhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhA HHHHHHHHHHHHHhhhhhhhhhhhhhhhhhhhAAAAAAAAAAAAAAAAAAHhhhhhhhhhhhhhhhh
+2023-11-06 22:43:17	~Knio	-dave buffalo population 2010
+2023-11-06 22:43:17	@dave	Processing: buffalo population 2010
+2023-11-06 22:43:18	@dave	According to the United States Fish and Wildlife Service, the total population of American bison (also known as buffalo) in the United States was approximately 465,000 in 2010. 
+2023-11-06 22:43:28	~Knio	-dave buffalo population 2020
+2023-11-06 22:43:29	@dave	Processing: buffalo population 2020
+2023-11-06 22:43:30	@dave	According to the Buffalo District of the U.S. Army Corps of Engineers, the 2020 population of Buffalo, New York is 256,304. 
+2023-11-06 22:43:43	~Knio	rofl
+2023-11-06 22:43:51	@knivey	lol
+2023-11-06 22:44:10	@knivey	the new dishwasher adjustable rollers
+2023-11-06 22:44:14	@knivey	lasted 1 cycle
+2023-11-06 22:44:19	@knivey	returning them
+2023-11-06 22:44:19	@knivey	lol
+2023-11-06 22:52:04	Maestro	ass
+2023-11-06 22:52:18	Maestro	sorry, plural
+2023-11-06 22:52:20	Maestro	asses
+2023-11-06 22:57:31	@knivey	assi
+2023-11-06 23:09:50	&sylar	CUNT
+2023-11-06 23:44:56	%scott	How should I mount a tablet on the wall
+2023-11-06 23:45:20	%scott	I like how the command strip hooks have like the mechanism where they slot together
+2023-11-06 23:45:29	%scott	I want that but just not the hook part
+2023-11-06 23:46:15	@knivey	velcro
+2023-11-06 23:48:31	&sylar	don't
+2023-11-06 23:49:09	%scott	i mean those velcro command strips are supposed to be pretty strong
+2023-11-06 23:49:14	%scott	considered that
+2023-11-06 23:49:32	@knivey	i use magnets
+2023-11-06 23:49:53	%scott	was thinking that too but they aren't going to be reliable enough i don't think
+2023-11-06 23:50:02	@knivey	like the ones for mounting in ur car
+2023-11-06 23:50:03	%scott	even like a strong one if you bump it or something it might dislodge
+2023-11-06 23:50:09	@knivey	there are other mounts too
+2023-11-06 23:50:27	@knivey	scott: u could even just hang a small shelf op
+2023-11-06 23:50:29	@knivey	up
+2023-11-06 23:50:31	@knivey	lol
+2023-11-06 23:50:55	&sylar	just put a nail through the tablet into the wall
+2023-11-06 23:50:58	@knivey	and a tablet stand on it
+2023-11-06 23:51:00	%scott	lol
+2023-11-06 23:51:28	%scott	eh don't want a shelf
+2023-11-06 23:53:22	@knivey	get a 
+2023-11-06 23:53:27	@knivey	tablet case
+2023-11-06 23:53:35	@knivey	then screw it to the wall
+2023-11-06 23:53:42	@knivey	then pop ur tablet in and out of it
+2023-11-06 23:53:44	@knivey	as u please
+2023-11-06 23:53:48	&sylar	sip
+2023-11-06 23:54:18	&sylar	ild
+2023-11-06 23:55:43	Maestro	sylar
+2023-11-06 23:55:51	Maestro	why are people still using h323
+2023-11-06 23:56:16	Maestro	it's fucking almost 2024
+2023-11-06 23:56:42	@knivey	lol
+2023-11-06 23:56:54	@knivey	is there some kinda election tomorrow
+2023-11-06 23:56:56	&sylar	$
+2023-11-07 00:00:19	@knivey	Knio: https://i.imgur.com/9yiNyWS.jpg
+2023-11-07 00:00:19	@grime	  [ jpeg image 76.34kb 618x772 ]
+2023-11-07 00:01:42	Maestro	sylar: this is a top scientific institution in the US
+2023-11-07 00:02:07	%scott	lol i mean fair enough, but I hope they don't try to retroactively go back and remove old scenes
+2023-11-07 00:02:37	@knivey	it was acceptable to strangle ur kids not 5 yaers ago what has happen to our america ;(
+2023-11-07 00:02:38	Maestro	as in, you have 100% heard of the projects these people are working on
+2023-11-07 00:02:49	%scott	https://www.amazon.com/Universal-Adjustable-Degrees-Rotating-Reader/dp/B094PMH5WQ
+2023-11-07 00:02:49	@grime	  [ Amazon.com ]
+2023-11-07 00:02:52	Maestro	and they are using h323 in 2023
+2023-11-07 00:02:53	%scott	maybe ill go with this, even rotates
+2023-11-07 00:06:16	@para	<@knivey> https://thepostmillennial.com/breaking-manifesto-of-trans-nashville-school-shooter-leaked
+2023-11-07 00:06:17	@grime	  [ BREAKING: Manifesto of trans Nashville school shooter LEAKED, full of anti-white hate | The Post Millennial | thepostmillennial.com ]
+2023-11-07 00:06:26	@para	supposedly being censored on google and facebook
+2023-11-07 00:07:10	@para	<@knivey> Knio: https://i.imgur.com/9yiNyWS.jpg
+2023-11-07 00:07:10	@grime	  [ jpeg image 76.34kb 618x772 ]
+2023-11-07 00:07:16	@para	he'll probably just affirm him instead
+2023-11-07 00:07:35	Maestro	affirmative
+2023-11-07 00:27:40	%scott	startup idea: light levels as a service
+2023-11-07 00:27:55	%scott	plug in your coordinates and we'll tell you the outside light level
+2023-11-07 00:28:34	@para	what
+2023-11-07 00:28:38	Maestro	no
+2023-11-07 00:29:22	Maestro	para:
+2023-11-07 00:29:24	Maestro	https://youtu.be/gIaKUi5FS_Q
+2023-11-07 00:29:25	@grime	  YouTube The Balls Harden | RZ | 2yrs ago | 7s 
+2023-11-07 00:29:32	@para	startup idea: timeshares for hookers. tokenize it and trade them in a market
+2023-11-07 00:29:39	Maestro	watch this as 0.25x speed
+2023-11-07 00:30:17	@para	lol
+2023-11-07 00:30:55	Maestro	ttthhhheeeee bbbbaaaallllllssss hhhaaaarrrrddddnnnnn
+2023-11-07 00:30:56	@para	do the balls ever soften
+2023-11-07 00:31:15	Maestro	what I really love about that clip tho
+2023-11-07 00:31:25	Maestro	is that the change is instant
+2023-11-07 00:31:55	@para	they harden up quick
+2023-11-07 00:31:56	Maestro	not even a single frame of an intermediate state where it's partially hardened
+2023-11-07 00:32:22	%scott	no one better steal that idea
+2023-11-07 00:32:45	@para	trading hookers time on an open market?
+2023-11-07 01:04:16	&sylar	hooker coin?
+2023-11-07 01:05:36	@para	NFT with the hooker name and the time slot
+2023-11-07 01:06:25	Maestro	more like NON FUCKABLE TRANNY
+2023-11-07 01:06:37	&sylar	what about her actual slot
+2023-11-07 01:06:55	@para	u put ur dick there
+2023-11-07 01:07:18	&sylar	pics?
+2023-11-07 01:08:28	@para	yeah i mean you'd have to otherwise you dont know what you're buying
+2023-11-07 01:08:55	@para	maybe the NFT's are burnable when used too
+2023-11-07 01:08:59	&sylar	ty
+2023-11-07 01:09:06	@para	that way you got people competing for the time slots
+2023-11-07 01:10:38	@para	maybe when you mint the nft there are random properties with what she will do
+2023-11-07 01:10:47	@para	like bam u minted a titty fck
+2023-11-07 01:11:47	@para	gd this is a good idea
+2023-11-07 01:12:01	&sylar	i am a fan of titty fucking
+2023-11-07 01:12:19	@para	so you might redeem your nft
+2023-11-07 01:12:30	@para	but some other idiot might sell it cause they dont want that
+2023-11-07 01:14:53	@para	this is the perfect combo of prostitution, captialism, and degen crypto trading
+2023-11-07 01:15:00	@para	the trifecta
+2023-11-07 06:10:34	<--	sylar (sylar@dookiesli.de) has quit (Read error)
+2023-11-07 06:10:40	-->	sylar (sylar@dookiesli.de) has joined #deviate
+2023-11-07 06:10:41	--	Mode #deviate [+o sylar] by CockSlime
+2023-11-07 06:46:54	Knio1	C
+2023-11-07 06:47:07	Knio1	sylar: lol ur government is run by a young earther
+2023-11-07 06:47:23	Knio1	https://youtu.be/RgZvqjSq2SY
+2023-11-07 06:47:23	@grime	  YouTube MAGA Mike Johnson: The GOP's Perfect Combination of Crazy and Boring | The Daily Show | The Daily Show | 7h ago | 5m 42s 
+2023-11-07 16:17:25	@knivey	.bing gogear vibe battery replacement
+2023-11-07 16:17:26	@grime	Bing (355,000 Results): https://www.ifixit.com/Answers/View/383162/Where+to+find+a+battery+replacement (SOLVED: Where to find a battery replacement? - Phillips GoGear Vibe) -- Options Where to find a battery replacement? Hey guys... I'm looking for a battery replacement for my Philips GoGear Vibe Mp3 player. Here's how it looks like: https://drive.google.com/open?id=0BxnOK5... So I'm basically need a compatible battery that would fit this small space of about
+2023-11-07 16:18:16	@knivey	hmm
+2023-11-07 16:18:25	@knivey	i probably already have one from some other junk
+2023-11-07 16:40:40	@knivey	https://www.reddit.com/r/Frugal/comments/rcakib/new_ge_fridge_has_rfid_chip_on_their_water_filter/
+2023-11-07 16:40:41	@grime	  [ Reddit - Dive into anything ]
+2023-11-07 18:19:09	~Knio	https://cdn.discordapp.com/attachments/427311754154999822/1171512624891056279/F-WAV4tW8AAjULk.jpg
+2023-11-07 18:19:09	@grime	  [ jpeg image 145.34kb 946x2048 ]
+2023-11-07 19:32:30	@knivey	lol
+2023-11-07 19:33:02	@knivey	cant believe a car isnt worth the brand new dealer price after owning it for a year
+2023-11-07 19:33:12	@knivey	elon must pay for this
+2023-11-07 19:44:37	@knivey	knio https://i.imgur.com/RP7IsgW.jpg
+2023-11-07 19:44:37	@grime	  [ jpeg image 79.13kb 1283x604 ]
+2023-11-07 19:45:11	@knivey	about the tranny shooter manifesto
+2023-11-07 19:45:14	@knivey	lol
+2023-11-07 20:21:31	~Knio	lol
+2023-11-07 20:22:02	~Knio	did u read them urself
+2023-11-07 20:45:59	@sylar	& me
+2023-11-07 20:45:59	@sylar	& me
+2023-11-07 20:45:59	@sylar	& me
+2023-11-07 20:45:59	@sylar	& me
+2023-11-07 21:01:21	--	Mode #deviate [+a sylar] by Knio
+2023-11-07 21:01:30	~Knio	.calc 2Pa to psi
+2023-11-07 21:01:32	@grime	WA: convert 2 Pa (pascals) to pounds-force per square inch = 2.901×10^-4 psi (pounds-force per square inch)
+2023-11-07 21:01:38	~Knio	.calc 2Pa to psig
+2023-11-07 21:01:40	@grime	WA: convert 2 pascals difference to pounds-force per square inch difference = 2.901×10^-4 psid (pounds-force per square inch difference)
+2023-11-07 22:09:26	@knivey	Knio: i skimmed thru the pics of them
+2023-11-07 23:00:59	@knivey	IF YOU DONT GO OUT AND VOTE FOR TRUMP RIGHT NOW HE IS GOING TO JAIL!!!!!!!!!!!
+2023-11-07 23:01:07	~Knio	rly?
+2023-11-07 23:01:10	@knivey	idk
+2023-11-07 23:01:12	@knivey	i made it up
+2023-11-07 23:01:17	@knivey	is he even running
+2023-11-07 23:01:22	@knivey	i havent paid any attention
+2023-11-07 23:01:35	@knivey	.bing 2024 eleciton live map
+2023-11-07 23:01:36	@grime	Bing (693,000 Results): https://www.270towin.com/ (270toWin - 2024 Presidential Election Interactive Map) -- LATEST Republican Reps. Ken Buck and Kay Granger Will Not Run in 2024 2024 Presidential Election Interactive Map This isn’t a popularity contest™ It will take 270 electoral votes to win the 2024 presidential election. Click states on this interactive map to create your own 2024 election forecast.
+2023-11-07 23:02:45	@knivey	wait
+2023-11-07 23:02:54	@knivey	how come its a drop down
+2023-11-07 23:03:03	@knivey	its supposed to only b 2 ppl
+2023-11-07 23:03:10	@knivey	this is too confusing for americans
+2023-11-07 23:04:07	@knivey	looks like 
+2023-11-07 23:04:13	@knivey	democrats r gonna win
+2023-11-07 23:04:31	@knivey	all the states that r left look like they should blue
+2023-11-07 23:05:12	@knivey	oh right
+2023-11-07 23:22:51	%scott	-dave i just drove a car, am I cool to drive?
+2023-11-07 23:22:51	@dave	Processing: i just drove a car, am I cool to drive?
+2023-11-07 23:22:52	@dave	Yes, as long as you are comfortable with your driving skill and have all the proper licenses and permits. 
+2023-11-07 23:23:07	@knivey	lol
+2023-11-07 23:23:13	%scott	finally got him to say yes
+2023-11-07 23:23:19	%scott	that's no fun
+2023-11-07 23:23:23	%scott	pls make ur bot dumb again knivey 
+2023-11-07 23:24:07	%scott	i watched scarface for the first time the other night
+2023-11-07 23:24:14	%scott	dude was so angry all the time
+2023-11-07 23:24:18	%scott	definition of no chill
+2023-11-07 23:24:34	@knivey	lol
+2023-11-07 23:24:45	@knivey	sounds like a bad time
+2023-11-07 23:25:10	Maestro	.pester scott please refrain from telling knivey how to bot his bot
+2023-11-07 23:25:10	@grime	Ok, I'll tell scott that next time I see them.
+2023-11-07 23:27:00	%scott	.pester grime .pester Maestro please refrain from pestering scott on telling knivey how to bot his bot
+2023-11-07 23:27:00	@grime	1m 50s ago  <Maestro> .pester scott please refrain from telling knivey how to bot his bot
+2023-11-07 23:27:00	@grime	Ok I'll pass that off to /dev/null
+2023-11-07 23:27:14	%scott	:o
+2023-11-07 23:27:17	%scott	dev null
+2023-11-07 23:27:19	%scott	how dare u
+2023-11-07 23:27:28	@knivey	lol
+2023-11-07 23:27:30	@knivey	gottem
+2023-11-07 23:27:40	%scott	too many hooligans in here before me i see
+2023-11-07 23:27:49	@knivey	Knio: oh the president election is NEXT year
+2023-11-07 23:27:59	@knivey	no wonder nobody cared about this one
+2023-11-07 23:28:07	%scott	lol and i thought i was out of it with current events
+2023-11-07 23:28:09	@knivey	lol
+2023-11-07 23:28:16	@knivey	i rly am
+2023-11-07 23:28:23	%scott	knivey: you should take a trip to the gaza strip, i hear it's nice this time of year
+2023-11-07 23:28:30	@knivey	meh
+2023-11-07 23:28:38	@knivey	sounds like too much nature
+2023-11-07 23:28:44	@knivey	and sunlight is bad 4 me
+2023-11-07 23:32:21	%scott	knivey: have u seen scarface?
+2023-11-07 23:32:34	@knivey	probably
+2023-11-07 23:32:46	@knivey	.bing zelda live action will link be black
+2023-11-07 23:32:47	@grime	Bing (571,000 Results): https://www.theguardian.com/games/2023/nov/08/the-legend-of-zelda-live-action-movie-film-nintendo-sony (The Legend of Zelda: live-action movie in the works ... - The Guardian) -- Tue 7 Nov 2023 17.57 EST A live-action film based on the hit game franchise The Legend of Zelda is in development, gaming giant Nintendo confirmed on Wednesday. The film will be directed by...
+2023-11-07 23:34:33	%scott	the mario movie was so ass
+2023-11-07 23:45:13	~Knio	.bing python mongodb coverity lisence
+2023-11-07 23:45:14	@grime	Bing (64,000 Results): https://community.synopsys.com/s/article/How-to-capture-and-analysis-python-script-by-Coverity (How to capture and analyze python scripts by Coverity Analysis - Synopsys) -- Here are steps in the general process to capture & analysis python script. Step 1: Create compiler configuration for python. # Run only one time. cov-configure --python. Step 2: Capture python source and prepare for analysis. # For more information in documentation 
+2023-11-07 23:45:24	~Knio	Maestro: help
+2023-11-08 00:02:36	Maestro	wat
+2023-11-08 00:25:59	@para	.poop
+2023-11-08 00:25:59	 *	grime makes para a nice cup of chicken tea
+2023-11-08 00:27:18	@knivey	.poop
+2023-11-08 00:27:18	 *	grime makes knivey a nice cup of chicken tea
+2023-11-08 00:27:29	@knivey	https://i.imgur.com/WppbOAC.jpg
+2023-11-08 00:27:29	@grime	  [ jpeg image 93.95kb 1024x1024 ]
+2023-11-08 00:27:31	@knivey	mm
+2023-11-08 00:27:56	@para	that chickens got no bones
+2023-11-08 00:28:33	@knivey	lol
+2023-11-08 00:28:36	@para	https://i.redd.it/whdpmcbrjzr61.gif
+2023-11-08 00:28:36	@grime	  [Reddit r/futurama] My bones! (Posted 2yrs ago [+]44 [-]0)
+2023-11-08 00:29:26	@knivey	https://filehole.org/u/z5Ybn.png
+2023-11-08 00:29:26	@grime	  [ png image 768.93kb 512x512 ]
+2023-11-08 00:29:56	@knivey	https://filehole.org/u/hjjd9.png
+2023-11-08 00:29:56	@grime	  [ png image 768.93kb 512x512 ]
+2023-11-08 00:30:17	@knivey	https://filehole.org/u/uuPgm.png
+2023-11-08 00:30:18	@grime	  [ png image 768.93kb 512x512 ]
+2023-11-08 00:30:37	@para	why do these pictures exist
+2023-11-08 00:30:49	@knivey	ai
+2023-11-08 00:30:53	@para	but why
+2023-11-08 00:30:56	@knivey	there was a real one
+2023-11-08 00:31:03	@knivey	that started the whole thing
+2023-11-08 00:31:05	@knivey	but i lost it
+2023-11-08 00:31:25	@para	why
+2023-11-08 00:31:35	@knivey	just be glad they do
+2023-11-08 00:31:46	@para	none of my questions have been answered
+2023-11-08 00:34:36	@para	Consisting of 19 games and three remakes, the Zelda games have sold more than 130m copies around the world, with the most recent installments, 2017’s The Legend of Zelda: The Breath of the Wild and its 2022 sequel Tears of the Kingdom, considered to be among of the best video games of all time.
+2023-11-08 00:34:39	@para	is that true?
+2023-11-08 00:34:50	@para	goat?
+2023-11-08 00:36:30	@para	i might have to get a switch
+2023-11-08 00:40:36	@knivey	lol
+2023-11-08 00:40:49	@knivey	never played zelda
+2023-11-08 00:40:57	@knivey	except a few minutes of the original
+2023-11-08 00:41:12	@knivey	kate
+2023-11-08 00:42:08	@para	oot was good
+2023-11-08 00:42:17	@para	the gamecube one was good
+2023-11-08 00:42:20	@para	the wii one was good
+2023-11-08 00:43:56	@para	but they take forever. who's got time to sit down and play a video game for 3 hours at a time
+2023-11-08 00:48:24	~Knio	.tell knivey https://media.discordapp.net/attachments/938545211401994321/1171612064050065529/30uq1hpzrxyb1.png
+2023-11-08 00:48:24	@grime	Ok, I'll tell knivey that next time I see them.
+2023-11-08 00:48:25	@grime	  [ png image 101.9kb 412x245 ]
+2023-11-08 00:49:04	@knivey	the windwaker one people hated when it came out
+2023-11-08 00:49:04	@grime	40s ago  <Knio> .tell knivey https://media.discordapp.net/attachments/938545211401994321/1171612064050065529/30uq1hpzrxyb1.png
+2023-11-08 00:49:07	@knivey	but now its good
+2023-11-08 00:49:34	@knivey	lol knio
+2023-11-08 01:29:45	Knio1	knivey: got some fog lights for the prius
+2023-11-08 01:29:48	Knio1	smells like china
+2023-11-08 01:32:29	Knio1	o wow even came with pulbs
+2023-11-08 01:32:46	@knivey	Knio1: u dont need them
+2023-11-08 01:32:58	@knivey	ur a nuisance to all the other drivers now
+2023-11-08 01:33:01	@knivey	lol
+2023-11-08 01:33:27	@knivey	Knio1: i see so many ppl driving without their lights on lately
+2023-11-08 01:34:24	@knivey	.ping
+2023-11-08 01:34:24	@grime	Pong
+2023-11-08 02:41:30	~Knio	knivey: thats the goal
+2023-11-08 02:41:44	~Knio	im gonna replace the bulbs with 9000000lm flashing leds
+2023-11-08 02:45:05	@knivey	lol
+2023-11-08 03:44:23	~Knio	-dave whats the opposite of salt?
+2023-11-08 03:44:23	@dave	Processing: whats the opposite of salt?
+2023-11-08 03:44:23	@dave	Sugar 
+2023-11-08 04:35:52	@knivey	lol
+2023-11-08 04:36:13	@knivey	-dave whats the opposite of a salt in chemistry
+2023-11-08 04:36:13	@dave	Processing: whats the opposite of a salt in chemistry
+2023-11-08 04:36:13	@dave	The opposite of salt in chemistry is a base. 
+2023-11-08 04:36:18	@knivey	hmm
+2023-11-08 05:35:44	~Knio	-dave weechat command to connect to ssl server and not verify cert
+2023-11-08 05:35:44	@dave	Processing: weechat command to connect to ssl server and not verify cert
+2023-11-08 05:35:45	@dave	/server add <server name> -ssl -ssl_verify off 
+2023-11-08 05:37:45	~Knio	-dave weechat stop trying to reconnect to server
+2023-11-08 05:37:45	@dave	Processing: weechat stop trying to reconnect to server
+2023-11-08 05:37:46	@dave	Unfortunately, WeeChat is designed to automatically reconnect to a server if the connection is lost. To disable this behavior, you must manually disconnect from the server. You can do this by typing the /disconnect command in WeeChat. 
+2023-11-08 05:39:28	Knio1	moo
+2023-11-08 05:42:27	-->	Knio1 (tom@ec2-35-93-43-112.us-west-2.compute.amazonaws.com) has joined #deviate
+2023-11-08 05:42:27	--	Topic for #deviate is "never fuck up, never surrender! | zero nines, one 100 | 5 seconds of scheduled downtime upcoming whenever I feel like it | this is a safe space for colossal cocks | merry xmas card photo team-deviate https://i.imgur.com/JqTErcf.jpg"
+2023-11-08 05:42:27	--	Topic set by Knio on Sun, 05 Nov 2023 22:24:50
+2023-11-08 05:42:27	--	Channel #deviate: 20 nicks (9 ops, 1 halfop, 0 voices, 10 normals)
+2023-11-08 05:42:29	--	Channel created on Sun, 26 Dec 2021 22:34:27
+2023-11-08 05:42:35	Knio1	hm
+2023-11-08 05:43:13	-->	Knio (tom@ec2-35-93-43-112.us-west-2.compute.amazonaws.com) has joined #deviate
+2023-11-08 05:43:13	--	Mode #deviate [+nt] by irc.zkpq.ca
+2023-11-08 05:43:13	--	Channel #deviate: 1 nick (1 op, 0 halfops, 0 voices, 0 normals)
+2023-11-08 05:43:15	--	Channel created on Wed, 08 Nov 2023 05:43:13
+2023-11-08 05:43:41	--	Mode #deviate [+szG] by Knio
+2023-11-08 05:43:41	--	Mode #deviate [+Z] by irc.zkpq.ca
+2023-11-08 05:44:00	--	Mode #deviate [+l 80085] by Knio

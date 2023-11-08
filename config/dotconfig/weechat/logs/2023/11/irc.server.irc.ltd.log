@@ -1,0 +1,243 @@
+2023-11-05 22:22:59	--	irc: connecting to server internetrelaychat.net/6697 (SSL)...
+2023-11-05 22:22:59	--	gnutls: receiving 3 certificates
+2023-11-05 22:22:59	--	 - certificate[1] info:
+2023-11-05 22:22:59	--	   - subject `CN=internetrelaychat.net', issuer `CN=R3,O=Let's Encrypt,C=US', serial 0x037288594c0ad20182f425a62a837a00742d, EC/ECDSA key 256 bits, signed using RSA-SHA256, activated `2023-10-22 15:39:14 UTC', expires `2024-01-20 15:39:13 UTC', pin-sha256="m6Oz1OYqAsQ/9WKLy97y/RzLk+xrcdcf8a4o4V1x3Ko="
+2023-11-05 22:22:59	--	 - certificate[2] info:
+2023-11-05 22:22:59	--	   - subject `CN=R3,O=Let's Encrypt,C=US', issuer `CN=ISRG Root X1,O=Internet Security Research Group,C=US', serial 0x00912b084acf0c18a753f6d62e25a75f5a, RSA key 2048 bits, signed using RSA-SHA256, activated `2020-09-04 00:00:00 UTC', expires `2025-09-15 16:00:00 UTC', pin-sha256="jQJTbIh0grw0/1TkHSumWb+Fs0Ggogr621gT3PvPKG0="
+2023-11-05 22:22:59	--	 - certificate[3] info:
+2023-11-05 22:22:59	--	   - subject `CN=ISRG Root X1,O=Internet Security Research Group,C=US', issuer `CN=DST Root CA X3,O=Digital Signature Trust Co.', serial 0x4001772137d4e942b8ee76aa3c640ab7, RSA key 4096 bits, signed using RSA-SHA256, activated `2021-01-20 19:14:03 UTC', expires `2024-09-30 18:14:03 UTC', pin-sha256="C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M="
+2023-11-05 22:22:59	--	gnutls: peer's certificate is trusted
+2023-11-05 22:22:59	--	irc: connected to internetrelaychat.net/6697 (216.238.82.178)
+2023-11-05 22:23:00	--	irc: client capability, server supports: unrealircd.org/link-security=2 unrealircd.org/plaintext-policy=user=allow,oper=warn,server=warn unrealircd.org/history-storage=memory away-notify invite-notify extended-join userhost-in-names multi-prefix cap-notify setname tls chghost account-notify message-tags batch server-time account-tag echo-message labeled-response draft/chathistory extended-monitor unrealircd.org/json-log
+2023-11-05 22:23:00	--	irc: client capability, requesting: multi-prefix server-time
+2023-11-05 22:23:00	--	irc: nickname "Knio" is already in use, trying nickname "Knio1"
+2023-11-05 22:23:00	--	irc: client capability, enabled: multi-prefix server-time
+2023-11-05 22:23:00	--	Welcome to the internetrelaychat IRC Network Knio1!tom@ec2-35-93-43-112.us-west-2.compute.amazonaws.com
+2023-11-05 22:23:00	--	Your host is internetrelaychat.net, running version UnrealIRCd-6.0.4.2
+2023-11-05 22:23:00	--	This server was created Thu Nov 24 2022 at 22:47:15 UTC
+2023-11-05 22:23:00	--	internetrelaychat.net UnrealIRCd-6.0.4.2 diopqrstwxzBDGHIRSTWZ beIacdfhiklmnopqrstvzCDGHKLMNOPQRSTVZ
+2023-11-05 22:23:00	--	AWAYLEN=307 BOT=B CASEMAPPING=ascii CHANLIMIT=#:69 CHANMODES=beI,fkL,lH,cdimnprstzCDGKMNOPQRSTVZ CHANNELLEN=32 CHANTYPES=# CHATHISTORY=50 CLIENTTAGDENY=*,-draft/typing,-typing,-draft/channel-context,-draft/reply DEAF=d ELIST=MNUCT EXCEPTS are supported by this server
+2023-11-05 22:23:00	--	EXTBAN=~,acfjmnpqrtCGOST INVEX KICKLEN=307 KNOCK MAP MAXCHANNELS=69 MAXLIST=b:60,e:60,I:60 MAXNICKLEN=30 MINNICKLEN=0 MODES=12 MONITOR=128 NAMELEN=50 are supported by this server
+2023-11-05 22:23:00	--	NAMESX NETWORK=internetrelaychat NICKLEN=30 PREFIX=(qaohv)~&@%+ QUITLEN=307 SAFELIST SILENCE=15 STATUSMSG=~&@%+ TARGMAX=DCCALLOW:,ISON:,JOIN:,KICK:4,KILL:,LIST:,NAMES:1,NOTICE:1,PART:,PRIVMSG:4,SAJOIN:,SAPART:,TAGMSG:1,USERHOST:,USERIP:,WATCH:,WHOIS:1,WHOWAS:1 TOPICLEN=360 UHNAMES USERIP are supported by this server
+2023-11-05 22:23:00	--	WALLCHOPS WATCH=128 WATCHOPTS=A WHOX are supported by this server
+2023-11-05 22:23:00	--	Clk-1CF5AA18.us-west-2.compute.amazonaws.com is now your displayed host
+2023-11-05 22:23:00	--	internetrelaychat.net: *** You are connected to internetrelaychat.net with TLSv1.3-TLS_CHACHA20_POLY1305_SHA256
+2023-11-05 22:23:00	--	There are 1 users and 34 invisible on 1 servers
+2023-11-05 22:23:00	--	2 operator(s) online
+2023-11-05 22:23:00	--	-3 unknown connection(s)
+2023-11-05 22:23:00	--	30 channels formed
+2023-11-05 22:23:00	--	I have 35 clients and 0 servers
+2023-11-05 22:23:00	--	35 53 Current local users 35, max 53
+2023-11-05 22:23:00	--	35 37 Current global users 35, max 37
+2023-11-05 22:23:00	--	- internetrelaychat.net Message of the Day -
+2023-11-05 22:23:00	--	- 25/11/2022 0:31
+2023-11-05 22:23:00	--	-                                                                                
+2023-11-05 22:23:00	--	-                                                                                
+2023-11-05 22:23:00	--	-                                                                             
+2023-11-05 22:23:00	--	-                                                                               
+2023-11-05 22:23:00	--	-           ▀▀▀ ▄ ▀▀▀▄▄▀▄▄▄▄▄▄▄▄▄▄ ▀▄   ▀▀  ▄▄▄▀▀▄▄▄▄▄▄▄▄▄▄▄▄▀▀▀      
+2023-11-05 22:23:00	--	- ▀▀▀▀▀▀▀▀     ▀      ▀▀            ▀▀▀▀▀▄ ▀   ▀▀                     ▀▀▄
+2023-11-05 22:23:00	--	-                ▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀                          ▀
+2023-11-05 22:23:00	--	-    ▀▀▀▀▀                                                          ▀▀▀▀       ▀▀▀
+2023-11-05 22:23:00	--	-       ▀▄▄▄▄▄▄▄                                                            ▀▀▀▀▀▀
+2023-11-05 22:23:00	--	-  ▄▄ ▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄                    
+2023-11-05 22:23:00	--	- ▄▄     ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀                ▄▄▄▄▄▄▄▄▄   ▄
+2023-11-05 22:23:00	--	-   ▀▀ ▄▄▄▄▄▄▄▄▄▄▄▄▄                                      ▀▀▀▀▀▀▀▀
+2023-11-05 22:23:00	--	-                                                                      ▀▀▀▀
+2023-11-05 22:23:00	--	-       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄▄▄▄▄▄▄                     ▀▀▀▀▀
+2023-11-05 22:23:00	--	-  ▄▄▄                                                         ▄▄▄▄▄▄           
+2023-11-05 22:23:00	--	-                                                                             ▄▄▄▄
+2023-11-05 22:23:00	--	-                                                                      
+2023-11-05 22:23:00	--	-                    ▀▀▀▀▀▀▀▀▀▀▀▀▀▀       ▀▀▀▀▀▀▀▀▀                          
+2023-11-05 22:23:00	--	-       ▀▀              ▀▀▀▀▀     ▀▀▀    ▀▀▀▀▀▀▀▀▀▀▀▀▀▀                      
+2023-11-05 22:23:00	--	-   ▀          ▀▀▀▀▀▀▀▀▀                               ▀▀▀▀▀                 
+2023-11-05 22:23:00	--	- ▀      ▀▀▀      ▀   ▄▄▄▄▄▄▄        ▄▄  ▄▄▄▄▄▄▄▄▄        ▀      ▀▀▀   ▀▀▀
+2023-11-05 22:23:00	--	-    ▀▀      ▄▄▄                                        ▄▄▄▄▄         ▀▀▀  ▀▀
+2023-11-05 22:23:00	--	- ▀    ▄▄▄                      ▄▄▄▄▄▄▄▄▄▄▄▄▄                    ▄▄▄▄     ▀▀▀  ▀▀▀
+2023-11-05 22:23:00	--	-  ▄▄         ▄▄                                                            ▄▄▄▄▄▄
+2023-11-05 22:23:00	--	-   ▄▄▄▄▄▄                                                   ▄▄▄▄▀▄▄
+2023-11-05 22:23:00	--	-                 ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄          ▄▄         
+2023-11-05 22:23:00	--	-       ▄▄▄▄▄             ▀▀▀▀▀▀▀▀▀▀▀▀                           ▄▄          ▄▄▄
+2023-11-05 22:23:00	--	-   ▄▄▄           ▀▀▀▀                       ▀▀▀▀▀▀                    ▄▄▄▄▄▄▄
+2023-11-05 22:23:00	--	- ▄       ▀  ▀▀                   ▄▄▄▄                ▀▀▀▀▀▀                     ▄
+2023-11-05 22:23:00	--	-      ▀▀            ▄▄          ▄▄▄▄▄       ▄▄▄▄▄ ▄▄            ▀▀▀▀▀
+2023-11-05 22:23:00	--	-  ▀▀       ▄▄▄▄▄▄▄          ▄▄▄▀▀▀ ▀    ▄▀               ▄▄▄▄▄▄▄▄ ▄▄▄▄ ▀▀▀
+2023-11-05 22:23:00	--	-         ▄                    ▀   ▄▄▄▄▄                                 ▄▄
+2023-11-05 22:23:00	--	-                                  ▄▄▄▄▄▄    ▀▀              ▀ ▄ ▀▀▀▀  ▀▀▀▀ ▄
+2023-11-05 22:23:00	--	-     ▄                               ▄   ▄                 ▄▀▀▀ ▄▄▄▄  ▀▀  ▀▀ ▄
+2023-11-05 22:23:00	--	- ▄▄▄▄▄                             ▄ ▄ ▄                 ▄ ▀▀ ▄  ▄▄         ▄
+2023-11-05 22:23:00	--	-     ▄▄      ▄▄▄▄▄              ▀ ▀ ▀ ▀                   ▀ ▄▀▀▄   ▀          ▀
+2023-11-05 22:23:00	--	-     ▄▄                ▄▄▄   ▄    ▀   ▀▀                  ▄      ▀ ▀▄  ▀▀▀▀▄▀  
+2023-11-05 22:23:00	--	-                            ▀▀▄     ▄▄▄   ▄▄▄▀▀▀▀▀▀▀▀▀         ▀  ▄▀▀▄ ▀   ▀  ▀
+2023-11-05 22:23:00	--	-                  ▀▀▀             ▀      ▀▀▀▀            ▀▀▀▀   ▄ ▄▄ ▀ 
+2023-11-05 22:23:00	--	-                     ▀▀▀        ▄▄▄ ▄     ▀▀▀            ▀▀       ▄  ▄▄ ▀▀▄ ▀ 
+2023-11-05 22:23:00	--	-                     ▄▄▄ ▀           ▄▄▄▄ ▄▄  ▀         ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▄▄▀▀▄▄    
+2023-11-05 22:23:00	--	-   ▀▀▀▀                                    ▄    ▄▄   ▄▄▀▄▄   ▀▀▀  ▀▄▄▄▄▄
+2023-11-05 22:23:00	--	-           ▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀           ▄▄▄▄▄▄▄▄            
+2023-11-05 22:23:00	--	End of /MOTD command.
+2023-11-05 22:23:00	--	User mode [+iwxzG] by Knio1
+2023-11-05 22:23:00	--	User mode [+tx] by Knio1
+2023-11-05 22:23:00	--	internetrelaychat.net: *** Your vhost has been changed to Knio1/internetrelaychat
+2023-11-05 22:23:00	--	Knio1/internetrelaychat is now your displayed host
+2023-11-08 05:42:17	--	irc: connecting to server internetrelaychat.net/6697 (SSL)...
+2023-11-08 05:42:18	--	gnutls: receiving 3 certificates
+2023-11-08 05:42:18	--	 - certificate[1] info:
+2023-11-08 05:42:18	--	   - subject `CN=internetrelaychat.net', issuer `CN=R3,O=Let's Encrypt,C=US', serial 0x037288594c0ad20182f425a62a837a00742d, EC/ECDSA key 256 bits, signed using RSA-SHA256, activated `2023-10-22 15:39:14 UTC', expires `2024-01-20 15:39:13 UTC', pin-sha256="m6Oz1OYqAsQ/9WKLy97y/RzLk+xrcdcf8a4o4V1x3Ko="
+2023-11-08 05:42:18	--	 - certificate[2] info:
+2023-11-08 05:42:18	--	   - subject `CN=R3,O=Let's Encrypt,C=US', issuer `CN=ISRG Root X1,O=Internet Security Research Group,C=US', serial 0x00912b084acf0c18a753f6d62e25a75f5a, RSA key 2048 bits, signed using RSA-SHA256, activated `2020-09-04 00:00:00 UTC', expires `2025-09-15 16:00:00 UTC', pin-sha256="jQJTbIh0grw0/1TkHSumWb+Fs0Ggogr621gT3PvPKG0="
+2023-11-08 05:42:18	--	 - certificate[3] info:
+2023-11-08 05:42:18	--	   - subject `CN=ISRG Root X1,O=Internet Security Research Group,C=US', issuer `CN=DST Root CA X3,O=Digital Signature Trust Co.', serial 0x4001772137d4e942b8ee76aa3c640ab7, RSA key 4096 bits, signed using RSA-SHA256, activated `2021-01-20 19:14:03 UTC', expires `2024-09-30 18:14:03 UTC', pin-sha256="C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M="
+2023-11-08 05:42:18	--	gnutls: peer's certificate is trusted
+2023-11-08 05:42:18	--	irc: connected to internetrelaychat.net/6697 (216.238.82.178)
+2023-11-08 05:42:19	--	irc: client capability, server supports: unrealircd.org/link-security=2 unrealircd.org/plaintext-policy=user=allow,oper=warn,server=warn unrealircd.org/history-storage=memory away-notify invite-notify extended-join userhost-in-names multi-prefix cap-notify setname tls chghost account-notify message-tags batch server-time account-tag echo-message labeled-response draft/chathistory extended-monitor unrealircd.org/json-log
+2023-11-08 05:42:19	--	irc: client capability, requesting: multi-prefix server-time
+2023-11-08 05:42:19	--	irc: nickname "Knio" is already in use, trying nickname "Knio1"
+2023-11-08 05:42:19	--	irc: client capability, enabled: multi-prefix server-time
+2023-11-08 05:42:19	--	Welcome to the internetrelaychat IRC Network Knio1!tom@ec2-35-93-43-112.us-west-2.compute.amazonaws.com
+2023-11-08 05:42:19	--	Your host is internetrelaychat.net, running version UnrealIRCd-6.0.4.2
+2023-11-08 05:42:19	--	This server was created Thu Nov 24 2022 at 22:47:15 UTC
+2023-11-08 05:42:19	--	internetrelaychat.net UnrealIRCd-6.0.4.2 diopqrstwxzBDGHIRSTWZ beIacdfhiklmnopqrstvzCDGHKLMNOPQRSTVZ
+2023-11-08 05:42:19	--	AWAYLEN=307 BOT=B CASEMAPPING=ascii CHANLIMIT=#:69 CHANMODES=beI,fkL,lH,cdimnprstzCDGKMNOPQRSTVZ CHANNELLEN=32 CHANTYPES=# CHATHISTORY=50 CLIENTTAGDENY=*,-draft/typing,-typing,-draft/channel-context,-draft/reply DEAF=d ELIST=MNUCT EXCEPTS are supported by this server
+2023-11-08 05:42:19	--	EXTBAN=~,acfjmnpqrtCGOST INVEX KICKLEN=307 KNOCK MAP MAXCHANNELS=69 MAXLIST=b:60,e:60,I:60 MAXNICKLEN=30 MINNICKLEN=0 MODES=12 MONITOR=128 NAMELEN=50 are supported by this server
+2023-11-08 05:42:19	--	NAMESX NETWORK=internetrelaychat NICKLEN=30 PREFIX=(qaohv)~&@%+ QUITLEN=307 SAFELIST SILENCE=15 STATUSMSG=~&@%+ TARGMAX=DCCALLOW:,ISON:,JOIN:,KICK:4,KILL:,LIST:,NAMES:1,NOTICE:1,PART:,PRIVMSG:4,SAJOIN:,SAPART:,TAGMSG:1,USERHOST:,USERIP:,WATCH:,WHOIS:1,WHOWAS:1 TOPICLEN=360 UHNAMES USERIP are supported by this server
+2023-11-08 05:42:19	--	WALLCHOPS WATCH=128 WATCHOPTS=A WHOX are supported by this server
+2023-11-08 05:42:19	--	Clk-1CF5AA18.us-west-2.compute.amazonaws.com is now your displayed host
+2023-11-08 05:42:19	--	internetrelaychat.net: *** You are connected to internetrelaychat.net with TLSv1.3-TLS_CHACHA20_POLY1305_SHA256
+2023-11-08 05:42:19	--	There are 1 users and 34 invisible on 1 servers
+2023-11-08 05:42:19	--	2 operator(s) online
+2023-11-08 05:42:19	--	-3 unknown connection(s)
+2023-11-08 05:42:19	--	30 channels formed
+2023-11-08 05:42:19	--	I have 35 clients and 0 servers
+2023-11-08 05:42:19	--	35 53 Current local users 35, max 53
+2023-11-08 05:42:19	--	35 37 Current global users 35, max 37
+2023-11-08 05:42:19	--	- internetrelaychat.net Message of the Day -
+2023-11-08 05:42:19	--	- 25/11/2022 0:31
+2023-11-08 05:42:19	--	-                                                                                
+2023-11-08 05:42:19	--	-                                                                                
+2023-11-08 05:42:19	--	-                                                                             
+2023-11-08 05:42:19	--	-                                                                               
+2023-11-08 05:42:19	--	-           ▀▀▀ ▄ ▀▀▀▄▄▀▄▄▄▄▄▄▄▄▄▄ ▀▄   ▀▀  ▄▄▄▀▀▄▄▄▄▄▄▄▄▄▄▄▄▀▀▀      
+2023-11-08 05:42:19	--	- ▀▀▀▀▀▀▀▀     ▀      ▀▀            ▀▀▀▀▀▄ ▀   ▀▀                     ▀▀▄
+2023-11-08 05:42:19	--	-                ▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀                          ▀
+2023-11-08 05:42:19	--	-    ▀▀▀▀▀                                                          ▀▀▀▀       ▀▀▀
+2023-11-08 05:42:19	--	-       ▀▄▄▄▄▄▄▄                                                            ▀▀▀▀▀▀
+2023-11-08 05:42:19	--	-  ▄▄ ▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄                    
+2023-11-08 05:42:19	--	- ▄▄     ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀                ▄▄▄▄▄▄▄▄▄   ▄
+2023-11-08 05:42:19	--	-   ▀▀ ▄▄▄▄▄▄▄▄▄▄▄▄▄                                      ▀▀▀▀▀▀▀▀
+2023-11-08 05:42:19	--	-                                                                      ▀▀▀▀
+2023-11-08 05:42:19	--	-       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄▄▄▄▄▄▄                     ▀▀▀▀▀
+2023-11-08 05:42:19	--	-  ▄▄▄                                                         ▄▄▄▄▄▄           
+2023-11-08 05:42:19	--	-                                                                             ▄▄▄▄
+2023-11-08 05:42:19	--	-                                                                      
+2023-11-08 05:42:19	--	-                    ▀▀▀▀▀▀▀▀▀▀▀▀▀▀       ▀▀▀▀▀▀▀▀▀                          
+2023-11-08 05:42:19	--	-       ▀▀              ▀▀▀▀▀     ▀▀▀    ▀▀▀▀▀▀▀▀▀▀▀▀▀▀                      
+2023-11-08 05:42:19	--	-   ▀          ▀▀▀▀▀▀▀▀▀                               ▀▀▀▀▀                 
+2023-11-08 05:42:19	--	- ▀      ▀▀▀      ▀   ▄▄▄▄▄▄▄        ▄▄  ▄▄▄▄▄▄▄▄▄        ▀      ▀▀▀   ▀▀▀
+2023-11-08 05:42:19	--	-    ▀▀      ▄▄▄                                        ▄▄▄▄▄         ▀▀▀  ▀▀
+2023-11-08 05:42:19	--	- ▀    ▄▄▄                      ▄▄▄▄▄▄▄▄▄▄▄▄▄                    ▄▄▄▄     ▀▀▀  ▀▀▀
+2023-11-08 05:42:19	--	-  ▄▄         ▄▄                                                            ▄▄▄▄▄▄
+2023-11-08 05:42:19	--	-   ▄▄▄▄▄▄                                                   ▄▄▄▄▀▄▄
+2023-11-08 05:42:19	--	-                 ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄          ▄▄         
+2023-11-08 05:42:19	--	-       ▄▄▄▄▄             ▀▀▀▀▀▀▀▀▀▀▀▀                           ▄▄          ▄▄▄
+2023-11-08 05:42:19	--	-   ▄▄▄           ▀▀▀▀                       ▀▀▀▀▀▀                    ▄▄▄▄▄▄▄
+2023-11-08 05:42:19	--	- ▄       ▀  ▀▀                   ▄▄▄▄                ▀▀▀▀▀▀                     ▄
+2023-11-08 05:42:19	--	-      ▀▀            ▄▄          ▄▄▄▄▄       ▄▄▄▄▄ ▄▄            ▀▀▀▀▀
+2023-11-08 05:42:19	--	-  ▀▀       ▄▄▄▄▄▄▄          ▄▄▄▀▀▀ ▀    ▄▀               ▄▄▄▄▄▄▄▄ ▄▄▄▄ ▀▀▀
+2023-11-08 05:42:19	--	-         ▄                    ▀   ▄▄▄▄▄                                 ▄▄
+2023-11-08 05:42:19	--	-                                  ▄▄▄▄▄▄    ▀▀              ▀ ▄ ▀▀▀▀  ▀▀▀▀ ▄
+2023-11-08 05:42:19	--	-     ▄                               ▄   ▄                 ▄▀▀▀ ▄▄▄▄  ▀▀  ▀▀ ▄
+2023-11-08 05:42:19	--	- ▄▄▄▄▄                             ▄ ▄ ▄                 ▄ ▀▀ ▄  ▄▄         ▄
+2023-11-08 05:42:19	--	-     ▄▄      ▄▄▄▄▄              ▀ ▀ ▀ ▀                   ▀ ▄▀▀▄   ▀          ▀
+2023-11-08 05:42:19	--	-     ▄▄                ▄▄▄   ▄    ▀   ▀▀                  ▄      ▀ ▀▄  ▀▀▀▀▄▀  
+2023-11-08 05:42:19	--	-                            ▀▀▄     ▄▄▄   ▄▄▄▀▀▀▀▀▀▀▀▀         ▀  ▄▀▀▄ ▀   ▀  ▀
+2023-11-08 05:42:19	--	-                  ▀▀▀             ▀      ▀▀▀▀            ▀▀▀▀   ▄ ▄▄ ▀ 
+2023-11-08 05:42:19	--	-                     ▀▀▀        ▄▄▄ ▄     ▀▀▀            ▀▀       ▄  ▄▄ ▀▀▄ ▀ 
+2023-11-08 05:42:19	--	-                     ▄▄▄ ▀           ▄▄▄▄ ▄▄  ▀         ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▄▄▀▀▄▄    
+2023-11-08 05:42:19	--	-   ▀▀▀▀                                    ▄    ▄▄   ▄▄▀▄▄   ▀▀▀  ▀▄▄▄▄▄
+2023-11-08 05:42:19	--	-           ▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀           ▄▄▄▄▄▄▄▄            
+2023-11-08 05:42:19	--	End of /MOTD command.
+2023-11-08 05:42:19	--	User mode [+iwxzG] by Knio1
+2023-11-08 05:42:19	--	User mode [+tx] by Knio1
+2023-11-08 05:42:19	--	internetrelaychat.net: *** Your vhost has been changed to Knio1/internetrelaychat
+2023-11-08 05:42:19	--	Knio1/internetrelaychat is now your displayed host
+2023-11-08 05:43:01	--	irc: connecting to server internetrelaychat.net/6697 (SSL)...
+2023-11-08 05:43:01	--	gnutls: receiving 3 certificates
+2023-11-08 05:43:01	--	 - certificate[1] info:
+2023-11-08 05:43:01	--	   - subject `CN=internetrelaychat.net', issuer `CN=R3,O=Let's Encrypt,C=US', serial 0x037288594c0ad20182f425a62a837a00742d, EC/ECDSA key 256 bits, signed using RSA-SHA256, activated `2023-10-22 15:39:14 UTC', expires `2024-01-20 15:39:13 UTC', pin-sha256="m6Oz1OYqAsQ/9WKLy97y/RzLk+xrcdcf8a4o4V1x3Ko="
+2023-11-08 05:43:01	--	 - certificate[2] info:
+2023-11-08 05:43:01	--	   - subject `CN=R3,O=Let's Encrypt,C=US', issuer `CN=ISRG Root X1,O=Internet Security Research Group,C=US', serial 0x00912b084acf0c18a753f6d62e25a75f5a, RSA key 2048 bits, signed using RSA-SHA256, activated `2020-09-04 00:00:00 UTC', expires `2025-09-15 16:00:00 UTC', pin-sha256="jQJTbIh0grw0/1TkHSumWb+Fs0Ggogr621gT3PvPKG0="
+2023-11-08 05:43:01	--	 - certificate[3] info:
+2023-11-08 05:43:01	--	   - subject `CN=ISRG Root X1,O=Internet Security Research Group,C=US', issuer `CN=DST Root CA X3,O=Digital Signature Trust Co.', serial 0x4001772137d4e942b8ee76aa3c640ab7, RSA key 4096 bits, signed using RSA-SHA256, activated `2021-01-20 19:14:03 UTC', expires `2024-09-30 18:14:03 UTC', pin-sha256="C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M="
+2023-11-08 05:43:01	--	gnutls: peer's certificate is trusted
+2023-11-08 05:43:01	--	irc: connected to internetrelaychat.net/6697 (216.238.82.178)
+2023-11-08 05:43:02	--	irc: client capability, server supports: unrealircd.org/link-security=2 unrealircd.org/plaintext-policy=user=allow,oper=warn,server=warn unrealircd.org/history-storage=memory away-notify invite-notify extended-join userhost-in-names multi-prefix cap-notify setname tls chghost account-notify message-tags batch server-time account-tag echo-message labeled-response draft/chathistory extended-monitor unrealircd.org/json-log
+2023-11-08 05:43:02	--	irc: client capability, requesting: multi-prefix server-time
+2023-11-08 05:43:02	--	irc: nickname "Knio" is already in use, trying nickname "Knio1"
+2023-11-08 05:43:02	--	irc: client capability, enabled: multi-prefix server-time
+2023-11-08 05:43:02	--	Welcome to the internetrelaychat IRC Network Knio1!tom@ec2-35-93-43-112.us-west-2.compute.amazonaws.com
+2023-11-08 05:43:02	--	Your host is internetrelaychat.net, running version UnrealIRCd-6.0.4.2
+2023-11-08 05:43:02	--	This server was created Thu Nov 24 2022 at 22:47:15 UTC
+2023-11-08 05:43:02	--	internetrelaychat.net UnrealIRCd-6.0.4.2 diopqrstwxzBDGHIRSTWZ beIacdfhiklmnopqrstvzCDGHKLMNOPQRSTVZ
+2023-11-08 05:43:02	--	AWAYLEN=307 BOT=B CASEMAPPING=ascii CHANLIMIT=#:69 CHANMODES=beI,fkL,lH,cdimnprstzCDGKMNOPQRSTVZ CHANNELLEN=32 CHANTYPES=# CHATHISTORY=50 CLIENTTAGDENY=*,-draft/typing,-typing,-draft/channel-context,-draft/reply DEAF=d ELIST=MNUCT EXCEPTS are supported by this server
+2023-11-08 05:43:02	--	EXTBAN=~,acfjmnpqrtCGOST INVEX KICKLEN=307 KNOCK MAP MAXCHANNELS=69 MAXLIST=b:60,e:60,I:60 MAXNICKLEN=30 MINNICKLEN=0 MODES=12 MONITOR=128 NAMELEN=50 are supported by this server
+2023-11-08 05:43:02	--	NAMESX NETWORK=internetrelaychat NICKLEN=30 PREFIX=(qaohv)~&@%+ QUITLEN=307 SAFELIST SILENCE=15 STATUSMSG=~&@%+ TARGMAX=DCCALLOW:,ISON:,JOIN:,KICK:4,KILL:,LIST:,NAMES:1,NOTICE:1,PART:,PRIVMSG:4,SAJOIN:,SAPART:,TAGMSG:1,USERHOST:,USERIP:,WATCH:,WHOIS:1,WHOWAS:1 TOPICLEN=360 UHNAMES USERIP are supported by this server
+2023-11-08 05:43:02	--	WALLCHOPS WATCH=128 WATCHOPTS=A WHOX are supported by this server
+2023-11-08 05:43:02	--	Clk-1CF5AA18.us-west-2.compute.amazonaws.com is now your displayed host
+2023-11-08 05:43:02	--	internetrelaychat.net: *** You are connected to internetrelaychat.net with TLSv1.3-TLS_CHACHA20_POLY1305_SHA256
+2023-11-08 05:43:02	--	There are 1 users and 34 invisible on 1 servers
+2023-11-08 05:43:02	--	2 operator(s) online
+2023-11-08 05:43:02	--	-3 unknown connection(s)
+2023-11-08 05:43:02	--	30 channels formed
+2023-11-08 05:43:02	--	I have 35 clients and 0 servers
+2023-11-08 05:43:02	--	35 53 Current local users 35, max 53
+2023-11-08 05:43:02	--	35 37 Current global users 35, max 37
+2023-11-08 05:43:02	--	- internetrelaychat.net Message of the Day -
+2023-11-08 05:43:02	--	- 25/11/2022 0:31
+2023-11-08 05:43:02	--	-                                                                                
+2023-11-08 05:43:02	--	-                                                                                
+2023-11-08 05:43:02	--	-                                                                             
+2023-11-08 05:43:02	--	-                                                                               
+2023-11-08 05:43:02	--	-           ▀▀▀ ▄ ▀▀▀▄▄▀▄▄▄▄▄▄▄▄▄▄ ▀▄   ▀▀  ▄▄▄▀▀▄▄▄▄▄▄▄▄▄▄▄▄▀▀▀      
+2023-11-08 05:43:02	--	- ▀▀▀▀▀▀▀▀     ▀      ▀▀            ▀▀▀▀▀▄ ▀   ▀▀                     ▀▀▄
+2023-11-08 05:43:02	--	-                ▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀                          ▀
+2023-11-08 05:43:02	--	-    ▀▀▀▀▀                                                          ▀▀▀▀       ▀▀▀
+2023-11-08 05:43:02	--	-       ▀▄▄▄▄▄▄▄                                                            ▀▀▀▀▀▀
+2023-11-08 05:43:02	--	-  ▄▄ ▄▄▄       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄      ▄▄▄▄▄▄▄                    
+2023-11-08 05:43:02	--	- ▄▄     ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀                ▄▄▄▄▄▄▄▄▄   ▄
+2023-11-08 05:43:02	--	-   ▀▀ ▄▄▄▄▄▄▄▄▄▄▄▄▄                                      ▀▀▀▀▀▀▀▀
+2023-11-08 05:43:02	--	-                                                                      ▀▀▀▀
+2023-11-08 05:43:02	--	-       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄                  ▄▄▄▄▄▄▄▄                     ▀▀▀▀▀
+2023-11-08 05:43:02	--	-  ▄▄▄                                                         ▄▄▄▄▄▄           
+2023-11-08 05:43:02	--	-                                                                             ▄▄▄▄
+2023-11-08 05:43:02	--	-                                                                      
+2023-11-08 05:43:02	--	-                    ▀▀▀▀▀▀▀▀▀▀▀▀▀▀       ▀▀▀▀▀▀▀▀▀                          
+2023-11-08 05:43:02	--	-       ▀▀              ▀▀▀▀▀     ▀▀▀    ▀▀▀▀▀▀▀▀▀▀▀▀▀▀                      
+2023-11-08 05:43:02	--	-   ▀          ▀▀▀▀▀▀▀▀▀                               ▀▀▀▀▀                 
+2023-11-08 05:43:02	--	- ▀      ▀▀▀      ▀   ▄▄▄▄▄▄▄        ▄▄  ▄▄▄▄▄▄▄▄▄        ▀      ▀▀▀   ▀▀▀
+2023-11-08 05:43:02	--	-    ▀▀      ▄▄▄                                        ▄▄▄▄▄         ▀▀▀  ▀▀
+2023-11-08 05:43:02	--	- ▀    ▄▄▄                      ▄▄▄▄▄▄▄▄▄▄▄▄▄                    ▄▄▄▄     ▀▀▀  ▀▀▀
+2023-11-08 05:43:02	--	-  ▄▄         ▄▄                                                            ▄▄▄▄▄▄
+2023-11-08 05:43:02	--	-   ▄▄▄▄▄▄                                                   ▄▄▄▄▀▄▄
+2023-11-08 05:43:02	--	-                 ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄          ▄▄         
+2023-11-08 05:43:02	--	-       ▄▄▄▄▄             ▀▀▀▀▀▀▀▀▀▀▀▀                           ▄▄          ▄▄▄
+2023-11-08 05:43:02	--	-   ▄▄▄           ▀▀▀▀                       ▀▀▀▀▀▀                    ▄▄▄▄▄▄▄
+2023-11-08 05:43:02	--	- ▄       ▀  ▀▀                   ▄▄▄▄                ▀▀▀▀▀▀                     ▄
+2023-11-08 05:43:02	--	-      ▀▀            ▄▄          ▄▄▄▄▄       ▄▄▄▄▄ ▄▄            ▀▀▀▀▀
+2023-11-08 05:43:02	--	-  ▀▀       ▄▄▄▄▄▄▄          ▄▄▄▀▀▀ ▀    ▄▀               ▄▄▄▄▄▄▄▄ ▄▄▄▄ ▀▀▀
+2023-11-08 05:43:02	--	-         ▄                    ▀   ▄▄▄▄▄                                 ▄▄
+2023-11-08 05:43:02	--	-                                  ▄▄▄▄▄▄    ▀▀              ▀ ▄ ▀▀▀▀  ▀▀▀▀ ▄
+2023-11-08 05:43:02	--	-     ▄                               ▄   ▄                 ▄▀▀▀ ▄▄▄▄  ▀▀  ▀▀ ▄
+2023-11-08 05:43:02	--	- ▄▄▄▄▄                             ▄ ▄ ▄                 ▄ ▀▀ ▄  ▄▄         ▄
+2023-11-08 05:43:02	--	-     ▄▄      ▄▄▄▄▄              ▀ ▀ ▀ ▀                   ▀ ▄▀▀▄   ▀          ▀
+2023-11-08 05:43:02	--	-     ▄▄                ▄▄▄   ▄    ▀   ▀▀                  ▄      ▀ ▀▄  ▀▀▀▀▄▀  
+2023-11-08 05:43:02	--	-                            ▀▀▄     ▄▄▄   ▄▄▄▀▀▀▀▀▀▀▀▀         ▀  ▄▀▀▄ ▀   ▀  ▀
+2023-11-08 05:43:02	--	-                  ▀▀▀             ▀      ▀▀▀▀            ▀▀▀▀   ▄ ▄▄ ▀ 
+2023-11-08 05:43:02	--	-                     ▀▀▀        ▄▄▄ ▄     ▀▀▀            ▀▀       ▄  ▄▄ ▀▀▄ ▀ 
+2023-11-08 05:43:02	--	-                     ▄▄▄ ▀           ▄▄▄▄ ▄▄  ▀         ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▄▄▀▀▄▄    
+2023-11-08 05:43:02	--	-   ▀▀▀▀                                    ▄    ▄▄   ▄▄▀▄▄   ▀▀▀  ▀▄▄▄▄▄
+2023-11-08 05:43:02	--	-           ▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀           ▄▄▄▄▄▄▄▄            
+2023-11-08 05:43:02	--	End of /MOTD command.
+2023-11-08 05:43:02	--	User mode [+iwxzG] by Knio1
+2023-11-08 05:43:02	--	User mode [+tx] by Knio1
+2023-11-08 05:43:02	--	internetrelaychat.net: *** Your vhost has been changed to Knio1/internetrelaychat
+2023-11-08 05:43:02	--	Knio1/internetrelaychat is now your displayed host

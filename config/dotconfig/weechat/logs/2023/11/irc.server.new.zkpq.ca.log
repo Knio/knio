@@ -1,0 +1,189 @@
+2023-11-08 05:30:46	--	irc: connecting to server new.zkpq.ca/6667...
+2023-11-08 05:30:46	--	irc: connected to new.zkpq.ca/6667 (35.93.43.112)
+2023-11-08 05:30:46	=!=	NON-TLS command received on TLS-only port. Check your connection settings.
+2023-11-08 05:30:55	=!=	irc: reading data on socket: error 104 Connection reset by peer
+2023-11-08 05:30:55	--	irc: disconnecting from server...
+2023-11-08 05:30:55	--	irc: disconnected from server
+2023-11-08 05:30:55	--	irc: reconnecting to server in 10 seconds
+2023-11-08 05:31:05	--	irc: reconnecting to server...
+2023-11-08 05:31:05	--	irc: connecting to server new.zkpq.ca/6667...
+2023-11-08 05:31:05	--	irc: connected to new.zkpq.ca/6667 (35.93.43.112)
+2023-11-08 05:31:05	=!=	NON-TLS command received on TLS-only port. Check your connection settings.
+2023-11-08 05:31:15	=!=	irc: reading data on socket: error 104 Connection reset by peer
+2023-11-08 05:31:15	--	irc: disconnecting from server...
+2023-11-08 05:31:15	--	irc: disconnected from server
+2023-11-08 05:31:15	--	irc: reconnecting to server in 20 seconds
+2023-11-08 05:31:24	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:31:24	--	gnutls: receiving 1 certificate
+2023-11-08 05:31:24	--	 - certificate[1] info:
+2023-11-08 05:31:24	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:31:24	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:31:24	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:31:24	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:31:24	=!=	irc: TLS handshake failed
+2023-11-08 05:31:24	=!=	irc: error: Error in the certificate.
+2023-11-08 05:31:24	--	irc: reconnecting to server in 10 seconds
+2023-11-08 05:31:34	--	irc: reconnecting to server...
+2023-11-08 05:31:34	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:31:34	--	gnutls: receiving 1 certificate
+2023-11-08 05:31:34	--	 - certificate[1] info:
+2023-11-08 05:31:34	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:31:34	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:31:34	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:31:34	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:31:34	=!=	irc: TLS handshake failed
+2023-11-08 05:31:34	=!=	irc: error: Error in the certificate.
+2023-11-08 05:31:34	--	irc: reconnecting to server in 20 seconds
+2023-11-08 05:31:54	--	irc: reconnecting to server...
+2023-11-08 05:31:54	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:31:54	--	gnutls: receiving 1 certificate
+2023-11-08 05:31:54	--	 - certificate[1] info:
+2023-11-08 05:31:54	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:31:54	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:31:54	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:31:54	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:31:54	=!=	irc: TLS handshake failed
+2023-11-08 05:31:54	=!=	irc: error: Error in the certificate.
+2023-11-08 05:31:54	--	irc: reconnecting to server in 40 seconds
+2023-11-08 05:32:34	--	irc: reconnecting to server...
+2023-11-08 05:32:34	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:32:34	--	gnutls: receiving 1 certificate
+2023-11-08 05:32:34	--	 - certificate[1] info:
+2023-11-08 05:32:34	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:32:34	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:32:34	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:32:34	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:32:34	=!=	irc: TLS handshake failed
+2023-11-08 05:32:34	=!=	irc: error: Error in the certificate.
+2023-11-08 05:32:34	--	irc: reconnecting to server in 1 minute, 20 seconds
+2023-11-08 05:33:54	--	irc: reconnecting to server...
+2023-11-08 05:33:54	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:33:54	--	gnutls: receiving 1 certificate
+2023-11-08 05:33:54	--	 - certificate[1] info:
+2023-11-08 05:33:54	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:33:54	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:33:54	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:33:54	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:33:54	=!=	irc: TLS handshake failed
+2023-11-08 05:33:54	=!=	irc: error: Error in the certificate.
+2023-11-08 05:33:54	--	irc: reconnecting to server in 2 minutes, 40 seconds
+2023-11-08 05:35:13	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:35:13	--	gnutls: receiving 1 certificate
+2023-11-08 05:35:13	--	 - certificate[1] info:
+2023-11-08 05:35:13	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:35:13	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:35:13	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:35:13	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:35:13	=!=	irc: TLS handshake failed
+2023-11-08 05:35:13	=!=	irc: error: Error in the certificate.
+2023-11-08 05:35:13	--	irc: reconnecting to server in 10 seconds
+2023-11-08 05:35:23	--	irc: reconnecting to server...
+2023-11-08 05:35:23	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:35:23	--	gnutls: receiving 1 certificate
+2023-11-08 05:35:23	--	 - certificate[1] info:
+2023-11-08 05:35:23	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:35:23	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:35:23	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:35:23	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:35:23	=!=	irc: TLS handshake failed
+2023-11-08 05:35:23	=!=	irc: error: Error in the certificate.
+2023-11-08 05:35:23	--	irc: reconnecting to server in 20 seconds
+2023-11-08 05:35:43	--	irc: reconnecting to server...
+2023-11-08 05:35:43	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:35:43	--	gnutls: receiving 1 certificate
+2023-11-08 05:35:43	--	 - certificate[1] info:
+2023-11-08 05:35:43	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:35:43	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:35:43	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:35:43	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:35:43	=!=	irc: TLS handshake failed
+2023-11-08 05:35:43	=!=	irc: error: Error in the certificate.
+2023-11-08 05:35:43	--	irc: reconnecting to server in 40 seconds
+2023-11-08 05:35:59	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:35:59	--	gnutls: receiving 1 certificate
+2023-11-08 05:35:59	--	 - certificate[1] info:
+2023-11-08 05:35:59	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:35:59	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:35:59	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:35:59	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:35:59	=!=	irc: TLS handshake failed
+2023-11-08 05:35:59	=!=	irc: error: Error in the certificate.
+2023-11-08 05:35:59	--	irc: reconnecting to server in 10 seconds
+2023-11-08 05:36:09	--	irc: reconnecting to server...
+2023-11-08 05:36:09	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:36:09	--	gnutls: receiving 1 certificate
+2023-11-08 05:36:09	--	 - certificate[1] info:
+2023-11-08 05:36:09	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:36:09	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:36:09	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:36:09	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:36:09	=!=	irc: TLS handshake failed
+2023-11-08 05:36:09	=!=	irc: error: Error in the certificate.
+2023-11-08 05:36:09	--	irc: reconnecting to server in 20 seconds
+2023-11-08 05:36:29	--	irc: reconnecting to server...
+2023-11-08 05:36:29	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:36:29	--	gnutls: receiving 1 certificate
+2023-11-08 05:36:29	--	 - certificate[1] info:
+2023-11-08 05:36:29	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:36:29	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:36:29	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:36:29	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:36:29	=!=	irc: TLS handshake failed
+2023-11-08 05:36:29	=!=	irc: error: Error in the certificate.
+2023-11-08 05:36:29	--	irc: reconnecting to server in 40 seconds
+2023-11-08 05:36:44	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:36:44	--	gnutls: receiving 1 certificate
+2023-11-08 05:36:44	--	 - certificate[1] info:
+2023-11-08 05:36:44	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:36:44	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:36:44	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:36:44	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:36:44	=!=	irc: TLS handshake failed
+2023-11-08 05:36:44	=!=	irc: error: Error in the certificate.
+2023-11-08 05:36:44	--	irc: reconnecting to server in 10 seconds
+2023-11-08 05:36:54	--	irc: reconnecting to server...
+2023-11-08 05:36:54	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:36:54	--	gnutls: receiving 1 certificate
+2023-11-08 05:36:54	--	 - certificate[1] info:
+2023-11-08 05:36:54	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:36:54	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:36:54	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:36:54	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:36:54	=!=	irc: TLS handshake failed
+2023-11-08 05:36:54	=!=	irc: error: Error in the certificate.
+2023-11-08 05:36:54	--	irc: reconnecting to server in 20 seconds
+2023-11-08 05:37:14	--	irc: reconnecting to server...
+2023-11-08 05:37:14	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:37:14	--	gnutls: receiving 1 certificate
+2023-11-08 05:37:14	--	 - certificate[1] info:
+2023-11-08 05:37:14	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:37:14	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:37:14	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:37:14	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:37:14	=!=	irc: TLS handshake failed
+2023-11-08 05:37:14	=!=	irc: error: Error in the certificate.
+2023-11-08 05:37:14	--	irc: reconnecting to server in 40 seconds
+2023-11-08 05:37:54	--	irc: reconnecting to server...
+2023-11-08 05:37:54	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:37:54	--	gnutls: receiving 1 certificate
+2023-11-08 05:37:54	--	 - certificate[1] info:
+2023-11-08 05:37:54	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:37:54	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:37:54	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:37:54	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:37:54	=!=	irc: TLS handshake failed
+2023-11-08 05:37:54	=!=	irc: error: Error in the certificate.
+2023-11-08 05:37:54	--	irc: reconnecting to server in 1 minute, 20 seconds
+2023-11-08 05:39:14	--	irc: reconnecting to server...
+2023-11-08 05:39:14	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:39:14	--	gnutls: receiving 1 certificate
+2023-11-08 05:39:14	--	 - certificate[1] info:
+2023-11-08 05:39:14	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:39:14	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:39:14	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:39:14	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:39:14	=!=	irc: TLS handshake failed
+2023-11-08 05:39:14	=!=	irc: error: Error in the certificate.
+2023-11-08 05:39:14	--	irc: reconnecting to server in 2 minutes, 40 seconds
+2023-11-08 05:39:24		irc: auto-reconnection is cancelled
+2023-11-08 05:39:24	--	irc: disconnected from server

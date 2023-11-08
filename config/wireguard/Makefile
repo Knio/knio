@@ -1,6 +1,7 @@
 ADDR = 10.87.0.1/24
 
-server_start: wg.conf
+server_start: wg.conf private.key public.key
+	chmod 600 *.key
 	sudo ip link add dev wg0 type wireguard
 	sudo wg setconf wg0 wg.conf
 	sudo wg set wg0 private-key private.key
@@ -11,17 +12,16 @@ server_start: wg.conf
 	sudo ip link set up dev wg0
 
 server_stop:
-	sudo iptables -D FORWARD -i wg0 -j ACCEPT
-	sudo iptables -D POSTROUTING -o ens5 -j MASQUERADE -t nat
-	sudo ip link set down dev wg0
-	sudo ip link del dev wg0
+	-sudo iptables -D FORWARD -i wg0 -j ACCEPT
+	-sudo iptables -D POSTROUTING -o ens5 -j MASQUERADE -t nat
+	-sudo ip link set down dev wg0
+	-sudo ip link del dev wg0
 
 wg.conf: wireguard.py
 	python3 wireguard.py server > $@
 
 private.key:
 	wg genkey > $@
-	chmod 600 *.key
 
 public.key: private.key
 	sudo wg pubkey < private.key > $@

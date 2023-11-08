@@ -1,0 +1,100 @@
+2023-11-05 22:22:59	--	irc: connecting to server irc.zkpq.ca/6667 (SSL)...
+2023-11-05 22:22:59	--	gnutls: receiving 1 certificate
+2023-11-05 22:22:59	--	 - certificate[1] info:
+2023-11-05 22:22:59	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-05 22:22:59	=!=	gnutls: the hostname in the certificate does NOT match "irc.zkpq.ca"
+2023-11-05 22:22:59	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-05 22:22:59	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-05 22:22:59	--	irc: connected to irc.zkpq.ca/6667 (54.186.50.116)
+2023-11-05 22:22:59	--	irc.zkpq.ca: *** Looking up your hostname...
+2023-11-05 22:22:59	--	irc.zkpq.ca: *** Found your hostname
+2023-11-05 22:23:00	--	irc: client capability, server supports: unrealircd.org/link-security=2 unrealircd.org/plaintext-policy=user=allow,oper=deny,server=deny unrealircd.org/history-storage=memory away-notify invite-notify extended-join userhost-in-names multi-prefix cap-notify setname tls chghost account-notify message-tags batch server-time account-tag echo-message labeled-response draft/chathistory draft/extended-monitor unrealircd.org/json-log
+2023-11-05 22:23:00	--	irc: client capability, requesting: multi-prefix server-time
+2023-11-05 22:23:00	--	irc: nickname "Knio" is already in use, trying nickname "Knio1"
+2023-11-05 22:23:00	--	irc: client capability, enabled: multi-prefix server-time
+2023-11-05 22:23:00	--	Welcome to the ZKPQ IRC Network Knio1!tom@ec2-35-93-43-112.us-west-2.compute.amazonaws.com
+2023-11-05 22:23:00	--	Your host is irc.zkpq.ca, running version UnrealIRCd-6.0.0
+2023-11-05 22:23:00	--	This server was created Sun Dec 26 2021 at 13:49:10 PST
+2023-11-05 22:23:00	--	irc.zkpq.ca UnrealIRCd-6.0.0 diopqrstwxzBDGHIRSTWZ beIacdfhiklmnopqrstvzCDGHKLMNOPQRSTVZ
+2023-11-05 22:23:00	--	AWAYLEN=307 BOT=B CASEMAPPING=ascii CHANLIMIT=#:10 CHANMODES=beI,fkL,lH,cdimnprstzCDGKMNOPQRSTVZ CHANNELLEN=32 CHANTYPES=# CHATHISTORY=50 CLIENTTAGDENY=*,-draft/typing,-typing,-draft/reply DEAF=d ELIST=MNUCT EXCEPTS are supported by this server
+2023-11-05 22:23:00	--	EXTBAN=~,acfjmnpqrtCGOST INVEX KICKLEN=307 KNOCK MAP MAXCHANNELS=10 MAXLIST=b:60,e:60,I:60 MAXNICKLEN=30 MINNICKLEN=0 MODES=12 MONITOR=128 NAMELEN=50 are supported by this server
+2023-11-05 22:23:00	--	NAMESX NETWORK=ZKPQ NICKLEN=30 PREFIX=(qaohv)~&@%+ QUITLEN=307 SAFELIST SILENCE=15 STATUSMSG=~&@%+ TARGMAX=DCCALLOW:,ISON:,JOIN:,KICK:4,KILL:,LIST:,NAMES:1,NOTICE:1,PART:,PRIVMSG:4,SAJOIN:,SAPART:,TAGMSG:1,USERHOST:,USERIP:,WATCH:,WHOIS:1,WHOWAS:1 TOPICLEN=360 UHNAMES USERIP are supported by this server
+2023-11-05 22:23:00	--	WALLCHOPS WATCH=128 WATCHOPTS=A WHOX are supported by this server
+2023-11-05 22:23:00	--	irc.zkpq.ca: *** You are connected to irc.zkpq.ca with TLSv1.3-TLS_CHACHA20_POLY1305_SHA256
+2023-11-05 22:23:00	--	There are 1 users and 19 invisible on 1 servers
+2023-11-05 22:23:00	--	1 operator(s) online
+2023-11-05 22:23:00	--	10 channels formed
+2023-11-05 22:23:00	--	I have 20 clients and 0 servers
+2023-11-05 22:23:00	--	20 26 Current local users 20, max 26
+2023-11-05 22:23:00	--	20 23 Current global users 20, max 23
+2023-11-05 22:23:00	--	MOTD File is missing
+2023-11-05 22:23:00	--	User mode [+iwz] by Knio1
+2023-11-05 22:24:09	--	No O-lines for your host
+2023-11-08 05:42:17	--	irc: connecting to server irc.zkpq.ca/6667 (SSL)...
+2023-11-08 05:42:17	--	gnutls: receiving 1 certificate
+2023-11-08 05:42:17	--	 - certificate[1] info:
+2023-11-08 05:42:17	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:42:17	=!=	gnutls: the hostname in the certificate does NOT match "irc.zkpq.ca"
+2023-11-08 05:42:17	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:42:17	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:42:17	--	irc: connected to irc.zkpq.ca/6667 (54.186.50.116)
+2023-11-08 05:42:17	--	irc.zkpq.ca: *** Looking up your hostname...
+2023-11-08 05:42:17	--	irc.zkpq.ca: *** Found your hostname
+2023-11-08 05:42:18	--	irc: client capability, server supports: unrealircd.org/link-security=2 unrealircd.org/plaintext-policy=user=allow,oper=deny,server=deny unrealircd.org/history-storage=memory away-notify invite-notify extended-join userhost-in-names multi-prefix cap-notify setname tls chghost account-notify message-tags batch server-time account-tag echo-message labeled-response draft/chathistory draft/extended-monitor unrealircd.org/json-log
+2023-11-08 05:42:18	--	irc: client capability, requesting: multi-prefix server-time
+2023-11-08 05:42:18	--	irc: nickname "Knio" is already in use, trying nickname "Knio1"
+2023-11-08 05:42:18	--	irc: client capability, enabled: multi-prefix server-time
+2023-11-08 05:42:18	--	Welcome to the ZKPQ IRC Network Knio1!tom@ec2-35-93-43-112.us-west-2.compute.amazonaws.com
+2023-11-08 05:42:18	--	Your host is irc.zkpq.ca, running version UnrealIRCd-6.0.0
+2023-11-08 05:42:18	--	This server was created Sun Dec 26 2021 at 13:49:10 PST
+2023-11-08 05:42:18	--	irc.zkpq.ca UnrealIRCd-6.0.0 diopqrstwxzBDGHIRSTWZ beIacdfhiklmnopqrstvzCDGHKLMNOPQRSTVZ
+2023-11-08 05:42:18	--	AWAYLEN=307 BOT=B CASEMAPPING=ascii CHANLIMIT=#:10 CHANMODES=beI,fkL,lH,cdimnprstzCDGKMNOPQRSTVZ CHANNELLEN=32 CHANTYPES=# CHATHISTORY=50 CLIENTTAGDENY=*,-draft/typing,-typing,-draft/reply DEAF=d ELIST=MNUCT EXCEPTS are supported by this server
+2023-11-08 05:42:18	--	EXTBAN=~,acfjmnpqrtCGOST INVEX KICKLEN=307 KNOCK MAP MAXCHANNELS=10 MAXLIST=b:60,e:60,I:60 MAXNICKLEN=30 MINNICKLEN=0 MODES=12 MONITOR=128 NAMELEN=50 are supported by this server
+2023-11-08 05:42:18	--	NAMESX NETWORK=ZKPQ NICKLEN=30 PREFIX=(qaohv)~&@%+ QUITLEN=307 SAFELIST SILENCE=15 STATUSMSG=~&@%+ TARGMAX=DCCALLOW:,ISON:,JOIN:,KICK:4,KILL:,LIST:,NAMES:1,NOTICE:1,PART:,PRIVMSG:4,SAJOIN:,SAPART:,TAGMSG:1,USERHOST:,USERIP:,WATCH:,WHOIS:1,WHOWAS:1 TOPICLEN=360 UHNAMES USERIP are supported by this server
+2023-11-08 05:42:18	--	WALLCHOPS WATCH=128 WATCHOPTS=A WHOX are supported by this server
+2023-11-08 05:42:18	--	irc.zkpq.ca: *** You are connected to irc.zkpq.ca with TLSv1.3-TLS_CHACHA20_POLY1305_SHA256
+2023-11-08 05:42:18	--	There are 1 users and 19 invisible on 1 servers
+2023-11-08 05:42:18	--	1 operator(s) online
+2023-11-08 05:42:18	--	10 channels formed
+2023-11-08 05:42:18	--	I have 20 clients and 0 servers
+2023-11-08 05:42:18	--	20 26 Current local users 20, max 26
+2023-11-08 05:42:18	--	20 23 Current global users 20, max 23
+2023-11-08 05:42:18	--	MOTD File is missing
+2023-11-08 05:42:18	--	User mode [+iwz] by Knio1
+2023-11-08 05:43:01	--	irc: connecting to server new.zkpq.ca/6667 (SSL)...
+2023-11-08 05:43:01	--	gnutls: receiving 1 certificate
+2023-11-08 05:43:01	--	 - certificate[1] info:
+2023-11-08 05:43:01	--	   - subject `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', issuer `CN=zkpq.ca,OU=IRCd,O=ZKPQ,L=Victoria,ST=BC,C=CA', serial 0x00b25d778b635e8016, RSA key 4096 bits, signed using RSA-SHA256, activated `2015-06-29 18:06:56 UTC', expires `2025-06-26 18:06:56 UTC', pin-sha256="be1Pdgq9pl+v7Q9wU5n946epxDV4iTxFfOvmF+CnER4="
+2023-11-08 05:43:01	=!=	gnutls: the hostname in the certificate does NOT match "new.zkpq.ca"
+2023-11-08 05:43:01	=!=	gnutls: peer's certificate is NOT trusted
+2023-11-08 05:43:01	=!=	gnutls: peer's certificate issuer is unknown
+2023-11-08 05:43:01	--	irc: connected to new.zkpq.ca/6667 (35.93.43.112)
+2023-11-08 05:43:01	--	irc.zkpq.ca: *** Looking up your hostname...
+2023-11-08 05:43:01	--	irc.zkpq.ca: *** Found your hostname (cached)
+2023-11-08 05:43:02	--	irc: client capability, server supports: unrealircd.org/link-security=2 unrealircd.org/plaintext-policy=user=allow,oper=deny,server=deny unrealircd.org/history-storage=memory away-notify invite-notify extended-join userhost-in-names multi-prefix cap-notify setname tls chghost account-notify message-tags batch server-time account-tag echo-message labeled-response draft/chathistory extended-monitor standard-replies unrealircd.org/json-log
+2023-11-08 05:43:02	--	irc: client capability, requesting: multi-prefix server-time
+2023-11-08 05:43:02	--	irc: client capability, enabled: multi-prefix server-time
+2023-11-08 05:43:02	--	Welcome to the ZKPQ IRC Network Knio!tom@ec2-35-93-43-112.us-west-2.compute.amazonaws.com
+2023-11-08 05:43:02	--	Your host is irc.zkpq.ca, running version UnrealIRCd-6.1.2.3
+2023-11-08 05:43:02	--	This server was created Wed Nov 8 2023 at 03:15:13 UTC
+2023-11-08 05:43:02	--	irc.zkpq.ca UnrealIRCd-6.1.2.3 diopqrstwxzBDGHIRSTWZ beIacdfhiklmnopqrstvzCDFGHKLMNOPQRSTVZ
+2023-11-08 05:43:02	--	ACCOUNTEXTBAN=account,a AWAYLEN=307 BOT=B CASEMAPPING=ascii CHANLIMIT=#:10 CHANMODES=beI,fkL,lFH,cdimnprstzCDGKMNOPQRSTVZ CHANNELLEN=32 CHANTYPES=# CHATHISTORY=50 CLIENTTAGDENY=*,-draft/typing,-typing,-draft/channel-context,-draft/reply DEAF=d ELIST=MNUCT are supported by this server
+2023-11-08 05:43:02	--	EXCEPTS EXTBAN=~,acfjmnpqrtCFGOST INVEX KICKLEN=307 KNOCK MAP MAXLIST=b:60,e:60,I:60 MAXNICKLEN=30 MINNICKLEN=0 MODES=12 MONITOR=128 MSGREFTYPES=msgid,timestamp are supported by this server
+2023-11-08 05:43:02	--	NAMELEN=50 NAMESX NETWORK=ZKPQ NICKLEN=30 PREFIX=(qaohv)~&@%+ QUITLEN=307 SAFELIST SILENCE=15 STATUSMSG=~&@%+ TARGMAX=DCCALLOW:,ISON:,JOIN:,KICK:4,KILL:,LIST:,NAMES:1,NOTICE:1,PART:,PRIVMSG:4,SAJOIN:,SAPART:,TAGMSG:1,USERHOST:,USERIP:,WATCH:,WHOIS:1,WHOWAS:1 TOPICLEN=360 UHNAMES are supported by this server
+2023-11-08 05:43:02	--	USERIP WALLCHOPS WATCH=128 WATCHOPTS=A WHOX are supported by this server
+2023-11-08 05:43:02	--	irc.zkpq.ca: *** You are connected to irc.zkpq.ca with TLSv1.3-TLS_CHACHA20_POLY1305_SHA256
+2023-11-08 05:43:02	--	There are 1 users and 0 invisible on 1 servers
+2023-11-08 05:43:02	--	I have 1 clients and 0 servers
+2023-11-08 05:43:02	--	1 1 Current local users 1, max 1
+2023-11-08 05:43:02	--	1 1 Current global users 1, max 1
+2023-11-08 05:43:02	--	MOTD File is missing
+2023-11-08 05:43:02	--	User mode [+iwz] by Knio
+2023-11-08 05:43:41	--	Permission Denied- You do not have the correct IRC operator privileges
+2023-11-08 05:45:08	--	[Knio] (tom@ec2-35-93-43-112.us-west-2.compute.amazonaws.com): tom
+2023-11-08 05:45:08	--	[Knio] is using modes +iwz
+2023-11-08 05:45:08	--	[Knio] is connecting from *@ec2-35-93-43-112.us-west-2.compute.amazonaws.com 35.93.43.112
+2023-11-08 05:45:08	--	[Knio] @#deviate
+2023-11-08 05:45:08	--	[Knio] irc.zkpq.ca (ZKPQ IRC)
+2023-11-08 05:45:08	--	[Knio] is using a Secure Connection [TLSv1.3-TLS_CHACHA20_POLY1305_SHA256]
+2023-11-08 05:45:08	--	[Knio] idle: 00 hours 02 minutes 06 seconds, signon at: Wed, 08 Nov 2023 05:43:02
+2023-11-08 05:45:08	--	[Knio] End of /WHOIS list.

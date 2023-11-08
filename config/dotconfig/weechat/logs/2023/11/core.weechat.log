@@ -1,0 +1,9 @@
+2023-11-05 22:22:59		Plugins loaded: alias, buflist, charset, fset, irc, logger, xfer
+2023-11-08 05:30:30	=!=	Error with command "/server new.zkpq.ca" (help on command: /help server)
+2023-11-08 05:30:46		irc: server added: new.zkpq.ca (temporary)
+2023-11-08 05:31:15	=!=	Unknown command "/rmreconns" (type /help for help)
+2023-11-08 05:32:00		irc: server added: irc.zkpq.ca (temporary)
+2023-11-08 05:35:59		irc: server added: off (temporary)
+2023-11-08 05:42:17		Plugins loaded: alias, buflist, charset, fset, irc, logger, xfer
+2023-11-08 05:42:42	=!=	Unknown command "/exit" (type /help for help)
+2023-11-08 05:43:01		Plugins loaded: alias, buflist, charset, fset, irc, logger, xfer
