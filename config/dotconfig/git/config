@@ -1,6 +1,8 @@
 [alias]
   lg = log -n 15 --color --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+  s = status
   st = status -sb
+  ss = show --stat
   b = branch -vv --sort=-committerdate
 
 [status]
