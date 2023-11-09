@@ -24,9 +24,9 @@ from devices import xdm1041
 
 log = logging.getLogger('lab')
 
-config = toml.load("../config.toml")['grafana']
+config = toml.load("config.toml")['grafana']
 
-ROOT = pathlib.Path('.')
+ROOT = pathlib.Path('lab')
 
 DEV = None
 
