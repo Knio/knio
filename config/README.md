@@ -77,7 +77,11 @@ sudo apt update
 sudo apt upgrade
 sudo apt dist-upgrade
 sudo apt autoremove
-sudo apt install build-essential git python3-pip
+sudo apt install \
+  build-essential \
+  git \
+  python3-pip \
+  cifs-utils
 
 
 time sudo dd if=/dev/zero of=/swapfile bs=128M count=32
@@ -125,9 +129,6 @@ apt install weechat --no-install-recommends
 ### Build VeraCrypt
 ```
 sudo apt install pkg-config libpcsclite-dev libfuse-dev
-# sudo apt install libwxgtk3.2-dev --no-install-recommends
-
-# wget https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.3/wxWidgets-3.2.3.tar.bz2
 wget https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxWidgets-3.0.5.tar.bz2
 tar xvf wxWidgets-3.0.5.tar.bz2
 make NOGUI=1 WXSTATIC=1 WX_ROOT=$PWD/wxWidgets-3.0.5 wxbuild
@@ -139,4 +140,33 @@ Mount docs:
 ```
 cd ~/mnt
 make mount.docs
+```
+
+
+## Install IRCd
+
+```sh
+sudo /sbin/adduser ircd
+sudo su - ircd
+# get latest version from https://www.unrealircd.org/download/
+wget https://www.unrealircd.org/downloads/unrealircd-6.1.2.3.tar.gz
+tar xvf *.gz
+cd unreal<T>
+./Config
+make
+make install
+```
+
+Copy config files:
+(as `tom`)
+```sh
+cd ~/Docs/Programming/ircd
+sudo cp -R . /home/ircd/unrealircd/conf
+sudo chown ircd:ircd /home/ircd/unrealircd/conf -R
+```
+
+
+Start server:
+```sh
+unrealircd/unrealircd start
 ```

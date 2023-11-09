@@ -18,8 +18,8 @@ import whirl
 from dominate import tags
 from whirl.domx import dx
 
-import dl24
-import xdm1041
+from devices import dl24
+from devices import xdm1041
 
 
 log = logging.getLogger('lab')
@@ -32,7 +32,7 @@ DEV = None
 
 
 def post_grafana(ns, **kv):
-  auth = 'Bearer {}:{}'.format(59684, config['grafana_token'])
+  auth = f'Bearer {59684}:{config["grafana_token"]}'
   now = int(time.time())
   data = [{
     'name': '.'.join((ns, k)),
@@ -44,7 +44,8 @@ def post_grafana(ns, **kv):
     p = requests.post(
       config['grafana_uri'],
       headers={'Authorization': auth, 'Content-Type':'application/json'},
-      json=data
+      json=data,
+      timeout=5,
     )
     log.info(p.json())
   except Exception as e:
@@ -54,7 +55,7 @@ def post_grafana(ns, **kv):
 @whirl.domx.template
 class dl24dash(dominate.document):
   def __init__(self, *a, **kw):
-    super(dl24dash, self).__init__('DL24Load', *a, **kw)
+    super().__init__('DL24Load', *a, **kw)
 
     self.head += tags.link(rel="stylesheet", href="https://cdn.simplecss.org/simple.min.css")
     self.head += tags.link(rel="stylesheet", href="https://unpkg.com/@picocss/pico@1.5.3/css/pico.min.css")

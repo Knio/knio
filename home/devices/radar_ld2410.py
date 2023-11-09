@@ -85,35 +85,35 @@ class RadarLD2410:
 
   def __init__(self, ser):
     self.ser = ser
+    self.reset()
 
-    def send_command(cmd, data=b''):
-      params = [
-        struct.pack('<I', self.COMMAND_HEADER), # header
-        struct.pack('<H', len(data) + 2), # length
-        struct.pack('<H', cmd),
-        data, # stuff
-        struct.pack('<I', self.COMMAND_FOOTER), # footer
-      ]
-      b = b''.join(params)
-      self.ser.write(b)
-      LOG.info(f'cmd:       {b.hex(" ", 2)}')
-      response = self.ser.read_until(self.COMMAND_FOOTER.to_bytes(4, byteorder='little'), timeout=2)
-      r = response
-      if len(r) % 2 == 1:
-        r += b'\x00'
-      LOG.info(f'response: {r.hex(" ", 2)}')
-      return response
+  def send_command(self, cmd, data=b''):
+    params = [
+      struct.pack('<I', self.COMMAND_HEADER), # header
+      struct.pack('<H', len(data) + 2), # length
+      struct.pack('<H', cmd),
+      data, # stuff
+      struct.pack('<I', self.COMMAND_FOOTER), # footer
+    ]
+    b = b''.join(params)
+    self.ser.write(b)
+    LOG.info(f'cmd:       {b.hex(" ", 2)}')
+    response = self.ser.read_until(self.COMMAND_FOOTER.to_bytes(4, byteorder='little'), timeout=0.1)
+    r = response
+    if len(r) % 2 == 1:
+      r += b'\x00'
+    LOG.info(f'response: {r.hex(" ", 2)}')
+    return response
 
-    return
-    # hack to hardcode config
-    send_command(RadarLD2410.Command.CONFIG_START, b'\x01\x00')
-    # send_command(RadarLD2410.Command.FACTORY_RESET)
+  def reset(self):
+    self.send_command(RadarLD2410.Command.FACTORY_RESET)
+    self.send_command(RadarLD2410.Command.CONFIG_START, b'\x01\x00')
 
-    # send_command(RadarLD2410.Command.READ_MAC_ADDRESS)
-    send_command(RadarLD2410.Command.READ_FIRMWARE_VERSION)
+    # self.send_command(RadarLD2410.Command.READ_MAC_ADDRESS)
+    self.send_command(RadarLD2410.Command.READ_FIRMWARE_VERSION)
 
-    # send_command(RadarLD2410.Command.ENGINEERING_START)
-    send_command(RadarLD2410.Command.CONFIG_END)
+    # self.send_command(RadarLD2410.Command.ENGINEERING_START)
+    self.send_command(RadarLD2410.Command.CONFIG_END)
 
 
 
@@ -126,6 +126,7 @@ class RadarLD2410:
     data = self.ser.read_until(self.TargetDataFrame.FOOTER.to_bytes(4, byteorder='little'))
     if not data:
       LOG.info('no data')
+      self.reset()
       return
 
     # f3f2 f10d 0002 aa03 3c00 3600 0064 0000 5500 f8f7 f6f5

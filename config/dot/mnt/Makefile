@@ -29,4 +29,3 @@ rpizw.mount.desktop:
 		unmount.docs \
 		mount.desktop \
 		rpizw.mount.desktop
-

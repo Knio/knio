@@ -15,7 +15,7 @@ SUBNET = f'{SUBPRE}0'
 
 SERVER = dict(
   PublicKey = '5r/W9FmLHrJ/HXooBn1/x8yvrqBJaltG2vcYuEWy1T8=',
-  Endpoint = 'zkpq.ca:123',
+  Endpoint = 'vpn.zkpq.ca:123',
 )
 
 SERVER_ONLY = dict(
@@ -116,10 +116,13 @@ def print_config(config):
     print('')
 
 
+def main(args):
+  config = get_config_for_host(args.host)
+  print_config(config)
+
+
 if __name__ == '__main__':
   import argparse
   parser = argparse.ArgumentParser(argparse.RawTextHelpFormatter, description=__doc__)
   parser.add_argument('host')
-  args = parser.parse_args()
-  config = get_config_for_host(args.host)
-  print_config(config)
+  main(parser.parse_args())

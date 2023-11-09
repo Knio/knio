@@ -14,7 +14,8 @@
     "files.trimTrailingWhitespace": true,
     "files.associations": {
         "BUILD": "python",
-        "*.cu": "cpp"
+        "*.cu": "cpp",
+        "*.toml": "ini",
     },
     "editor.minimap.enabled": false,
     "files.watcherExclude": {
@@ -90,5 +91,14 @@
     "gitlens.telemetry.enabled": false,
     "workbench.activityBar.location": "top",
     "workbench.editor.doubleClickTabToToggleEditorGroupSizes": "maximize",
-    "editor.multiDocumentOccurrencesHighlight": true
+    "editor.multiDocumentOccurrencesHighlight": true,
+    "pylint.showNotifications": "onError",
+    "pylint.args": [
+        "--disable=W0311",
+        "--disable=W0511",
+        "--disable=C0114",
+        "--disable=C0115",
+        "--disable=C0116",
+        "--disable=R1735",
+    ]
 }

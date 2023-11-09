@@ -44,7 +44,6 @@ import time
 LOG = logging.getLogger(__name__)
 
 
-
 class Serial:
   def __init__(self, timeout=2.0):
     # TODO add encoding param
@@ -105,6 +104,13 @@ class Serial:
     r = b''.join(r)
     LOG.debug(f'flush: {r!r}')
     return r
+
+  def set_timeout(self, t):
+    raise NotImplementedError
+  def read_raw(self, n):
+    raise NotImplementedError
+  def write_raw(self, data):
+    raise NotImplementedError
 
 
 class SocketSerial(Serial):
