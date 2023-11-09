@@ -14,14 +14,14 @@ mount.desktop:
 	mkdir -p desktop
 	mkdir -p desktop/k
 	mkdir -p desktop/f
-	sudo mount.cifs \\\\10.87.0.10\\\docs desktop/k -o $(MOUNTOPS)
+	sudo mount.cifs \\\\10.87.0.10\\\docs  desktop/k -o $(MOUNTOPS)
 	sudo mount.cifs \\\\10.87.0.10\\\media desktop/f -o $(MOUNTOPS)
 
 rpizw.mount.desktop:
 	mkdir -p desktop/k
 	mkdir -p desktop/f
-	sudo mount.cifs '\\10.87.1.10\docs' k -o $(MOUNTOPS)
-	sudo mount.cifs '\\10.87.1.10\media' f -o $(MOUNTOPS)
+	sudo mount.cifs '\\10.87.1.10\docs'  desktop/k -o $(MOUNTOPS)
+	sudo mount.cifs '\\10.87.1.10\media' desktop/f -o $(MOUNTOPS)
 
 
 .PHONY: \
