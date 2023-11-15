@@ -71,7 +71,7 @@ class Serial:
   def read_until(self, footer, timeout=None):
     if timeout is None:
       timeout = self.timeout
-    end = time.time() + timeout
+    # end = time.time() + timeout
     buf = b''
     n = -1
     done = False
@@ -137,7 +137,12 @@ class PySerial(Serial):
     super().__init__(*args, **kwargs)
 
   def set_timeout(self, t):
-    self.ser.timeout = t
+    if self.ser.timeout != t:
+      LOG.warning(
+        'WARNING! setting timeout on pyserial.Serial '
+        'while a connection is active will corrupt the read buffer')
+      self.ser.timeout = t
+      self.ser.reset_input_buffer()
 
   def read_raw(self, n):
     # compensate for weird pyserial behavior
@@ -160,7 +165,7 @@ class PySerial(Serial):
   def read_until(self, footer, timeout=None):
     if timeout is None:
       timeout = self.timeout
-    self.ser.timeout = timeout
+    self.set_timeout(timeout)
     b = b''.join(self.rq)
     self.rq[:] = []
     i = b.find(footer)

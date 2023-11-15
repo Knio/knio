@@ -118,11 +118,12 @@ def foobar(url, handler, match):
   cmd = match.group(1)
   # TODO: move this to devices.foobar
   if cmd == 'play':
-    r = requests.post('http://10.87.1.10:8880/api/player/play')
+    r = requests.post('http://10.87.1.10:8880/api/player/play', timeout=1)
   elif cmd == 'pause':
-    r = requests.post('http://10.87.1.10:8880/api/player/pause/toggle')
+    r = requests.post(
+      'http://10.87.1.10:8880/api/player/pause/toggle', timeout=1)
   elif cmd == 'random':
-    r = requests.post('http://10.87.1.10:8880/api/player/play/random')
+    r = requests.post('http://10.87.1.10:8880/api/player/play/random', timeout=1)
   else:
     tags.p(f'bad command: {cmd!r}')
     return
@@ -135,8 +136,6 @@ def scene(url, handler, match):
   cmd = match.group(1)
   r = getattr(home, f'scene_{cmd}')()
   tags.p(f'{r!r}')
-
-
 
 
 class Home:
@@ -168,7 +167,7 @@ class Home:
     self.amp.set_power(self.amp.PowerState.ON)
     self.amp.set_source('TV')
     # TODO: move this to devices.foobar
-    requests.post('http://10.87.1.10:8880/api/player/play').status_code
+    requests.post('http://10.87.1.10:8880/api/player/play', timeout=1)
     self.amp.set_vol(-55)
     self.lights[0].turn_on()
     self.lights[1].turn_off()
@@ -187,7 +186,7 @@ class Home:
 
   def scene_gone(self):
     # TODO: move this to devices.foobar
-    requests.post('http://10.87.1.10:8880/api/player/pause/toggle')
+    requests.post('http://10.87.1.10:8880/api/player/pause/toggle', timeout=1)
     return True
 
 

@@ -96,9 +96,15 @@
     "pylint.args": [
         "--disable=W0311",
         "--disable=W0511",
+        "--disable=W0702",
+        "--disable=W0718",
+        "--disable=W1203",
+        "--disable=E0401",
         "--disable=C0114",
         "--disable=C0115",
         "--disable=C0116",
+        "--disable=R0903",
         "--disable=R1735",
+        "--disable=logging-not-lazy",
     ]
 }
