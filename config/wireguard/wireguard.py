@@ -89,11 +89,17 @@ def get_config_for_host(host):
 
   # self
   section = {}
-  section['DNS'] = DNS
+
+  # linux client
+  is_linux = host in ('rpizw',)
+  addr = section['Address']
+
+  if not is_linux:
+    section['DNS'] = DNS
+    section['Address'] = f'{SUBPRE}{addr}/{MASK}'
+
   section |= CLIENTS[host]
   section.pop('PublicKey')
-  addr = section['Address']
-  section['Address'] = f'{SUBPRE}{addr}/{MASK}'
   conf.append(('Interface', section))
 
   # server
@@ -102,6 +108,7 @@ def get_config_for_host(host):
   section['PersistentKeepalive'] = '5'
   section['AllowedIPs'] = f'{SUBNET}/{MASK}'
   conf.append(('Peer', section))
+
 
 
   return conf

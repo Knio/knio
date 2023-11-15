@@ -275,8 +275,13 @@ def t_colors():
     for style in ANSI.GRAPHICS:
         print(f'{ANSI.graphics(style.value)} {style.name:^8} {ANSI.graphics_reset()}', end=' ')
 
-    print('\n 8x8 Color:')
+    print('\n8x8 Color:')
+    print('  ', end='')
     for fg in ANSI.COLOR8:
+        print(f'{fg} ', end='')
+    print()
+    for fg in ANSI.COLOR8:
+        print(f'{fg}', end=' ')
         for bg in ANSI.COLOR8:
             print(f'{ANSI.color_fg8(fg.value)}{ANSI.color_bg8(bg.value)}{box}{ANSI.graphics_reset()}', end='')
         print()
