@@ -26,7 +26,7 @@ class Presence:
     Location.COMPUTER: [
       range(90, 190),
       range(50, 120),
-      range(0, 700),
+      range(0, 900),
     ],
     Location.COUCH: [
       range(290, 420),
