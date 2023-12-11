@@ -4,6 +4,7 @@
 desktop.zkpq.ca.		300	IN	A	10.87.0.10
 laptop.zkpq.ca.			300	IN	A	10.87.0.12
 phone.zkpq.ca.			300	IN	A	10.87.0.15
+rpi5.zkpq.ca.				300	IN	A	10.87.0.16
 lab-rpizw.zkpq.ca.	300	IN	A	10.87.0.17
 lab-sp6.zkpq.ca.		300	IN	A	10.87.0.18
 prius.zkpq.ca.			300	IN	A	10.87.0.19

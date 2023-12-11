@@ -1,30 +1,36 @@
 ADDR = 10.87.0.1/24
+HOST = `hostname`
 
-server_start: wg.conf private.key public.key
-	chmod 600 *.key
-	sudo ip link add dev wg0 type wireguard
-	sudo wg setconf wg0 wg.conf
-	sudo wg set wg0 private-key private.key
-	sudo ip address add dev wg0 $(ADDR)
-	sudo sysctl -w net.ipv4.ip_forward=1
-	sudo iptables -A FORWARD -i wg0 -j ACCEPT
-	sudo iptables -A POSTROUTING -o ens5 -j MASQUERADE -t nat
-	sudo ip link set up dev wg0
+start: /etc/wireguard/wg0_start.sh
+	sudo $<
 
-server_stop:
+stop:
 	-sudo iptables -D FORWARD -i wg0 -j ACCEPT
 	-sudo iptables -D POSTROUTING -o ens5 -j MASQUERADE -t nat
 	-sudo ip link set down dev wg0
 	-sudo ip link del dev wg0
+	-sudo rm -r /etc/wireguard
 
-wg.conf: wireguard.py
-	python3 wireguard.py server > $@
+install:
+	sudo apt install wireguard
 
-private.key:
-	wg genkey > $@
+/etc/wireguard:
+	sudo mkdir -p /etc/wireguard
+	sudo chmod 755 /etc/wireguard
 
-public.key: private.key
-	sudo wg pubkey < private.key > $@
+/etc/wireguard/wg0.conf: /etc/wireguard wireguard.py config.toml
+	python3 wireguard.py --type conf --host $(HOST) | sudo tee $@
+	sudo chmod 600 /etc/wireguard/wg0.conf
+
+/etc/wireguard/wg0_start.sh: /etc/wireguard /etc/wireguard/wg0.conf wireguard.py config.toml
+	python3 wireguard.py --type script --host $(HOST) | sudo tee $@
+	sudo chmod +x $@
+
+	echo "USER DO: "
+	echo "$ sudo crontab -e"
+	echo "add:"
+	echo "@reboot ${@}"
+
 
 listen_inner:
 	sudo tcpdump -i wg0
@@ -33,18 +39,4 @@ listen_outer:
 	sudo tcpdump -i ens5 'port 123'
 
 
-rpizw_start: public.key
-	python3 wireguard.py rpizw | sudo tee /etc/wg.conf
-	sudo ip link add dev wg0 type wireguard
-	sudo wg setconf wg0 /etc/wg.conf
-	sudo wg set wg0 private-key private.key
-	sudo ip address add dev wg0 10.87.0.17
-	sudo ip link set up dev wg0
-
-rpizw_stop:
-	-sudo ip link set down dev wg0
-	-sudo ip link del dev wg0
-
-
-
-.PHONY: server_start server_stop server_interface server_config listen_inner listen_outer
+.PHONY: start stop install listen_inner listen_outer

@@ -82,7 +82,8 @@ sudo apt install \
   git \
   python3-pip \
   cifs-utils \
-  mosh
+  mosh \
+  wireguard
 
 
 time sudo dd if=/dev/zero of=/swapfile bs=128M count=32
