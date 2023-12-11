@@ -8,7 +8,7 @@ mount.docs:
 unmount.docs:
 	sudo $(VC) --dismount ~/mnt/Docs
 
-MOUNTOPS = "username=Tom,uid=tom,gid=0,file_mode=0750,dir_mode=0750,soft"
+MOUNTOPS = "username=Tom,uid=tom,gid=0,file_mode=0750,dir_mode=0750,soft,dirsync,sync"
 
 mount.desktop:
 	mkdir -p desktop
@@ -17,7 +17,7 @@ mount.desktop:
 	sudo mount.cifs \\\\10.87.0.10\\\docs  desktop/k -o $(MOUNTOPS)
 	sudo mount.cifs \\\\10.87.0.10\\\media desktop/f -o $(MOUNTOPS)
 
-rpizw.mount.desktop:
+mount.desktop.local:
 	mkdir -p desktop/k
 	mkdir -p desktop/f
 	sudo mount.cifs '\\10.87.1.10\docs'  desktop/k -o $(MOUNTOPS)
