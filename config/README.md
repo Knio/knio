@@ -91,7 +91,6 @@ sudo mkswap /swapfile
 sudo swapon /swapfile
 sudo swapon --show
 sudo echo '/swapfile swap swap defaults 0 0' >> /etc/fstab
-
 ```
 
 

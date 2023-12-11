@@ -106,5 +106,10 @@
         "--disable=R0903",
         "--disable=R1735",
         "--disable=logging-not-lazy",
-    ]
+        "--disable=pointless-string-statement",
+    ],
+    "codeium.enableConfig": {
+        "*": true,
+        "plaintext": true
+    }
 }

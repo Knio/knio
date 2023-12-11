@@ -16,6 +16,7 @@ prius.zkpq.ca.			300	IN	A	10.87.0.19
 ;	7c:5c:f8:5c:2a:65		118-laptop				.11		tom laptop zoox
 ;	78:2b:46:37:46:4b		tom-laptop				.12		tom sp7
 ;	ca:6c:dc:9f:85:33		tom-iphone				.15		tom iphone se2
+; d8:3a:dd:c0:76:25		rpi5							.16
 ;
 ;	b8:27:eb:cc:89:83		lab-rpizw				.17
 ;	b8:31:b5:91:06:b9		lab-sp6					.18
@@ -23,4 +24,4 @@ prius.zkpq.ca.			300	IN	A	10.87.0.19
 ;	00:05:cd:ae:3d:aa		denon-AVR-X2400H		.22
 ;	48:22:54:43:ed:2e		light1-hs210				.25
 ;	48:22:54:43:ed:3f		light2-hs210 				.26
-;
+; 1c:90:ff:88:ee:ca		plug1								.27
