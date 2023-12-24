@@ -130,6 +130,7 @@ def t_unicode():
 
 
     # https://unicode-table.com/en/blocks/spacing-modifier-letters/
+    print_codes('TODO',             map(chr, range(0x2000, 0x2190)))
     print_codes('Arrows',           map(chr, range(0x2190, 0x2200)))
     print_codes('Control pictures', map(chr, range(0x2400, 0x2440)))
     print_codes('Box drawing',      map(chr, range(0x2500, 0x2580)))
