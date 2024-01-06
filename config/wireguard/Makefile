@@ -1,5 +1,6 @@
 ADDR = 10.87.0.1/24
 HOST = `hostname`
+KERNEL_VERSION = $(shell uname -r)
 
 start: /etc/wireguard/wg0_start.sh
 	sudo $<
@@ -13,6 +14,8 @@ stop:
 
 install:
 	sudo apt install wireguard
+	sudo apt install python3-bpfcc
+	sudo apt install linux-headers-$(KERNEL_VERSION)
 
 /etc/wireguard:
 	sudo mkdir -p /etc/wireguard
