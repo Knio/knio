@@ -7,19 +7,18 @@ import argparse
 import pathlib
 
 import toml
-import openai
 
-
-
+from openai import OpenAI
 
 
 config = toml.load("config.toml")['openai']
-openai.api_key = config['api_key']
+
+openai_client = OpenAI(api_key=config['api_key'])
 
 
 def code_api(args):
   src = pathlib.Path(args.query[0])
-  response = response = openai.ChatCompletion.create(
+  response = response = openai_client.ChatCompletion.create(
     model=args.model,
     temperature=0.2,
     messages=[
@@ -48,7 +47,7 @@ def code_api(args):
 
 def main(args):
   if args.chat:
-    response = response = openai.ChatCompletion.create(
+    response = response = openai_client.ChatCompletion.create(
       model=args.model,
       messages=[
         {"role": "system", "content":
@@ -63,12 +62,13 @@ def main(args):
     return
 
   if args.image:
-    response = openai.Image.create(
+    response = openai_client.images.generate(
       model='dall-e-3',
-      quality='standart',
+      quality='standard',
       prompt=' '.join(args.query),
       n=1,
       size="1024x1024"
+      # size="256x256",
     )
     print(response)
     return

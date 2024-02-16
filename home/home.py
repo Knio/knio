@@ -61,41 +61,46 @@ def index(url, handler, match):
 @whirl.domx.route(r'^/foo$')
 @tags.div
 def foo(url, handler, match):
-  p = home.amp.get_power()
-  tags.h3(f'Power?: {p}')
+  with home.do_amp() as a:
+    p = a.get_power()
+    tags.h3(f'Power?: {p}')
 
-  v = home.amp.get_vol()
-  tags.h3(f'Vol?: {v} dB')
+    v = a.get_vol()
+    tags.h3(f'Vol?: {v} dB')
 
-  s = home.amp.get_source()
-  tags.h3(f'Source?: {s}')
+    s = a.get_source()
+    tags.h3(f'Source?: {s}')
 
 
 @whirl.domx.route(r'^/avr/on$')
 @tags.div
 def avr_on(url, handler, match):
-  home.amp.set_power(home.amp.PowerState.ON)
+  with home.do_amp() as a:
+    a.set_power(a.PowerState.ON)
   tags.p('Power turned on')
 
 
 @whirl.domx.route(r'^/avr_off$')
 @tags.div
 def avr_off(url, handler, match):
-  home.amp.set_power(home.amp.PowerState.STANDBY)
+  with home.do_amp() as a:
+    a.set_power(a.PowerState.STANDBY)
   tags.p('Power turned off')
 
 @whirl.domx.route(r'^/avr/vol/([+-]?\d+)$')
 @tags.div
 def avr_vol(url, handler, match):
   v = int(match.group(1))
-  home.amp.set_vol(v)
+  with home.do_amp() as a:
+    a.set_vol(v)
   tags.p(f'Vol set to {v:d}')
 
 @whirl.domx.route(r'^/avr/si/(\w+)$')
 @tags.div
 def avr_si(url, handler, match):
   si = match.group(1)
-  home.amp.set_source(si)
+  with home.do_amp() as a:
+    a.set_source(si)
   tags.p(f'Source set to {si}')
 
 
@@ -131,7 +136,7 @@ def foobar(url, handler, match):
 
 
 @whirl.domx.route(r'^/scene/(\w+)$')
-def scene(url, handler, match):
+def scene(url, handler_, match):
   LOG.info(url)
   cmd = match.group(1)
   r = getattr(home, f'scene_{cmd}')()
@@ -147,34 +152,48 @@ class Home:
     ]
     self.radar = None
 
+  # pylint: disable=no-self-argument
+  def do_amp(h):
+    class AmpTry:
+      def __enter__(self):
+        return h.amp
+      def __exit__(self, exec_type, exc_val, exc_tb):
+        if exec_type is not None:
+          h.amp.reset()
+    return AmpTry()
+
   def scene_active(self):
-    self.amp.set_power(self.amp.PowerState.ON)
-    self.amp.set_source('TV')
-    self.amp.set_vol(-50)
+    with self.do_amp() as a:
+      a.set_power(a.PowerState.ON)
+      a.set_source('TV')
+      a.set_vol(-50)
     self.lights[0].turn_on()
     self.lights[1].turn_on()
     return True
 
   def scene_work(self):
-    self.amp.set_power(self.amp.PowerState.ON)
-    self.amp.set_source('TV')
-    self.amp.set_vol(-55)
+    with self.do_amp() as a:
+      a.set_power(a.PowerState.ON)
+      a.set_source('TV')
+      a.set_vol(-55)
     self.lights[0].turn_on()
     self.lights[1].turn_on()
     return True
 
   def scene_lounge(self):
-    self.amp.set_power(self.amp.PowerState.ON)
-    self.amp.set_source('TV')
-    # TODO: move this to devices.foobar
-    requests.post('http://10.87.1.10:8880/api/player/play', timeout=1)
-    self.amp.set_vol(-55)
+    with self.do_amp() as a:
+      a.set_power(a.PowerState.ON)
+      a.set_source('TV')
+      # TODO: move this to devices.foobar
+      requests.post('http://10.87.1.10:8880/api/player/play', timeout=1)
+      a.set_vol(-55)
     self.lights[0].turn_on()
     self.lights[1].turn_off()
     return True
 
   def scene_movie(self):
-    self.amp.set_source('NET')
+    with self.do_amp() as a:
+      a.set_source('NET')
     self.lights[0].turn_off()
     self.lights[1].turn_off()
     return True
@@ -204,7 +223,7 @@ def main():
   global home
   home = Home()
 
-  whirl.domx.run(('', 8000))
+  whirl.domx.run(('', 8888))
 
 if __name__ == '__main__':
   main()

@@ -50,7 +50,7 @@ def main():
       '-M', 'noise',
   ]
   log.info(f"cmd: {' '.join(cmd)}")
-  rtl = subprocess.Popen(stdout=subprocess.PIPE)
+  rtl = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 
   def process(line):
     data = json.loads(line)
@@ -58,7 +58,7 @@ def main():
     if data.get('model') == 'Ambientweather-F007TH':
       id_ch_to_name_x = {
         (1, 222): ('House_Common', -0.200, -7.0),
-        (2, 108): ('Outside_Back',  0.086, -3.0),
+        (2, 166): ('Outside_Back',  0.086, -3.0),
         (3, 51):  ('Inside_House',  0.146,  1.0),
 
         (1, 41):   ('Room',        -0.034, -1.0),

@@ -111,5 +111,6 @@
     "codeium.enableConfig": {
         "*": true,
         "plaintext": true
-    }
+    },
+    "cmake.showOptionsMovedNotification": false
 }

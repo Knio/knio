@@ -57,6 +57,9 @@ class DenonAVR:
 
   def __init__(self, host):
     self.host = host
+    self.reset()
+
+  def reset(self):
     self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     self.socket.settimeout(0.1) # for connect
     self.socket.connect((self.host, 23))
