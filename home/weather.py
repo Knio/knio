@@ -38,7 +38,7 @@ def f_to_c(x):
 
 
 def main():
-  rtl = subprocess.Popen([
+  cmd = [
     'sudo',
     'rtl_433',
       '-F', 'json',
@@ -48,7 +48,9 @@ def main():
       # '-Y', 'magest',
       '-M', 'level',
       '-M', 'noise',
-  ], stdout=subprocess.PIPE)
+  ]
+  log.info(f"cmd: {' '.join(cmd)}")
+  rtl = subprocess.Popen(stdout=subprocess.PIPE)
 
   def process(line):
     data = json.loads(line)
