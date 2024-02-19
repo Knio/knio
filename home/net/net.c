@@ -12,7 +12,13 @@ struct Flow {
 BPF_HASH(flows, struct Flow, u32, 4096);
 
 
-int peek_packet(struct xdp_md *ctx) {
+int tc_peek_packet(struct __sk_buff *skb) {
+  bpf_trace_printk("skb");
+  return 1;
+}
+
+
+int xdp_peek_packet(struct xdp_md *ctx) {
   bpf_trace_printk("packet");
 
   void *data_end = (void *)(long)ctx->data_end;

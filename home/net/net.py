@@ -4,6 +4,17 @@ run with:
  sudo python3 -m net.net
 
 from the parent dir
+
+
+CONFIG NOTES:
+
+MTU + overhead must fit in one page:
+
+ sudo ifconfig ens5 mtu 3000
+
+sudo ethtool -l ens5
+sudo ethtool -L ens5 combined 1
+
 '''
 
 import datetime
@@ -14,10 +25,11 @@ import collections
 import time
 import sqlite3
 import argparse
+import subprocess
 
 from bcc import BPF
 
-import grafana
+# import grafana
 
 LOG = logging.getLogger('net')
 
@@ -39,7 +51,7 @@ class DB:
       c.execute('CREATE INDEX IF NOT EXISTS index_ip_b ON flow (ip_b);')
       c.execute('CREATE INDEX IF NOT EXISTS index_t_ip_a ON flow (time, ip_a);')
       c.execute('CREATE INDEX IF NOT EXISTS index_t_ip_b ON flow (time, ip_b);')
-
+      LOG.info('database ok')
 
   def close(self):
     self.conn.commit()
@@ -58,9 +70,42 @@ def run(args):
 
   src_path = str(pathlib.Path(__file__).parent/"net.c")
   b = BPF(src_file=src_path, debug=0)
-  BPF.attach_xdp(dev=args['interface'], fn=b.load_func("peek_packet", BPF.XDP))
-  flows = b["flows"]
+  fn=b.load_func("tc_peek_packet", BPF.SCHED_CLS)
+  # fn=b.load_func("xdp_peek_packet", BPF.XDP)
+  # BPF.attach_xdp(
+  #   dev=args['interface'],
+  #   fn=fn
+  # )
 
+
+'''
+ifc = ipdb.interfaces.eth0
+
+ipr.tc("add", "ingress", ifc.index, "ffff:")
+ipr.tc("add-filter", "bpf", ifc.index, ":1", fd=ingress_fn.fd,
+       name=ingress_fn.name, parent="ffff:", action="ok", classid=1)
+ipr.tc("add", "sfq", ifc.index, "1:")
+ipr.tc("add-filter", "bpf", ifc.index, ":1", fd=egress_fn.fd,
+       name=egress_fn.name, parent="1:", action="ok", classid=1)
+
+'''
+
+  # sudo tc qdisc add dev wg0 parent root pfifo
+  # sudo tc filter add dev wg0 parent root handle :1234 filtertype bpf name tc_peek_packet fd /dev/fd/NNN
+
+  subprocess.check_output([
+    'tc',
+    'filter', 'add',
+    'dev', 'wg0',
+    'parent', 'root',
+    'handle', ':1234',
+    'filtertype', 'bpf',
+    'name', fn.name,
+    'fd', str(fn.fd),
+  ])
+
+  flows = b["flows"]
+  LOG.info('bpf ok')
   # b.trace_print()
   db = DB(args['db'])
 
@@ -68,7 +113,7 @@ def run(args):
     while 1:
       t = datetime.datetime.now()
       f = list(flows.items_lookup_and_delete_batch())
-
+      LOG.debug(f'{len(f)} flows recoded')
       inserts = []
       host_src = collections.defaultdict(int)
       host_dst = collections.defaultdict(int)
