@@ -11,6 +11,23 @@ config = toml.load(pathlib.Path(__file__).parent / 'config.toml')['grafana']
 
 # https://grafana.com/docs/grafana-cloud/metrics-graphite/http-api/
 
+
+def post_frame(data):
+  auth = 'Bearer {}:{}'.format(59684, config['grafana_token'])
+  now = int(time.time())
+  try:
+    p = requests.post(
+      config['grafana_uri'],
+      headers={'Authorization': auth, 'Content-Type':'application/json'},
+      json=data,
+      timeout=2,
+    )
+    LOG.info(p.json())
+  except Exception as e:
+    LOG.error(e)
+
+
+
 def post(ns, **kv):
   auth = 'Bearer {}:{}'.format(59684, config['grafana_token'])
   now = int(time.time())
