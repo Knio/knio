@@ -14,6 +14,8 @@ mount.desktop:
 	mkdir -p desktop
 	mkdir -p desktop/k
 	mkdir -p desktop/f
+	-sudo umount -lf desktop/f
+	-sudo umount -lf desktop/k
 	sudo mount.cifs \\\\10.87.0.10\\\docs  desktop/k -o $(MOUNTOPS)
 	sudo mount.cifs \\\\10.87.0.10\\\media desktop/f -o $(MOUNTOPS)
 
