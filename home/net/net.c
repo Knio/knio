@@ -27,26 +27,34 @@ static void log_packet(const struct iphdr* ip) {
 
 
 int sock_peek_packet(struct __sk_buff *skb) {
-  // struct ethhdr e_hdr;
-  // if (bpf_skb_load_bytes(skb, 0, &e_hdr, sizeof(e_hdr))) {
-  //    bpf_trace_printk("no eth header");
-  //   return 1;
-  // }
-  // if (e_hdr.h_proto != htons(ETH_P_IP)) {
-  //    bpf_trace_printk("not an ip packet: %d", ntohs(e_hdr.h_proto));
-  //   return 1;
-  // }
+  bpf_trace_printk("protocol: %x", skb->protocol);
+  bpf_trace_printk("pkt_type: %x", skb->pkt_type);
+  struct ethhdr e_hdr;
+  u32 off = 0;
+  if (bpf_skb_load_bytes(skb, off, &e_hdr, sizeof(e_hdr))) {
+     bpf_trace_printk("no eth header");
+    return 1;
+  }
+  u8 ipproto = *((u8*)(&e_hdr)) & 0xf0;
+  if (e_hdr.h_proto == htons(ETH_P_IP)) {
+    off += sizeof(e_hdr);
+  }
+  else if (ipproto == 0x40) {
+    // ipv4
+    bpf_trace_printk("lol idk");
+  } else {
+    bpf_trace_printk("not an ip packet: %x", e_hdr.h_proto);
+    return 1;
+  }
   struct iphdr ip_hdr;
-  if (bpf_skb_load_bytes(skb, 0, &ip_hdr, sizeof(ip_hdr))) {
+  if (bpf_skb_load_bytes(skb, off, &ip_hdr, sizeof(ip_hdr))) {
      bpf_trace_printk("no ip header");
     return 1;
   }
-  bpf_trace_printk("socket packet 3 %d %d", ip_hdr.saddr, ip_hdr.daddr);
+  bpf_trace_printk("socket packet 3 %x %x", ip_hdr.saddr, ip_hdr.daddr);
   log_packet(&ip_hdr);
   return 1;
 }
-
-
 
 
 int xdp_peek_packet(struct xdp_md *ctx) {

@@ -12,6 +12,7 @@ def main():
   parser.add_argument('--interval', '-t', type=int, default=5)
   parser.add_argument('--attachment', '-a', type=str, default='socket')
   parser.add_argument('--db', type=str, default='netflow.db')
+  parser.add_argument('--printk', default=False, action='store_true')
 
   args = parser.parse_args()
   net.run(vars(args))
