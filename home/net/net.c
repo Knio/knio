@@ -9,20 +9,51 @@ struct Flow {
 };
 
 
-BPF_HASH(flows, struct Flow, u32, 4096);
+BPF_HASH(flows, struct Flow, u32, 1024);
+
+static void log_packet(const struct iphdr* ip) {
+  struct Flow flow;
+  u32 z = 0;
+  flow.ip_a = ntohl(ip->saddr);
+  flow.ip_b = ntohl(ip->daddr);
+
+  u32 *bytes = flows.lookup_or_try_init(&flow, &z);
+  if (bytes) {
+      *bytes += ntohs(ip->tot_len);
+  } else {
+    bpf_trace_printk("no map entry");
+  }
+}
 
 
-int tc_peek_packet(struct __sk_buff *skb) {
-  bpf_trace_printk("skb");
+int sock_peek_packet(struct __sk_buff *skb) {
+  // struct ethhdr e_hdr;
+  // if (bpf_skb_load_bytes(skb, 0, &e_hdr, sizeof(e_hdr))) {
+  //    bpf_trace_printk("no eth header");
+  //   return 1;
+  // }
+  // if (e_hdr.h_proto != htons(ETH_P_IP)) {
+  //    bpf_trace_printk("not an ip packet: %d", ntohs(e_hdr.h_proto));
+  //   return 1;
+  // }
+  struct iphdr ip_hdr;
+  if (bpf_skb_load_bytes(skb, 0, &ip_hdr, sizeof(ip_hdr))) {
+     bpf_trace_printk("no ip header");
+    return 1;
+  }
+  bpf_trace_printk("socket packet 3 %d %d", ip_hdr.saddr, ip_hdr.daddr);
+  log_packet(&ip_hdr);
   return 1;
 }
+
+
 
 
 int xdp_peek_packet(struct xdp_md *ctx) {
   bpf_trace_printk("packet");
 
-  void *data_end = (void *)(long)ctx->data_end;
   void *data = (void *)(long)ctx->data;
+  void *data_end = (void *)(long)ctx->data_end;
 
   struct ethhdr *eth = data;
   struct iphdr *ip = data + sizeof(struct ethhdr);
@@ -43,18 +74,7 @@ int xdp_peek_packet(struct xdp_md *ctx) {
     return XDP_PASS;
   }
 
-  u32 z = 0;
-
-  struct Flow flow;
-  flow.ip_a = ntohl(ip->saddr);
-  flow.ip_b = ntohl(ip->daddr);
-
-  u32 *bytes = flows.lookup_or_try_init(&flow, &z);
-  if (bytes) {
-      *bytes += ntohs(ip->tot_len);
-  } else {
-    bpf_trace_printk("no stats");
-  }
+  log_packet(ip);
 
   return XDP_PASS;
 }

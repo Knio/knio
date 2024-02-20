@@ -10,6 +10,7 @@ def main():
     description=__doc__)
   parser.add_argument('--interface', '-i', type=str, default='eth0')
   parser.add_argument('--interval', '-t', type=int, default=5)
+  parser.add_argument('--attachment', '-a', type=str, default='socket')
   parser.add_argument('--db', type=str, default='netflow.db')
 
   args = parser.parse_args()

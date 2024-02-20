@@ -27,7 +27,11 @@ import sqlite3
 import argparse
 import subprocess
 
+import pyroute2
 from bcc import BPF
+
+
+
 
 # import grafana
 
@@ -70,39 +74,47 @@ def run(args):
 
   src_path = str(pathlib.Path(__file__).parent/"net.c")
   b = BPF(src_file=src_path, debug=0)
-  fn=b.load_func("tc_peek_packet", BPF.SCHED_CLS)
-  # fn=b.load_func("xdp_peek_packet", BPF.XDP)
-  # BPF.attach_xdp(
-  #   dev=args['interface'],
-  #   fn=fn
-  # )
+
+  # fn=b.load_func("tc_peek_packet", BPF.SCHED_CLS)
+  if args['attachment'] == 'socket':
+    fn=b.load_func("sock_peek_packet", BPF.SOCKET_FILTER)
+    BPF.attach_raw_socket(dev=args['interface'], fn=fn)
+  elif args['attachments'] == 'xdp':
+    fn=b.load_func("xdp_peek_packet", BPF.XDP)
+    BPF.attach_xdp(dev=args['interface'], fn=fn)
 
 
-'''
-ifc = ipdb.interfaces.eth0
+  # ipr = pyroute2.IPRoute()
+  # ipdb = pyroute2.IPDB(nl=ipr)
 
-ipr.tc("add", "ingress", ifc.index, "ffff:")
-ipr.tc("add-filter", "bpf", ifc.index, ":1", fd=ingress_fn.fd,
-       name=ingress_fn.name, parent="ffff:", action="ok", classid=1)
-ipr.tc("add", "sfq", ifc.index, "1:")
-ipr.tc("add-filter", "bpf", ifc.index, ":1", fd=egress_fn.fd,
-       name=egress_fn.name, parent="1:", action="ok", classid=1)
+  # ifc = ipdb.interfaces.eth0
 
-'''
+  # ipr.tc("add", "ingress", "wg0", "ffff:")
+  # ipr.tc("add-filter", "bpf", "wg0", ":1", fd=fn.fd,
+  #       name=fn.name, parent="ffff:", action="ok", classid=1)
+
+  # ipr.tc("add", "sfq", ifc.index, "1:")
+  # ipr.tc("add-filter", "bpf", ifc.index, ":1", fd=egress_fn.fd,
+  #       name=egress_fn.name, parent="1:", action="ok", classid=1)
+
+# '''
 
   # sudo tc qdisc add dev wg0 parent root pfifo
   # sudo tc filter add dev wg0 parent root handle :1234 filtertype bpf name tc_peek_packet fd /dev/fd/NNN
 
-  subprocess.check_output([
-    'tc',
-    'filter', 'add',
-    'dev', 'wg0',
-    'parent', 'root',
-    'handle', ':1234',
-    'filtertype', 'bpf',
-    'name', fn.name,
-    'fd', str(fn.fd),
-  ])
+  # subprocess.check_output([
+  #   'tc',
+  #   'filter', 'add',
+  #   'dev', 'wg0',
+  #   # 'parent', 'root',
+  #   'root',
+  #   # 'handle',
+  #   #  ':1',
+  #   'bpf',
+  #   'object-file', f'/dev/fd/{fn.fd}',
+  #   # 'section', "peeks",
+  # ])
+
 
   flows = b["flows"]
   LOG.info('bpf ok')
