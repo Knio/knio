@@ -1,6 +1,7 @@
 {
     "editor.renderWhitespace": "boundary",
     "files.exclude": {
+        ".cache": true,
         "**/__pycache__": true,
         "**/.cache": true,
         "**/*.pyc": true,
@@ -38,7 +39,9 @@
     ],
     "remote.SSH.remotePlatform": {
         "tom-zoox": "linux",
-        "zkpq": "linux"
+        "zkpq": "linux",
+        "rpi5.zkpq.ca": "linux",
+        "zkpq.ca": "linux"
     },
     "workbench.editor.closeEmptyGroups": false,
     "editor.cursorSurroundingLines": 30,
