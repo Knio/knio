@@ -27,13 +27,10 @@ import sqlite3
 import argparse
 import subprocess
 
-import pyroute2
 from bcc import BPF
 
 
 
-
-# import grafana
 
 LOG = logging.getLogger('net')
 
