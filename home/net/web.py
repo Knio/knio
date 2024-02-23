@@ -1,10 +1,14 @@
-
+'''
+Run a webserver to show network flows
+'''
 
 import argparse
 import logging
 import time
 import sqlite3
 import json
+import pathlib
+from collections import namedtuple
 
 import dominate
 import whirl
@@ -12,17 +16,14 @@ from dominate import tags
 from whirl.domx import dx
 
 
-from collections import namedtuple
+module_dir = pathlib.Path(__file__).parent
+conn = None
 
 def namedtuple_factory(cursor, row):
     fields = [column[0] for column in cursor.description]
     cls = namedtuple("Row", fields)
     return cls._make(row)
 
-conn = sqlite3.connect(
-  'netflow.db',
-)
-conn.row_factory = namedtuple_factory
 
 @whirl.domx.template
 class dashboard(dominate.document):
@@ -57,44 +58,13 @@ def index(url, handler, match):
   )]
   j = json.dumps(data, sort_keys=True, indent='  ')
 
-  tags.script(dominate.util.raw('''
-    timeline = document.querySelector('#timeline');
-    debug = document.querySelector('#debug');
-    layout = {
-      title: "network traffic",
-      xaxis: {
-        rangeslider: {}
-      },
-      yaxis: {
-        fixedrange: true
-      }
-    };
-
-    function update_zoom(data) {
-      debug.innerText = JSON.stringify(data);
-    }
-
-  '''))
+  tags.script(dominate.util.include(module_dir/'net.js'))
 
   tags.script(dominate.util.raw(f'''
     Plotly.newPlot(timeline, {json.dumps(graph)}, layout);
   '''))
 
   tags.script(dominate.util.raw('''
-    time_range = [0,0];
-    timeline.on('plotly_relayout',
-    function(eventdata) {
-        time_range = timeline.layout.xaxis.range.map(t => Math.floor(new Date(t).getTime()/1000));
-        fetch("/domx/sumrange/" + time_range[0] + "/" + time_range[1]).then(response => {
-          if (!response.ok) {
-            debug.innerText = "response not ok";
-            return;
-          }
-          response.json().then(data => {
-            update_zoom(data);
-          })
-        })
-    });
 
   '''))
 
@@ -127,11 +97,17 @@ def main():
   parser = argparse.ArgumentParser(
     formatter_class=argparse.RawTextHelpFormatter,
     description=__doc__)
+  parser.add_argument('--db', type=str, default='netflow.db')
 
   args = parser.parse_args()
 
+  global conn
+  conn = sqlite3.connect(args.db, readonly=True)
+  conn.row_factory = namedtuple_factory
+
 
   whirl.domx.run(('', 8002))
+
 
 if __name__ == '__main__':
   main()
