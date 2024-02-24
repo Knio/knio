@@ -126,5 +126,6 @@
     "python.analysis.autoFormatStrings": true,
     "python.analysis.diagnosticSeverityOverrides": {
         "reportMissingImports": "none",
-    }
+    },
+    "editor.stickyScroll.maxLineCount": 10
 }
