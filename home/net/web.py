@@ -2,28 +2,22 @@
 Run a webserver to show network flows
 '''
 
+import ipaddress
 import argparse
 import logging
-import time
-import sqlite3
+import datetime
 import json
 import pathlib
-from collections import namedtuple
 
 import dominate
 import whirl
 from dominate import tags
-from whirl.domx import dx
 
+from .db import FlowDB
 
+LOG = logging.getLogger(__name__)
 module_dir = pathlib.Path(__file__).parent
-conn = None
-
-def namedtuple_factory(cursor, row):
-    fields = [column[0] for column in cursor.description]
-    cls = namedtuple("Row", fields)
-    return cls._make(row)
-
+db = None
 
 @whirl.domx.template
 class dashboard(dominate.document):
@@ -35,59 +29,105 @@ class dashboard(dominate.document):
 
 @whirl.domx.route('/')
 @tags.div
-def index(url, handler, match):
+def index(url, handler):
   tags.h1('Hello world')
 
   tags.div(id="timeline")
+  tags.div(id="details")
   tags.div(debug := tags.pre(id='debug'))
 
-  curs = conn.execute('''
-    SELECT
-      time, bytes
-    FROM
-      flow
-    WHERE
-      ip_a is NULL
-      AND ip_b is NULL
-  ''')
-  data = curs.fetchall()
+  with db as c:
+    c.execute('''
+      SELECT
+        time, bytes
+      FROM
+        flow
+      WHERE
+        ip_a is NULL
+        AND ip_b is NULL
+    ''')
+    data = c.fetchall()
 
   graph = [dict(
     x=[x.time for x in data],
     y=[x.bytes for x in data]
   )]
-  j = json.dumps(data, sort_keys=True, indent='  ')
 
-  tags.script(dominate.util.include(module_dir/'net.js'))
+  layout = dict(
+    title = "network traffic",
+    xaxis = dict(rangeslider = {}),
+    yaxis = dict(fixedrange = True),
+  )
 
   tags.script(dominate.util.raw(f'''
-    Plotly.newPlot(timeline, {json.dumps(graph)}, layout);
+    Plotly.newPlot("timeline", {json.dumps(graph)}, {json.dumps(layout)});
   '''))
+  tags.script(dominate.util.include(module_dir/'web.js'))
+  topn(None, None)
 
-  tags.script(dominate.util.raw('''
-
-  '''))
-
-
-@whirl.domx.route('^/sumrange/(.+)/(.+)')
-def sumrange(url, handler, match):
-  start = int(match.group(1))
-  end = int(match.group(2))
-  curs = conn.execute('''
-    SELECT
-      ip_a, ip_b, SUM(bytes)
-    FROM
-      flow
-    WHERE
-      time >= :start
-      AND time <= :end
-    GROUP BY
-      ip_a, ip_b
-  ''', locals())
-  data = curs.fetchall()
+@whirl.domx.route('^/topn')
+def topn(url, handler):
+  with db as c:
+    c.execute('''
+      SELECT
+        ip_a, SUM(bytes)
+      FROM
+        flow
+      WHERE
+        ip_b is NULL
+        AND ip_a is not NULL
+      GROUP BY
+        ip_a
+      ORDER BY
+        SUM(bytes) DESC
+      LIMIT 10
+    ''')
+    data = c.fetchall()
+    c.execute('''
+      SELECT
+        ip_b, SUM(bytes)
+      FROM
+        flow
+      WHERE
+        ip_a is NULL
+        AND ip_b is not NULL
+      GROUP BY
+        ip_b
+      ORDER BY
+        SUM(bytes) DESC
+      LIMIT 10
+    ''')
+    # data += c.fetchall()
+  LOG.info(data)
+  data.sort(key=lambda x: x.SUM_bytes_, reverse=True)
+  with tags.table():
+    for d in data:
+      ip = d[0]
+      tags.tr(
+        tags.td(f'{ipaddress.ip_address(ip)}'),
+        tags.td(f'{d.SUM_bytes_}')
+      )
   return data
-  # j = json.dumps(data, sort_keys=True, indent='  ')
 
+@whirl.domx.route('^/sumrange/(.+)/(.+)', type='json')
+def sumrange(url, handler, start, end):
+  start = datetime.datetime.fromtimestamp(int(start))
+  end = datetime.datetime.fromtimestamp(int(end))
+  LOG.info(f'sumrange: {start} -> {end}')
+  with db as c:
+    c.execute('''
+      SELECT
+        ip_a, ip_b, SUM(bytes)
+      FROM
+        flow
+      WHERE
+        time >= :start
+        AND time <= :end
+      GROUP BY
+        ip_a, ip_b
+    ''', locals())
+    data = c.fetchall()
+  return data
 
 
 def main():
@@ -101,9 +141,8 @@ def main():
 
   args = parser.parse_args()
 
-  global conn
-  conn = sqlite3.connect(args.db, readonly=True)
-  conn.row_factory = namedtuple_factory
+  global db
+  db = FlowDB(f'file:{args.db}?mode=ro', uri=True)
 
 
   whirl.domx.run(('', 8002))

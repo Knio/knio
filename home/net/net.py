@@ -25,50 +25,15 @@ import argparse
 import pathlib
 import collections
 import time
-import sqlite3
-import argparse
-import subprocess
 
 from bcc import BPF
+from .db import FlowDB
 
 
 LOG = logging.getLogger('net')
 
 
-class DB:
-  def __init__(self, filename):
-    self.conn = sqlite3.connect(filename)
-    with self as c:
-      c.execute('''
-        CREATE TABLE IF NOT EXISTS flow (
-          time DATETIME,
-          ip_a INTEGER,
-          ip_b INTEGER,
-          bytes INTEGER
-        );
-      ''')
-      c.execute('CREATE INDEX IF NOT EXISTS index_time ON flow (time);')
-      c.execute('CREATE INDEX IF NOT EXISTS index_ip_a ON flow (ip_a);')
-      c.execute('CREATE INDEX IF NOT EXISTS index_ip_b ON flow (ip_b);')
-      c.execute('CREATE INDEX IF NOT EXISTS index_t_ip_a ON flow (time, ip_a);')
-      c.execute('CREATE INDEX IF NOT EXISTS index_t_ip_b ON flow (time, ip_b);')
-      LOG.info('database ok')
-
-  def close(self):
-    self.conn.commit()
-    self.conn.close()
-
-  def __enter__(self):
-    return self.conn.cursor()
-
-  def __exit__(self, et, ev, tb):
-    if ev is None:
-      self.conn.commit()
-    else:
-      self.conn.rollback()
-
 def run(args):
-
   src_path = str(pathlib.Path(__file__).parent/"net.c")
   b = BPF(src_file=src_path, debug=0)
 
@@ -86,7 +51,7 @@ def run(args):
   LOG.info('bpf ok')
   if args['printk']:
     b.trace_print()
-  db = DB(args['db'])
+  db = FlowDB(args['db'])
 
   try:
     while 1:
@@ -109,7 +74,7 @@ def run(args):
 
       for ip_a, stat in host_src.items():
         inserts.append((t, ip_a, None, stat))
-      for ip_b, stat in host_src.items():
+      for ip_b, stat in host_dst.items():
         inserts.append((t, None, ip_b, stat))
       inserts.append((t, None, None, total))
 
@@ -129,12 +94,11 @@ def run(args):
     pass
 
 
-
 def main():
-
   parser = argparse.ArgumentParser(
     formatter_class=argparse.RawTextHelpFormatter,
     description=__doc__)
+
   parser.add_argument('--interface', '-i', type=str, default='eth0')
   parser.add_argument('--interval', '-t', type=int, default=5)
   parser.add_argument('--attachment', '-a', type=str, default='socket')
@@ -142,11 +106,11 @@ def main():
   parser.add_argument('--printk', default=False, action='store_true')
 
   args = parser.parse_args()
-  net.run(vars(args))
+  run(vars(args))
+
 
 if __name__ == '__main__':
   logging.basicConfig(level=logging.DEBUG,
     format='%(asctime)s:%(levelname)s:%(name)s:%(funcName)s:%(lineno)d %(message)s')
 
   main()
-

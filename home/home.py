@@ -5,9 +5,7 @@ Web frontend to control home devices
 
 import argparse
 import logging
-import time
 
-import dominate
 import requests
 import whirl
 from dominate import tags
@@ -22,9 +20,10 @@ LOG = logging.getLogger('home')
 
 home = None
 
+
 @whirl.domx.route('/')
 @tags.div
-def index(url, handler, match):
+def index(url, handler):
   tags.h1('Hello world')
 
   with tags.div(tags.h2('Scene')):
@@ -56,11 +55,12 @@ def index(url, handler, match):
       tags.button(c, dx(target='#content', get=f'/foobar/{c}'))
 
   with tags.div(id='content'):
-    foo(None, None, None)
+    foo(None, None)
+
 
 @whirl.domx.route(r'^/foo$')
 @tags.div
-def foo(url, handler, match):
+def foo(url, handler):
   with home.do_amp() as a:
     p = a.get_power()
     tags.h3(f'Power?: {p}')
@@ -74,7 +74,7 @@ def foo(url, handler, match):
 
 @whirl.domx.route(r'^/avr/on$')
 @tags.div
-def avr_on(url, handler, match):
+def avr_on(url, handler):
   with home.do_amp() as a:
     a.set_power(a.PowerState.ON)
   tags.p('Power turned on')
@@ -82,15 +82,16 @@ def avr_on(url, handler, match):
 
 @whirl.domx.route(r'^/avr_off$')
 @tags.div
-def avr_off(url, handler, match):
+def avr_off(url, handler):
   with home.do_amp() as a:
     a.set_power(a.PowerState.STANDBY)
   tags.p('Power turned off')
 
+
 @whirl.domx.route(r'^/avr/vol/([+-]?\d+)$')
 @tags.div
-def avr_vol(url, handler, match):
-  v = int(match.group(1))
+def avr_vol(url, handler, vol):
+  v = int(vol)
   with home.do_amp() as a:
     a.set_vol(v)
   tags.p(f'Vol set to {v:d}')
@@ -105,22 +106,20 @@ def avr_si(url, handler, match):
 
 
 @whirl.domx.route(r'^/light/(\d+)/(\w+)$')
-def light(url, handler, match):
-  l = int(match.group(1))
-  s = match.group(2)
-  if s == 'on':
+def light(url, handler, id, state):
+  l = int(id)
+  if state == 'on':
     home.lights[l].turn_on()
     tags.p(f'light {l} turned on')
-  elif s == 'off':
+  elif state == 'off':
     home.lights[l].turn_off()
     tags.p(f'light {l} turned off')
   else:
-    tags.p(f'bad command: {s!r}')
+    tags.p(f'bad command: {state!r}')
 
 @whirl.domx.route(r'^/foobar/(\w+)$')
-def foobar(url, handler, match):
+def foobar(url, handler, cmd):
   LOG.info(url)
-  cmd = match.group(1)
   # TODO: move this to devices.foobar
   if cmd == 'play':
     r = requests.post('http://10.87.1.10:8880/api/player/play', timeout=1)
@@ -136,9 +135,8 @@ def foobar(url, handler, match):
 
 
 @whirl.domx.route(r'^/scene/(\w+)$')
-def scene(url, handler_, match):
+def scene(url, handler, cmd):
   LOG.info(url)
-  cmd = match.group(1)
   r = getattr(home, f'scene_{cmd}')()
   tags.p(f'{r!r}')
 

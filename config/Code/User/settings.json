@@ -100,12 +100,18 @@
         "--disable=W0311",
         "--disable=W0511",
         "--disable=W0702",
+        "--disable=W0603",
+        "--disable=W0612",
+        "--disable=W0613",
         "--disable=W0718",
         "--disable=W1203",
         "--disable=E0401",
         "--disable=C0114",
+        "--disable=C0103",
+        "--disable=C0104",
         "--disable=C0115",
         "--disable=C0116",
+        "--disable=C0321",
         "--disable=R0903",
         "--disable=R1735",
         "--disable=logging-not-lazy",
@@ -115,5 +121,10 @@
         "*": true,
         "plaintext": true
     },
-    "cmake.showOptionsMovedNotification": false
+    "cmake.showOptionsMovedNotification": false,
+    "codeium.enableCodeLens": false,
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingImports": "none",
+    }
 }
