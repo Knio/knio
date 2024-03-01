@@ -4,6 +4,7 @@ Run a webserver to show network flows
 
 import ipaddress
 import argparse
+
 import logging
 import datetime
 import json
@@ -37,6 +38,7 @@ def index(url, handler):
   tags.div(debug := tags.pre(id='debug'))
 
   with db as c:
+    # TODO: compress time series (2000 buckets)
     c.execute('''
       SELECT
         time, bytes
@@ -47,6 +49,16 @@ def index(url, handler):
         AND ip_b is NULL
     ''')
     data = c.fetchall()
+
+  with db as c:
+    c.execute('''
+      SELECT
+        ip, json
+      FROM
+        ipapi
+    ''')
+    ipapi = [[x.ip, json.loads(x.json)] for x in c.fetchall()]
+
 
   graph = [dict(
     x=[x.time for x in data],
@@ -60,10 +72,12 @@ def index(url, handler):
   )
 
   tags.script(dominate.util.raw(f'''
+    var ipapi_raw = {json.dumps(ipapi)};
     Plotly.newPlot("timeline", {json.dumps(graph)}, {json.dumps(layout)});
   '''))
+  topn(url, handler)
+
   tags.script(dominate.util.include(module_dir/'web.js'))
-  topn(None, None)
 
 @whirl.domx.route('^/topn')
 def topn(url, handler):
@@ -97,15 +111,17 @@ def topn(url, handler):
         SUM(bytes) DESC
       LIMIT 10
     ''')
-    # data += c.fetchall()
+    data += c.fetchall()
   LOG.info(data)
   data.sort(key=lambda x: x.SUM_bytes_, reverse=True)
   with tags.table():
     for d in data:
       ip = d[0]
       tags.tr(
+        tags.td(tags.input_(name='selected_ip', type='radio', value=f'{ip}')),
         tags.td(f'{ipaddress.ip_address(ip)}'),
-        tags.td(f'{d.SUM_bytes_}')
+        tags.td(f'{d.SUM_bytes_}'),
+        id='topn'
       )
   return data
 
@@ -123,9 +139,24 @@ def sumrange(url, handler, start, end):
       WHERE
         time >= :start
         AND time <= :end
+        AND ip_a is not NULL
+        AND ip_b is not NULL
       GROUP BY
         ip_a, ip_b
     ''', locals())
+    data = c.fetchall()
+  return data
+
+
+@whirl.domx.route('^/ipapi', type='json')
+def ipapi(url, handler):
+  with db as c:
+    c.execute('''
+      SELECT
+        json
+      FROM
+        ipapi
+    ''')
     data = c.fetchall()
   return data
 
@@ -142,9 +173,10 @@ def main():
   args = parser.parse_args()
 
   global db
-  db = FlowDB(f'file:{args.db}?mode=ro', uri=True)
+  db = FlowDB(args.db)
+  # db = FlowDB(f'file:{args.db}?mode=ro', uri=True)
 
-
+  # ipapi.tick(db)
   whirl.domx.run(('', 8002))
 
 

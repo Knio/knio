@@ -2,50 +2,80 @@
 timeline = document.querySelector('#timeline');
 debug = document.querySelector('#debug');
 time_range = [0,0];
+selected_ip = 0n;
+ipapi = new Map();
+ipapi_raw.map(x => ipapi.set(x[0], x[1]));
+
+var topn = document.querySelectorAll('#topn input');
+topn.forEach(x => x.addEventListener('change', x => {
+  selected_ip = Number(x.target.value);
+  console.log(selected_ip);
+}));
 
 
 function is_local(ip) {
-  return (ip & 0xFFFF0000) === 0x0A570000;
+  ip = BigInt(ip);
+  return (ip & 0xFFFF0000n) === 0x0A570000n;
 }
 
 function ip_from_int(x) {
-  return ((x >> 24) & 0xFF) + '.' +
-         ((x >> 16) & 0xFF) + '.' +
-         ((x >> 8) & 0xFF) + '.' +
-         (x & 0xFF);
+  x = BigInt(x);
+  return ((x >> 24n) & 0xFFn) + '.' +
+         ((x >> 16n) & 0xFFn) + '.' +
+         ((x >> 8n) & 0xFFn) + '.' +
+         (x & 0xFFn);
 }
 
 class IpTrie {
   constructor(ip, depth) {
-      this.ip = ip;
-      this.depth = depth || 0;
+      ip = BigInt(ip);
+      this.depth = BigInt(depth || 0);
+      var ip_masked = BigInt(ip) & (~(0xffffffffn >> this.depth));
+      this.ip = ip_masked;
       this.bytes_in = 0;
       this.bytes_out = 0;
       this.children = new Map();
   }
 
   label() {
+    var l = "";
     if (this.depth == 32) {
-      return ip_from_int(this.ip);
+      l += ip_from_int(this.ip);
     }
-    return ip_from_int(this.ip) + "/" + (this.depth);
+    else {
+      l += ip_from_int(this.ip) + "/" + (this.depth);
+    }
+    var m = ipapi.get(Number(this.ip));
+    if (m?.org) {
+      l += " " + m.org;
+    } else if (m?.isp) {
+      l += " " + m.isp;
+    } else if (m?.as) {
+      l += " " + m.as;
+    } else if (m?.country) {
+      l += " " + m.country;
+    } else if (m?.message) {
+      l += " " + m.message;
+    }
+    return l;
   }
 
   add(ip, bytes_in, bytes_out) {
-    if (this.depth >= 32) {
+    if (this.depth >= 32n) {
       this.bytes_in += bytes_in;
       this.bytes_out += bytes_out;
       return;
     }
-    var x = (ip & (1 << this.depth)) && 1;
+    ip = BigInt(ip);
+    var x = (ip & (1n << (31n - this.depth))) ? 1 : 0;
     if (!this.children.has(x)) {
-      this.children.set(x, new IpTrie(ip, this.depth + 1));
+      this.children.set(x, new IpTrie(ip, this.depth + 1n));
     }
     this.children.get(x).add(ip, bytes_in, bytes_out);
   }
 
   collapse() {
-    if (this.depth == 32) {
+    if (this.depth === 32n) {
       return [[this], [null]];
     }
     if (this.children.size == 2) {
@@ -95,10 +125,15 @@ function update_zoom(data) {
     }
     tries.get(ip_a).add(ip_b, 0, bytes_in, bytes_in);
   }
+  console.log(tries);
+  console.log(selected_ip);
 
-  debug.innerText = JSON.stringify(tries);
-
-  var [labels, parents] = tries.get(173473802).collapse();
+  var root = tries.get(selected_ip);
+  console.log(root);
+  if (root === undefined) {
+    return;
+  }
+  var [labels, parents] = tries.get(selected_ip).collapse();
   console.log([labels, parents]);
 
   var labels_strs = labels.map(n => n.label() );
@@ -119,8 +154,8 @@ function update_zoom(data) {
 
   var layout = {
     margin: {l: 0, r: 0, b: 0, t: 0},
-    width: 500,
-    height: 500
+    width: 1000,
+    height: 1000
   };
 
   Plotly.newPlot("details", graph_data, layout);

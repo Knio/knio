@@ -43,10 +43,10 @@ class FlowDB(DB):
     with self as c:
       c.execute('''
         CREATE TABLE IF NOT EXISTS flow (
-          time DATETIME,
+          time DATETIME NOT NULL,
           ip_a INTEGER,
           ip_b INTEGER,
-          bytes INTEGER
+          bytes INTEGER NOT NULL
         );
       ''')
       c.execute('CREATE INDEX IF NOT EXISTS index_time ON flow (time);')
@@ -54,4 +54,15 @@ class FlowDB(DB):
       c.execute('CREATE INDEX IF NOT EXISTS index_ip_b ON flow (ip_b);')
       c.execute('CREATE INDEX IF NOT EXISTS index_t_ip_a ON flow (time, ip_a);')
       c.execute('CREATE INDEX IF NOT EXISTS index_t_ip_b ON flow (time, ip_b);')
+
+      c.execute('''
+        CREATE TABLE IF NOT EXISTS ipapi (
+          time DATETIME NOT NULL,
+          ip INTEGER PRIMARY KEY NOT NULL,
+          json TEXT
+        );
+      ''')
+      c.execute('CREATE INDEX IF NOT EXISTS index_time ON ipapi (time);')
+      # c.execute('CREATE UNIQUE INDEX IF NOT EXISTS index_ip ON ipapi (ip);')
+
       LOG.info('database ok')
