@@ -68,3 +68,5 @@
 	directory = %(prefix)///desktop.zkpq.ca/docs/Programming
 	directory = %(prefix)///desktop.zkpq.ca/docs/Programming/everdb2
 	directory = %(prefix)///desktop.zkpq.ca/docs/Programming/phototools
+	directory = %(prefix)///desktop.zkpq.ca/docs
+	directory = %(prefix)///desktop.zkpq.ca/docs/Programming/whirl

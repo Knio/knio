@@ -5,8 +5,9 @@ Web frontend to control home devices
 
 import argparse
 import logging
-
+import pathlib
 import requests
+import dominate
 import whirl
 from dominate import tags
 from whirl.domx import dx
@@ -17,22 +18,31 @@ from devices import kasa_light
 
 LOG = logging.getLogger('home')
 
+root = pathlib.Path(__file__).parent
 
 home = None
 
+@whirl.domx.template
+class HomePage(dominate.document):
+  def __init__(self, *a, **kw):
+    super().__init__('Home', *a, **kw)
+    with self.head:
+      tags.style(dominate.util.include('home.css'))
+
+
+header = lambda x:tags.h2(tags.span(x))
 
 @whirl.domx.route('/')
 @tags.div
 def index(url, handler):
   tags.h1('Hello world')
 
-  with tags.div(tags.h2('Scene')):
-    for s in ('Active', 'Work', 'Lounge', 'Movie', 'Sleep', 'Gone'):
-      tags.button(s, dx(target='#content', get=f'/scene/{s.lower()}'))
+  with tags.div(header('Scene')):
+    with tags.div():
+      for s in ('Active', 'Work', 'Lounge', 'Movie', 'Sleep', 'Gone'):
+        tags.button(s, dx(target='#content', get=f'/scene/{s.lower()}'))
 
-  with tags.div(tags.h2('Sound')):
-    tags.button('foo', dx(target='#content', get='/foo'))
-    tags.button('bar', dx(target='#content', get='/bar'))
+  with tags.div(header('Sound')):
 
     with tags.div('power'):
       tags.button('on', dx(target='#content', get='/avr/on'))
@@ -44,18 +54,19 @@ def index(url, handler):
       for s in ('TV', 'NET'):
         tags.button(s, dx(target='#content', get=f'/avr/si/{s}'))
 
-  with tags.div(tags.h2('Lights')):
+  with tags.div(header('Lights')):
     for i in range(2):
       with tags.div(f'light {i}'):
         tags.button('on', dx(target='#content', get=f'/light/{i}/on'))
         tags.button('off', dx(target='#content', get=f'/light/{i}/off'))
 
-  with tags.div(tags.h2('Music')):
-    for c in ('play', 'pause', 'random'):
-      tags.button(c, dx(target='#content', get=f'/foobar/{c}'))
+  with tags.div(header('Music')):
+    with tags.div():
+      for c in ('play', 'pause', 'random'):
+        tags.button(c, dx(target='#content', get=f'/foobar/{c}'))
 
   with tags.div(id='content'):
-    foo(None, None)
+    foo(url, handler)
 
 
 @whirl.domx.route(r'^/foo$')
