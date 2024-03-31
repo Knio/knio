@@ -74,6 +74,7 @@ class PMSA0004:
     if len(d) != self.Frame.size:
       LOG.info(f'Ignoring incomplete data: ({len(d)} != {self.Frame.size}): {d.hex()}')
       return
+
     vals = self.Frame.unpack(d)
     return dict(zip(self._frame.keys(), vals))
 
