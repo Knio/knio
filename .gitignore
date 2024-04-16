@@ -17,3 +17,7 @@
 *.egg-info
 *.py[cod]
 __pycache__
+
+# misc
+netflow.db
+

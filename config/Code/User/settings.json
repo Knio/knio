@@ -129,5 +129,9 @@
         "reportMissingImports": "none",
     },
     "editor.stickyScroll.maxLineCount": 10,
-    "C_Cpp.default.compilerPath": "C:\\msys64\\mingw64\\bin\\g++.exe"
+    "C_Cpp.default.compilerPath": "C:\\msys64\\mingw64\\bin\\g++.exe",
+    "editor.stickyScroll.maxLineCount": 10,
+    "graphviz-interactive-preview.renderLockAdditionalTimeout": 10000,
+    "graphviz-interactive-preview.renderInterval": 500,
+    "rust-analyzer.inlayHints.typeHints.enable": false
 }
