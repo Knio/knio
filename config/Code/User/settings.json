@@ -41,7 +41,8 @@
         "tom-zoox": "linux",
         "zkpq": "linux",
         "rpi5.zkpq.ca": "linux",
-        "zkpq.ca": "linux"
+        "zkpq.ca": "linux",
+        "10.87.1.16": "linux"
     },
     "workbench.editor.closeEmptyGroups": false,
     "editor.cursorSurroundingLines": 30,
@@ -127,5 +128,6 @@
     "python.analysis.diagnosticSeverityOverrides": {
         "reportMissingImports": "none",
     },
-    "editor.stickyScroll.maxLineCount": 10
+    "editor.stickyScroll.maxLineCount": 10,
+    "C_Cpp.default.compilerPath": "C:\\msys64\\mingw64\\bin\\g++.exe"
 }
