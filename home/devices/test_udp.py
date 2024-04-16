@@ -11,5 +11,6 @@ def main():
       print(data)
     except socket.timeout:
       print('.', end='', flush=True)
+
 if __name__ == '__main__':
   main()
