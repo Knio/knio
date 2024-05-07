@@ -61,7 +61,7 @@ def main():
         (2, 166): ('Outside_Back',  0.086, -3.0),
         (3, 51):  ('Inside_House',  0.146,  1.0),
 
-        (1, 41):   ('Room',        -0.034, -1.0),
+        (1, 37):   ('Room',        -0.034, -1.0),
         (2, 14):   ('AC_Intake',   -0.114,  1.0),
         (3, 13):   ('AC_Cool',     -0.084,  0.0),
 
@@ -72,14 +72,14 @@ def main():
       ch_id = data.get('channel'), data.get('id')
       namex = id_ch_to_name_x.get(ch_id)
       if namex is None:
-        log.warning(f'Unknown sensor: {line_s}')
+        log.warning(f'\n\nUnknown sensor: {line_s}\n\n')
       else:
         name, t_c, h_c = namex
         log.info(f'{name:<12s} {line_s}')
         post_grafana(f'Temperature_{name}', data['temperature_C'] - t_c)
         post_grafana(f'Humidity_{name}', data['humidity'] - h_c)
     else:
-      log.warning('Unknown sensor: %s', line)
+      log.warning(f'\n\nUnknown sensor: {line}\n\n')
 
   try:
     for line in rtl.stdout:
