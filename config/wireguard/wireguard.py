@@ -15,6 +15,10 @@ CONFIG = toml.load(pathlib.Path(__file__).parent / 'config.toml')
 LAN = CONFIG['LAN']
 HOSTS = CONFIG['host']
 
+# 2600:1f13:07ad:fd01:3daa:0087:0012:0001
+#  /16  /32  /48  /64  /80  /96 /112 /128
+
+
 def get_gateway():
   gw = HOSTS[LAN['gateway']]
   wg_conf = {}
@@ -22,7 +26,8 @@ def get_gateway():
   wg_conf |= dict(
     Endpoint = gw['Endpoint'],
     PublicKey = gw['PublicKey'],
-    AllowedIPs = f'{LAN["PREFIX"]}0/{LAN["MASK"]}',
+    AllowedIPs = f'{LAN["PREFIX"]}1/{LAN["MASK"]}, '
+                 f'{get_addr6(gw["Address"])}/{LAN["MASK6"]}'
   )
   return wg_conf
 
@@ -38,6 +43,9 @@ def get_pubkey(config):
 def get_addr(octet):
   return f'{LAN["PREFIX"]}{octet}'
 
+def get_addr6(octet):
+  return f'{LAN["PREFIX6"]}{octet:04d}:0001'
+
 
 def get_config_for_host(host):
   config = HOSTS[host]
@@ -48,11 +56,14 @@ def get_config_for_host(host):
 
   if config.pop('is_gateway', False):
     for name, peer in HOSTS.items():
+      if name == LAN['gateway']:
+        continue
       wg_conf.append(('Peer', wg_peer := {}))
       wg_peer['# Host'] = name
       wg_peer |= CONFIG['peer_defaults']
       wg_peer |= dict(
-        AllowedIPs = f'{get_addr(peer["Address"])}/32',
+        AllowedIPs = f'{get_addr(peer["Address"])}/32, '
+        f'{get_addr6(peer["Address"])}/{LAN["PEER6"]}',
         PublicKey = get_pubkey(peer),
       )
 
@@ -60,11 +71,13 @@ def get_config_for_host(host):
     wg_conf.append(('Peer', get_gateway()))
 
   if config.get('is_linux'):
-    pass
+    pass # addresses handled by bash script
   else: # windows
-    interface['Address'] = f'{get_addr(config["Address"])}/{LAN["MASK"]}'
+    interface['Address'] = \
+        f'{get_addr(config["Address"])}/{LAN["MASK"]}, '
+    interface['Address'] += \
+        f'{get_addr6(config["Address"])}/{LAN["MASK6"]}'
     interface['DNS'] = ', '.join(LAN['DNS'])
-
 
   return wg_conf
 
@@ -73,7 +86,21 @@ def get_config_for_host(host):
 def get_script_for_host(host):
   config = HOSTS[host]
   addr = f'{get_addr(config["Address"])}/{LAN["MASK"]}'
+  addr6 = f'{get_addr6(config["Address"])}/{LAN["MASK6"]}'
   wan = config.get("wan_interface")
+  is_gateway = config.get('is_gateway')
+
+
+# VPC -> Route Tables
+# Change the ipv6 subnet from "local" to the server instance
+#
+# EC2 -> Network interfaces -> Manage prefixes
+# IPv6 prefix delegation: Auto-assign
+
+
+# 06:53:07.032805 IP6 2604:a880:400:d0::1c4d:e001 > 2600:1f13:7ad:fd01:3daa:87:0:9: ICMP6, echo request, id 22867, seq 1, length 64
+# 06:53:07.360278 IP6 zkpq.ca > ff02::1:ff00:9: ICMP6, neighbor solicitation, who has 2600:1f13:7ad:fd01:3daa:87:0:9, length 32
+# 06:53:07.360326 IP6 2600:1f13:7ad:fd01:3daa:87:0:9 > zkpq.ca: ICMP6, neighbor advertisement, tgt is 2600:1f13:7ad:fd01:3daa:87:0:9, length 32
 
   script = f'''#!/bin/bash
 
@@ -84,28 +111,39 @@ set -u
 set -o pipefail
 set -x
 
-sudo ip link set down dev wg0 || true
-sudo ip link del dev wg0 || true
+ip link set down dev wg0 || true
+ip link del dev wg0 || true
 '''
-
-  if config.get('is_gateway'):
+  if is_gateway:
     script += f'''
-sudo iptables -D FORWARD -i wg0 -j ACCEPT || true
-sudo iptables -D POSTROUTING -o {wan} -j MASQUERADE -t nat || true
+iptables -D FORWARD -i wg0 -j ACCEPT || true
+iptables -D POSTROUTING -o {wan} -j MASQUERADE -t nat || true
+
 '''
 
   script += f'''
 ip link add dev wg0 type wireguard
 wg setconf wg0 /etc/wireguard/wg0.conf
 ip address add dev wg0 {addr}
+ip address add dev wg0 {addr6}
 ip link set up dev wg0
 '''
 
-  if config.get('is_gateway'):
+  if is_gateway:
     script += f'''
 sysctl -w net.ipv4.ip_forward=1
 iptables -A FORWARD -i wg0 -j ACCEPT
 iptables -A POSTROUTING -o {wan} -j MASQUERADE -t nat
+
+#ip address add dev {wan} {addr6}
+sysctl -w net.ipv6.conf.all.forwarding=1
+# TODO firewall
+# need this?
+#ip6tables -A FORWARD -i wg0 -j ACCEPT
+#ip6tables -A FORWARD -o wg0 -j ACCEPT
+# ?
+#ip6tables -A FORWARD -i wg0 -s !{addr6} -o {wan}
+#ip6tables -A FORWARD -i {wan} -s {addr6} -o wg0
 '''
   return script
 
