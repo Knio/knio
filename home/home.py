@@ -24,8 +24,8 @@ home = None
 
 @whirl.domx.template
 class HomePage(dominate.document):
-  def __init__(self, *a, **kw):
-    super().__init__('Home', *a, **kw)
+  def __init__(self, title='Home', *a, **kw):
+    super().__init__(title, *a, **kw)
     with self.head:
       tags.style(dominate.util.include('home.css'))
 
@@ -109,8 +109,7 @@ def avr_vol(url, handler, vol):
 
 @whirl.domx.route(r'^/avr/si/(\w+)$')
 @tags.div
-def avr_si(url, handler, match):
-  si = match.group(1)
+def avr_si(url, handler, si):
   with home.do_amp() as a:
     a.set_source(si)
   tags.p(f'Source set to {si}')

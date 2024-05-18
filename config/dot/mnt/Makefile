@@ -12,18 +12,20 @@ MOUNTOPS = "username=Tom,uid=tom,gid=0,file_mode=0750,dir_mode=0750,soft,dirsync
 
 mount.desktop:
 	mkdir -p desktop
-	mkdir -p desktop/k
-	mkdir -p desktop/f
-	-sudo umount -lf desktop/f
-	-sudo umount -lf desktop/k
-	sudo mount.cifs \\\\10.87.0.10\\\docs  desktop/k -o $(MOUNTOPS)
-	sudo mount.cifs \\\\10.87.0.10\\\media desktop/f -o $(MOUNTOPS)
+	mkdir -p desktop/docs
+	mkdir -p desktop/media
+	-sudo umount -lf desktop/docs
+	-sudo umount -lf desktop/media
+	sudo mount.cifs \\\\10.87.0.10\\\docs  desktop/docs  -o $(MOUNTOPS)
+	sudo mount.cifs \\\\10.87.0.10\\\media desktop/media -o $(MOUNTOPS)
 
 mount.desktop.local:
-	mkdir -p desktop/k
-	mkdir -p desktop/f
-	sudo mount.cifs '\\10.87.1.10\docs'  desktop/k -o $(MOUNTOPS)
-	sudo mount.cifs '\\10.87.1.10\media' desktop/f -o $(MOUNTOPS)
+	mkdir -p desktop/docs
+	mkdir -p desktop/media
+	-sudo umount -lf desktop/docs
+	-sudo umount -lf desktop/media
+	sudo mount.cifs '\\10.87.1.10\docs'  desktop/docs  -o $(MOUNTOPS)
+	sudo mount.cifs '\\10.87.1.10\media' desktop/media -o $(MOUNTOPS)
 
 
 .PHONY: \

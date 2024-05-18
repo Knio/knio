@@ -28,6 +28,7 @@ def get_gateway():
     PublicKey = gw['PublicKey'],
     AllowedIPs = f'{LAN["PREFIX"]}1/{LAN["MASK"]}, '
                  f'{get_addr6(gw["Address"])}/{LAN["MASK6"]}'
+                 f', 0::0/0'
   )
   return wg_conf
 
