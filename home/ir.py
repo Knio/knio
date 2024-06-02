@@ -488,9 +488,10 @@ def main():
   #   baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1)
   # w = Keybow(ser2)
   w = None
+  m = None
 
   k = pynput.keyboard.Controller()
-  m = pynput.mouse.Controller()
+  # m = pynput.mouse.Controller()
   t = KnioTranslator(c, k, m, w)
   try:
     t.run()

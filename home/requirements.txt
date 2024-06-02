@@ -5,3 +5,4 @@ requests
 python-kasa
 IPython
 pyserial
+pynput

@@ -30,10 +30,14 @@ mount.desktop.local:
 
 
 mount.laptop:
-	mkdir -p laptop
 	mkdir -p laptop/data
 	-sudo umount -lf laptop/data
-	sudo mount.cifs '\\10.87.0.12\data'  laptop/d -o $(MOUNTOPS)
+	sudo mount.cifs '\\10.87.0.12\data'  laptop/data -o $(MOUNTOPS)
+
+mount.laptop.local:
+	mkdir -p laptop/data
+	-sudo umount -lf laptop/data
+	sudo mount.cifs '\\10.87.1.12\data'  laptop/data -o $(MOUNTOPS)
 
 
 .PHONY: \
