@@ -24,7 +24,7 @@ def get_gateway():
   wg_conf = {}
   wg_conf |= CONFIG['peer_defaults']
   wg_conf |= dict(
-    Endpoint = gw['Endpoint'],
+    Endpoint = f"{gw['Endpoint']}:{CONFIG['interface_defaults']['ListenPort']}y",
     PublicKey = gw['PublicKey'],
     AllowedIPs = f'{LAN["PREFIX"]}1/{LAN["MASK"]}, '
                  f'{get_addr6(gw["Address"])}/{LAN["MASK6"]}'
@@ -55,21 +55,28 @@ def get_config_for_host(host):
   interface |= CONFIG['interface_defaults']
   interface['PrivateKey'] = config['PrivateKey']
 
-  if config.pop('is_gateway', False):
-    for name, peer in HOSTS.items():
-      if name == LAN['gateway']:
-        continue
-      wg_conf.append(('Peer', wg_peer := {}))
-      wg_peer['# Host'] = name
-      wg_peer |= CONFIG['peer_defaults']
-      wg_peer |= dict(
-        AllowedIPs = f'{get_addr(peer["Address"])}/32, '
-        f'{get_addr6(peer["Address"])}/{LAN["PEER6"]}',
-        PublicKey = get_pubkey(peer),
-      )
+  for name, peer in HOSTS.items():
 
-  else:
+    if name == host:
+      continue # self
+    if name == CONFIG['LAN']['gateway']:
+      continue # handled later
+    if not (ep := peer.get('Endpoint')):
+      continue # no path
+    wg_conf.append(('Peer', wg_peer := {}))
+    wg_peer['# Host'] = name
+    wg_peer |= CONFIG['peer_defaults']
+    wg_peer |= dict(
+      Endpoint = f'{ep}:{interface["ListenPort"]}',
+      AllowedIPs = f'{get_addr(peer["Address"])}/32, '
+      f'{get_addr6(peer["Address"])}/{LAN["PEER6"]}',
+      PublicKey = get_pubkey(peer),
+    )
+
+
+  if not config.get('is_gateway'):
     wg_conf.append(('Peer', get_gateway()))
+
 
   if config.get('is_linux'):
     pass # addresses handled by bash script
