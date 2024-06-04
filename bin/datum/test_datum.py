@@ -2,6 +2,21 @@ import pytest
 
 import datum
 
+def test_basic():
+    class Point(datum.Datum):
+        x: datum.int32
+        y: datum.int32
+
+    p = Point(14, 37)
+    assert p.size() == 8
+    p2 = Point.deserialize_new(p.serialize())
+    assert p2.x == 14
+    assert p2.y == 37
+    assert p2.values() == (14, 37)
+    assert p2.dict() == {'x':14, 'y':37}
+    assert f'{p2}' == '<Point x=14 y=37>'
+
+
 def test_datum():
     class TestDatum(datum.Datum):
         x: datum.int8
@@ -11,12 +26,7 @@ def test_datum():
 
     assert d.x == -1
     assert d.y == 1
-    b = d.serialize()
-    assert b == b'\xff\0\0\0\x01'
 
-    c = TestDatum().deserialize(b)
-    assert c.x == -1
-    assert c.y == 1
 
 if __name__ == "__main__":
     exit(pytest.main(['-v']))

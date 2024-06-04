@@ -19,31 +19,30 @@ class DatumMeta(type):
     print((cls, name, bases, dct))
 
     A = dct.get('__annotations__', {})
-    def to_bytes(self):
-      pass
-
     T = super().__new__(cls, name, bases, dct)
     A = T.__annotations__
     print((T, A))
     return T
-
-  @staticmethod
-  def foo(A):
-    return 'bar'
 
 
 class DatumBase:
   def serialize(self):
     pass
 
-  def deserialize(bytes):
-    pass
+  def deserialize_into(self, buf):
+    raise NotImplementedError()
+
+  @classmethod
+  def deserialize_new(cls, buf):
+    n = cls()
+    n.deserialize_into(buf)
+    return n
 
   def value(self):
     return self
 
   def size(self):
-    raise NotImplemented
+    raise NotImplementedError
 
 
 class Datum(DatumBase, metaclass=DatumMeta):
@@ -51,6 +50,7 @@ class Datum(DatumBase, metaclass=DatumMeta):
     T = type(self)
     A = T.__annotations__
     self._items = {}
+    self._size = 0
     args = list(args)
     for k, v in A.items():
       if args:
@@ -62,22 +62,49 @@ class Datum(DatumBase, metaclass=DatumMeta):
         if not pv:
           # get default value
           pv = getattr(T, k, None)
-      self._items[k] = v(pv)
+
+      item = v(pv)
+      self._items[k] = item
+      self._size += item.size()
     # raise ValueError(self, A)
 
   def __getattr__(self, k):
-    return self._items[k].value()
+    try:
+      return self._items[k].value()
+    except KeyError:
+      raise AttributeError(k)
+
+  def __repr__(self):
+    x = '<'
+    x += type(self).__name__
+    x += ' '
+    x += ' '.join(f'{k}={v}' for k,v in self.items())
+    x += '>'
+    return x
+
+  def values(self):
+    return tuple(v.value() for v in self._items.values())
+
+  def items(self):
+    return tuple((k, v.value()) for k, v in self._items.items())
+
+  def dict(self):
+    return {k: v.value() for k, v in self._items.items()}
+
+  def size(self):
+    return self._size
 
   def serialize(self):
     return b''.join(v.serialize() for v in self._items.values())
 
-  def deserialize(self, buffer):
+  def deserialize_into(self, buf):
     i = 0
     for v in self._items.values():
       s = v.size()
-      v.deserialize(buffer[i:i+s])
+      v.deserialize(buf[i:i+s])
       i += s
     return self
+
 
 def datum_struct(fmt):
   s = struct.Struct(fmt)
@@ -89,9 +116,9 @@ def datum_struct(fmt):
     def serialize(self):
       return s.pack(self.v)
 
-    def deserialize(self, buffer):
-      assert len(buffer) == s.size
-      self.v, = s.unpack(buffer)
+    def deserialize(self, buf):
+      assert len(buf) == s.size
+      self.v, = s.unpack(buf)
       return self
 
     def value(self):
@@ -112,3 +139,4 @@ uint16 = datum_struct('!H')
 uint32 = datum_struct('!I')
 uint64 = datum_struct('!Q')
 
+# TODO: make u128 types
