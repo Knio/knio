@@ -146,17 +146,14 @@ class PySerial(Serial):
 
   def read_raw(self, n):
     # compensate for weird pyserial behavior
-    # t = self.ser.timeout
     # wait for at least 1 byte
     buf = self.ser.read(1)
     if not buf:
       return buf
     # flush any remaining bytes
-    # self.ser.timeout = 0
     k = min(n - 1, self.ser.in_waiting)
     if k:
       buf += self.ser.read(k)
-    # self.ser.timeout = t
     return buf
 
   def write_raw(self, data):

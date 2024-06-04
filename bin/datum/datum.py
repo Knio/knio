@@ -129,14 +129,21 @@ def datum_struct(fmt):
 
   return DatumStruct
 
-int8  = datum_struct('!b')
-int16 = datum_struct('!h')
-int32 = datum_struct('!i')
-int64 = datum_struct('!q')
+i8  = int8  = datum_struct('!b')
+i16 = int16 = datum_struct('!h')
+i32 = int32 = datum_struct('!i')
+i64 = int64 = datum_struct('!q')
 
-uint8  = datum_struct('!B')
-uint16 = datum_struct('!H')
-uint32 = datum_struct('!I')
-uint64 = datum_struct('!Q')
+u8  = uint8  = datum_struct('!B')
+u16 = uint16 = datum_struct('!H')
+u32 = uint32 = datum_struct('!I')
+u64 = uint64 = datum_struct('!Q')
 
 # TODO: make u128 types
+
+# TODO: make crc type that validates itself
+
+# TODO: make start/header type that validates itself
+
+# TODO: make size type that validates itself
+

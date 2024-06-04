@@ -23,60 +23,54 @@ import struct
 import serial
 
 from devices import utils
+from devices import datum
+
+
+class PMSAFrame(datum.Datum):
+    start: datum.u16
+    length: datum.u16
+
+    pm01_0_ug_m3_cf: datum.u16
+    pm02_5_ug_m3_cf: datum.u16
+    pm10_0_ug_m3_cf: datum.u16
+
+    pm01_0_ug_m3_atm: datum.u16
+    pm02_5_ug_m3_atm: datum.u16
+    pm10_0_ug_m3_atm: datum.u16
+
+    pm00_3_dl: datum.u16
+    pm00_5_dl: datum.u16
+    pm01_0_dl: datum.u16
+    pm02_5_dl: datum.u16
+    pm05_0_dl: datum.u16
+    pm10_0_dl: datum.u16
+
+    version: datum.u8
+    error: datum.u8
+    crc: datum.u16
+
 
 LOG = logging.getLogger(__name__)
 
 
 class PMSA0004:
-  u8 = 'B'
-  u16 = 'H'
-  # TODO use datum
-  _frame = dict(
-    start = u16,
-    length = u16,
-
-    pm01_0_ug_m3_cf = u16,
-    pm02_5_ug_m3_cf = u16,
-    pm10_0_ug_m3_cf = u16,
-
-    pm01_0_ug_m3_atm = u16,
-    pm02_5_ug_m3_atm = u16,
-    pm10_0_ug_m3_atm = u16,
-
-    pm00_3_dl = u16,
-    pm00_5_dl = u16,
-    pm01_0_dl = u16,
-    pm02_5_dl = u16,
-    pm05_0_dl = u16,
-    pm10_0_dl = u16,
-
-    version = u8,
-    error = u8,
-    crc = u16,
-
-  )
-
-  Frame = struct.Struct(
-    '!' +
-    ''.join(_frame.values())
-  )
-
-  length = Frame.size
-
   def __init__(self, ss):
     self.serial = ss
     self.serial.timeout = 0.5
+    self.data = PMSAFrame()
 
   def poll(self):
     # TODO need a .read_n()
+    # d = self.serial.read_all()
     d = self.serial.read_all()
     LOG.debug(f'{len(d)} {d.hex(" ")}')
-    if len(d) != self.Frame.size:
-      LOG.info(f'Ignoring incomplete data: ({len(d)} != {self.Frame.size}): {d.hex()}')
+    if len(d) != self.data.size():
+      LOG.info(f'Ignoring incomplete data: ({len(d)} != {self.data.size()}): {d.hex()}')
       return
 
-    vals = self.Frame.unpack(d)
-    return dict(zip(self._frame.keys(), vals))
+    vals = self.data.deserialize_into(d)
+    print(vals)
+    return vals.dict()
 
 
 def main():
