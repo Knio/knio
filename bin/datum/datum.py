@@ -1,17 +1,6 @@
+import functools
 import struct
-
-class FieldDescriptor:
-  def __init__(self, name=None, expr=None, **kwargs):
-    self.name = name
-    self.expr = expr
-
-
-  def __repr__(self):
-    l = ', '.join(
-      list(map(repr, self.args)) +
-      list(f'{k}={v!r}' for k, v in self.kwargs.items())
-    )
-    return f'<F {l}>'
+import sys
 
 
 class DatumMeta(type):
@@ -19,13 +8,17 @@ class DatumMeta(type):
     print((cls, name, bases, dct))
 
     A = dct.get('__annotations__', {})
+    for k, v in A.items():
+      if isinstance(v, functools.partial):
+        A[k] = v()
     T = super().__new__(cls, name, bases, dct)
-    A = T.__annotations__
-    print((T, A))
     return T
 
 
 class DatumBase:
+  def __init__(self, *a, **kw):
+    self.set_value(*a, **kw)
+
   def serialize(self):
     pass
 
@@ -41,17 +34,22 @@ class DatumBase:
   def value(self):
     return self
 
+  def set_value(self):
+    raise NotImplementedError
+
   def size(self):
     raise NotImplementedError
 
 
 class Datum(DatumBase, metaclass=DatumMeta):
+  __slots__ = ['_size', '_items']
   def __init__(self, *args, **kwargs):
     T = type(self)
     A = T.__annotations__
-    self._items = {}
-    self._size = 0
+    # self._items = {}
+    object.__setattr__(self, '_items', {})
     args = list(args)
+    size = 0
     for k, v in A.items():
       if args:
         pv = args.pop(0)
@@ -65,8 +63,8 @@ class Datum(DatumBase, metaclass=DatumMeta):
 
       item = v(pv)
       self._items[k] = item
-      self._size += item.size()
-    # raise ValueError(self, A)
+      size += item.size()
+    object.__setattr__(self, '_size', size)
 
   def __getattr__(self, k):
     try:
@@ -74,13 +72,20 @@ class Datum(DatumBase, metaclass=DatumMeta):
     except KeyError:
       raise AttributeError(k)
 
+  def __setattr__(self, k, v):
+    if k in self._items:
+      self._items[k].set_value(v)
+    else:
+      raise AttributeError(k)
+    return super().__setattr__(k, v)
+
   def __repr__(self):
-    x = '<'
-    x += type(self).__name__
-    x += ' '
-    x += ' '.join(f'{k}={v}' for k,v in self.items())
-    x += '>'
-    return x
+    return ''.join((
+      '<', type(self).__name__,
+      ' ',
+      ' '.join(f'{k}={v!r}' for k,v in self.items()),
+      '>',
+    ))
 
   def values(self):
     return tuple(v.value() for v in self._items.values())
@@ -101,45 +106,113 @@ class Datum(DatumBase, metaclass=DatumMeta):
     i = 0
     for v in self._items.values():
       s = v.size()
-      v.deserialize(buf[i:i+s])
+      v.deserialize_into(buf[i:i+s])
       i += s
     return self
 
 
-def datum_struct(fmt):
-  s = struct.Struct(fmt)
-  class DatumStruct(DatumBase):
-    def __init__(self, v):
-      # TODO: input validation
-      self.v = v
+class DatumStruct(DatumBase):
+  def set_value(self, v=0):
+    # TODO: input validation
+    self.v = v
 
-    def serialize(self):
-      return s.pack(self.v)
+  def serialize(self):
+    return self._struct.pack(self.v)
 
-    def deserialize(self, buf):
-      assert len(buf) == s.size
-      self.v, = s.unpack(buf)
-      return self
+  def deserialize_into(self, buf):
+    assert len(buf) == self._struct.size
+    self.v, = self._struct.unpack(buf)
+    return self
 
-    def value(self):
-      return self.v
+  def value(self):
+    return self.v
 
-    def size(self):
-      return s.size
+  def size(self):
+    return self._struct.size
 
-  return DatumStruct
 
-i8  = int8  = datum_struct('!b')
-i16 = int16 = datum_struct('!h')
-i32 = int32 = datum_struct('!i')
-i64 = int64 = datum_struct('!q')
+class BigIntDatum(DatumBase):
+  __slots__ = ['v']
+  def set_value(self, v=0):
+    # TODO: input validation
+    self.v = v
 
-u8  = uint8  = datum_struct('!B')
-u16 = uint16 = datum_struct('!H')
-u32 = uint32 = datum_struct('!I')
-u64 = uint64 = datum_struct('!Q')
+  def serialize(self):
+    return self.v.to_bytes(
+      length=self._size,
+      byteorder=self._byteorder,
+      signed=self._signed
+    )
 
-# TODO: make u128 types
+  def deserialize_into(self, buf):
+    assert len(buf) == self._size
+    self.v = int.from_bytes(buf,
+      byteorder=self._byteorder,
+      signed=self._signed)
+    return self
+
+  def value(self):
+    return self.v
+
+  def size(self):
+    return self._size
+
+class BigIntEnumDatum(BigIntDatum):
+  def value(self):
+    return self._enum(self.v)
+
+
+def datum_struct(fmt, endian='network'):
+  e = dict(
+    network='!',
+    native='@',
+    big='>',
+    little='<'
+  )[endian]
+  class DS(DatumStruct):
+    _struct = struct.Struct(f'{e}{fmt}')
+  return DS
+
+def datum_bigint(size=1, endian='big', signed=True, enum=None):
+  if endian == 'native':
+    endian = sys.byteorder
+  if endian == 'network':
+    endian = 'big'
+    # TODO just use type() and set the name etc
+  base = BigIntDatum
+  if enum:
+    base = BigIntEnumDatum
+  class BI(base):
+    _size = size
+    _byteorder = endian
+    _signed = signed
+    _enum = enum
+  return BI
+
+
+i8  = functools.partial(datum_struct, 'b')
+u32 = functools.partial(datum_struct, 'I')
+i32 = functools.partial(datum_struct, 'i')
+u128 =functools.partial(datum_bigint, size=16, signed=False)
+
+# u8  = uint8  = datum_struct('B')
+# i8  = int8  = datum_struct('b')
+# i16 = int16 = datum_struct('h')
+# i32 = int32 = datum_struct('i')
+# i64 = int64 = datum_struct('q')
+
+u8  = functools.partial(datum_bigint, size=1, signed=False)
+u16 = functools.partial(datum_bigint, size=2, signed=False)
+u32 = functools.partial(datum_bigint, size=4, signed=False)
+u64 = functools.partial(datum_bigint, size=8, signed=False)
+
+i8  = functools.partial(datum_bigint, size=1)
+i16 = functools.partial(datum_bigint, size=2)
+i32 = functools.partial(datum_bigint, size=4)
+i64 = functools.partial(datum_bigint, size=8)
+
+
+# TODO: if feild a is X, interpret feild b as Y
 
 # TODO: make crc type that validates itself
 

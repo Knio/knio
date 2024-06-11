@@ -4,8 +4,8 @@ import datum
 
 def test_basic():
     class Point(datum.Datum):
-        x: datum.int32
-        y: datum.int32
+        x: datum.i32()
+        y: datum.i32()
 
     p = Point(14, 37)
     assert p.size() == 8
@@ -15,17 +15,56 @@ def test_basic():
     assert p2.values() == (14, 37)
     assert p2.dict() == {'x':14, 'y':37}
     assert f'{p2}' == '<Point x=14 y=37>'
+    p2.y = 38
+    with pytest.raises(AttributeError):
+      p2.z = 3
+    p3 = Point.deserialize_new(p2.serialize())
+    assert f'{p3}' == '<Point x=14 y=38>'
+
 
 
 def test_datum():
     class TestDatum(datum.Datum):
-        x: datum.int8
-        y: datum.uint32
+        x: datum.i8
+        y: datum.u32
 
     d = TestDatum(-1, 1)
-
     assert d.x == -1
     assert d.y == 1
+    d.x = 2
+    assert d.x == 2
+
+def test_u64():
+    f = datum.u128()
+    assert f(1).serialize() == b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01'
+
+def test_basic_types():
+  def check(cls, v, buf):
+    d = cls(v)
+    assert d.serialize() == buf
+    assert cls.deserialize_new(buf).value() == v
+
+  check(datum.i8(), 1, b'\1')
+  check(datum.i8(), 127, b'\x7f')
+  check(datum.i8(), -128, b'\x80')
+  check(datum.i8(), -1, b'\xff')
+  check(datum.u8(), 255, b'\xff')
+
+  check(datum.u16(), 1, b'\0\1')
+  check(datum.u16(), 256, b'\1\0')
+
+  check(datum.u16(endian='network'), 1, b'\0\1')
+  check(datum.u16(endian='network'), 256, b'\1\0')
+
+  check(datum.u16(endian='big'), 1, b'\0\1')
+  check(datum.u16(endian='big'), 256, b'\1\0')
+
+  check(datum.u16(endian='little'), 1, b'\1\0')
+  check(datum.u16(endian='little'), 256, b'\0\1')
+
+  check(datum.u16(endian='native'), 1, b'\1\0')
+  check(datum.u16(endian='native'), 256, b'\0\1')
+
 
 
 if __name__ == "__main__":
