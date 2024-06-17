@@ -15,3 +15,5 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # aliases
 [ -f ~/knio/config/bash/aliases ] && source ~/knio/config/bash/aliases
 
+
+export PATH="$PATH:/home/tom/bin/ffmpeg/ffmpeg-git-20240524-arm64-static"

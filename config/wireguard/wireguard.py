@@ -24,7 +24,7 @@ def get_gateway():
   wg_conf = {}
   wg_conf |= CONFIG['peer_defaults']
   wg_conf |= dict(
-    Endpoint = f"{gw['Endpoint']}:{CONFIG['interface_defaults']['ListenPort']}y",
+    Endpoint = f"{gw['Endpoint']}:{gw['ListenPort']}",
     PublicKey = gw['PublicKey'],
     AllowedIPs = f'{LAN["PREFIX"]}1/{LAN["MASK"]}, '
                  f'{get_addr6(gw["Address"])}/{LAN["MASK6"]}'
@@ -52,7 +52,7 @@ def get_config_for_host(host):
   config = HOSTS[host]
 
   wg_conf = [('Interface', interface := {})]
-  interface |= CONFIG['interface_defaults']
+  # interface |= CONFIG['interface_defaults']
   interface['PrivateKey'] = config['PrivateKey']
 
   for name, peer in HOSTS.items():
@@ -61,17 +61,16 @@ def get_config_for_host(host):
       continue # self
     if name == CONFIG['LAN']['gateway']:
       continue # handled later
-    if not (ep := peer.get('Endpoint')):
-      continue # no path
     wg_conf.append(('Peer', wg_peer := {}))
     wg_peer['# Host'] = name
     wg_peer |= CONFIG['peer_defaults']
     wg_peer |= dict(
-      Endpoint = f'{ep}:{interface["ListenPort"]}',
       AllowedIPs = f'{get_addr(peer["Address"])}/32, '
       f'{get_addr6(peer["Address"])}/{LAN["PEER6"]}',
       PublicKey = get_pubkey(peer),
     )
+    if ep := peer.get('Endpoint'):
+      wg_peer['Endpoint'] = f'{ep}:{peer["ListenPort"]}'
 
 
   if not config.get('is_gateway'):
