@@ -1,22 +1,20 @@
 SHELL=/bin/bash -o pipefail
-ADDR = 10.87.0.1/24
 HOST = `hostname`
 KERNEL_VERSION = $(shell uname -r)
 
 start: /etc/wireguard/wg0_start.sh
 	sudo $<
 
-stop:
-	-sudo iptables -D FORWARD -i wg0 -j ACCEPT
-	-sudo iptables -D POSTROUTING -o ens5 -j MASQUERADE -t nat
-	-sudo ip link set down dev wg0
-	-sudo ip link del dev wg0
-	-sudo rm -r /etc/wireguard
+
+stop: /etc/wireguard/wg0_start.sh
+	sudo $< stop
+
 
 install:
 	sudo apt install wireguard
-	sudo apt install python3-bpfcc
-	sudo apt install linux-headers-$(KERNEL_VERSION)
+	#sudo apt install python3-bpfcc
+	#sudo apt install linux-headers-$(KERNEL_VERSION)
+	python3 -m pip install toml
 
 /etc/wireguard:
 	sudo mkdir -p /etc/wireguard

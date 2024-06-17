@@ -37,7 +37,6 @@ apt:
 		python3-pip \
 		cifs-utils \
 		mosh \
-		wireguard \
 		screen \
 
 

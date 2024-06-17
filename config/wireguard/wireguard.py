@@ -54,6 +54,9 @@ def get_config_for_host(host):
   wg_conf = [('Interface', interface := {})]
   # interface |= CONFIG['interface_defaults']
   interface['PrivateKey'] = config['PrivateKey']
+  if lp := config.get('ListenPort'):
+    interface['ListenPort'] = lp
+
 
   for name, peer in HOSTS.items():
 
@@ -126,6 +129,10 @@ ip link del dev wg0 || true
 iptables -D FORWARD -i wg0 -j ACCEPT || true
 iptables -D POSTROUTING -o {wan} -j MASQUERADE -t nat || true
 
+if [ $# -eq 1 ] && [ "$1" = "stop" ];
+then
+  exit
+fi
 '''
 
   script += f'''
