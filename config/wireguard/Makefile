@@ -1,3 +1,4 @@
+SHELL=/bin/bash -o pipefail
 ADDR = 10.87.0.1/24
 HOST = `hostname`
 KERNEL_VERSION = $(shell uname -r)
