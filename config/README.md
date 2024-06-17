@@ -73,19 +73,6 @@ Can now test login from other shell.
 ## Update OS software
 
 ```
-sudo apt update
-sudo apt upgrade
-sudo apt dist-upgrade
-sudo apt autoremove
-sudo apt install \
-  build-essential \
-  git \
-  python3-pip \
-  cifs-utils \
-  mosh \
-  wireguard
-
-
 time sudo dd if=/dev/zero of=/swapfile bs=128M count=32
 sudo chmod 0600 /swapfile
 sudo mkswap /swapfile

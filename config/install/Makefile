@@ -1,7 +1,13 @@
 REL = $(shell realpath --relative-to ~ ${PWD}/..)
 HOME = $(shell echo ~)
 
-all: ssh link bash fzf
+all: ssh link bash apt fzf
+
+ssh:
+	cp -R ~/.ssh ~/.ssh.bak
+	mv ~/.ssh/* ../dot/.ssh/
+	rm -r ~/.ssh
+	# link will put it back
 
 link:
 	-@for i in `find ~/$(REL)/dot -maxdepth 1 -type f,d -printf '%P\n'`; do \
@@ -20,11 +26,25 @@ link:
 		ln --backup=t --suffix bak -s "$$T" "$$F"; \
 	done
 
+apt:
+	sudo apt update
+	sudo apt upgrade
+	sudo apt dist-upgrade
+	sudo apt autoremove
+	sudo apt install \
+		git \
+		build-essential \
+		python3-pip \
+		cifs-utils \
+		mosh \
+		wireguard \
+		screen \
 
-ssh:
-	cp -R ~/.ssh ~/.ssh.bak
-	mv ~/.ssh/* ../dot/.ssh/
-	rm -r ~/.ssh
+
+	mkdir -p $(HOME)/.config/pip
+	echo '[global]\nbreak-system-packages = true\n' > \
+		$(HOME)/.config/pip/pip.conf
+
 
 fzf:
 	@git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
