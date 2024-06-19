@@ -19,20 +19,6 @@ HOSTS = CONFIG['host']
 #  /16  /32  /48  /64  /80  /96 /112 /128
 
 
-def get_gateway():
-  gw = HOSTS[LAN['gateway']]
-  wg_conf = {}
-  wg_conf |= CONFIG['peer_defaults']
-  wg_conf |= dict(
-    Endpoint = f"{gw['Endpoint']}:{gw['ListenPort']}",
-    PublicKey = gw['PublicKey'],
-    AllowedIPs = f'{LAN["PREFIX"]}1/{LAN["MASK"]}, '
-                 f'{get_addr6(gw["Address"])}/{LAN["MASK6"]}'
-                 f', 0::0/0'
-  )
-  return wg_conf
-
-
 def get_pubkey(config):
   if pubkey := config.get('PublicKey'):
     return pubkey
@@ -44,40 +30,20 @@ def get_pubkey(config):
 def get_addr(octet):
   return f'{LAN["PREFIX"]}{octet}'
 
+
 def get_addr6(octet):
   return f'{LAN["PREFIX6"]}{octet:04d}:0001'
 
 
 def get_config_for_host(host):
-  config = HOSTS[host]
+  config = dict(CONFIG['peer_defaults']) | HOSTS[host]
 
   wg_conf = [('Interface', interface := {})]
-  # interface |= CONFIG['interface_defaults']
-  interface['PrivateKey'] = config['PrivateKey']
-  if lp := config.get('ListenPort'):
-    interface['ListenPort'] = lp
-
-
-  for name, peer in HOSTS.items():
-
-    if name == host:
-      continue # self
-    if name == CONFIG['LAN']['gateway']:
-      continue # handled later
-    wg_conf.append(('Peer', wg_peer := {}))
-    wg_peer['# Host'] = name
-    wg_peer |= CONFIG['peer_defaults']
-    wg_peer |= dict(
-      AllowedIPs = f'{get_addr(peer["Address"])}/32, '
-      f'{get_addr6(peer["Address"])}/{LAN["PEER6"]}',
-      PublicKey = get_pubkey(peer),
-    )
-    if ep := peer.get('Endpoint'):
-      wg_peer['Endpoint'] = f'{ep}:{peer["ListenPort"]}'
-
-
-  if not config.get('is_gateway'):
-    wg_conf.append(('Peer', get_gateway()))
+  interface |= CONFIG['interface_defaults']
+  if pk := config.get('PrivateKey'):
+    interface['PrivateKey'] = pk
+    if lp := config.get('ListenPort'):
+      interface['ListenPort'] = lp
 
 
   if config.get('is_linux'):
@@ -88,6 +54,58 @@ def get_config_for_host(host):
     interface['Address'] += \
         f'{get_addr6(config["Address"])}/{LAN["MASK6"]}'
     interface['DNS'] = ', '.join(LAN['DNS'])
+
+
+  for name, peer_ in HOSTS.items():
+    if name == host:
+      continue # self
+
+    peer = dict(CONFIG['peer_defaults'])
+    peer |= peer_
+    gw = config['gateway']
+    px = config['proxy']
+    px6 = config['proxy6']
+    do = (
+      (peer['on_lan'] and config['on_lan']) or
+      (name == gw) or
+      (name == px) or
+      (peer.get('Endpoint')) or
+      (config.get('Endpoint'))
+    )
+
+    if not do:
+      # we won't have a route to them
+      continue
+
+    wg_conf.append(('Peer', wg_peer := {}))
+    wg_peer['# Host'] = name
+    mask = '32'
+    mask6 = LAN['PEER6']
+    addr = get_addr(peer['Address'])
+    addr6 = get_addr6(peer['Address'])
+    if (name == gw):
+      mask = LAN['MASK']
+      mask6 = LAN['MASK6']
+    if (name == px):
+      mask = '0'
+      addr = '0.0.0.0'
+    if (name == px6):
+      mask6 = '0'
+      addr6 = '0::'
+    wg_peer |= dict(
+      PersistentKeepalive = peer['PersistentKeepalive'],
+      PublicKey = get_pubkey(peer),
+      AllowedIPs =
+        f'{addr}/{mask}, '
+        f'{addr6}/{mask6}',
+    )
+
+    ep = peer.get('Endpoint')
+    if not ep and (peer['on_lan'] and config['on_lan']):
+      ep = f'{LAN["LAN"]}{peer["Address"]}'
+    if ep:
+      lp = peer.get('ListenPort', CONFIG['interface_defaults']['ListenPort'])
+      wg_peer['Endpoint'] = f'{ep}:{lp}'
 
   return wg_conf
 
@@ -170,12 +188,14 @@ def print_config(config):
 
 
 def main(args):
-
-  if args.type == 'conf':
+  if args.list_hosts:
+    print('\n'.join(HOSTS.keys()))
+    return
+  elif args.type == 'conf':
     config = get_config_for_host(args.host)
     print_config(config)
     return
-  if args.type == 'script':
+  elif args.type == 'script':
     script = get_script_for_host(args.host)
     print(script)
     return
@@ -185,6 +205,7 @@ def main(args):
 if __name__ == '__main__':
   import argparse
   parser = argparse.ArgumentParser(argparse.RawTextHelpFormatter, description=__doc__)
-  parser.add_argument('--host')
+  parser.add_argument('--list-hosts', action='store_true')
+  parser.add_argument('host', nargs='?')
   parser.add_argument('--type', default='conf')
   main(parser.parse_args())
