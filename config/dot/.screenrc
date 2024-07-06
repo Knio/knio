@@ -1,6 +1,3 @@
-# GNU Screen - main configuration file 
-# All other .screenrc files will source this file to inherit settings.
-# Author: Christian Wills - cwills.sys@gmail.com
 
 # Allow bold colors - necessary for some reason
 attrcolor b ".I"
@@ -17,21 +14,24 @@ defbce "on"
 # Enable 256 color term
 term xterm-256color
 
-shell -$SHELL
+#shell -$SHELL
+shell zsh
 
 # Cache lines for scroll back
 defscrollback 100000
 
-hardstatus alwayslastline 
+hardstatus alwayslastline
+
 # Very nice tabbed colored hardstatus line
 hardstatus string '%{= Kd} %{= Kd}%-w%{= Kr}[%{= KW}%n %t%{= Kr}]%{= Kd}%+w %-= %{KG} %H%{KW} %{KY}%101`%{KW} %D %M %d %Y%{= Kc} %c%{-}'
-
-# Hide hardstatus: ctrl-a f 
-bind f eval "hardstatus ignore"
-# Show hardstatus: ctrl-a F
-bind F eval "hardstatus alwayslastline"
 
 # this traps mouse events, meaning you can't select text
 # mousetrack on
 # defmousetrack on
 
+# idk
+# defmonitor on
+
+# bindkey "^[[5~" copy
+
+setenv IN_SCREEN 1

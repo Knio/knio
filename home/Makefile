@@ -15,6 +15,7 @@ start_weather:
 	python weather.py
 
 start_air:
+	-sh -c 'cd ~/bin/ch9344ser_linux/driver; sudo make load'
 	python air.py /dev/ttyCH9344USB0
 
 start_co2:

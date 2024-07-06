@@ -1,7 +1,5 @@
 
 
-
-
 set VISUAL=nano
 set EDITOR=nano
 
@@ -14,6 +12,8 @@ RPS1='ret: %?'
 # `od` to debug keycodes
 bindkey  "^[[H"   beginning-of-line
 bindkey  "^[[F"   end-of-line
+bindkey  "^[[1~"  beginning-of-line
+bindkey  "^[[4~"  end-of-line
 bindkey  "^[[3~"  delete-char
 
 
@@ -30,7 +30,31 @@ SAVEHIST=10000
 HISTFILE=~/.history
 
 
+
 source ~/knio/config/bash/aliases
+
+autoload -U compinit
+compinit
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+function preexec() {
+  # set term title (screen passes this thru)
+  print -Pn "\e]0;$1\a"
+
+  # set screen title
+  if [[ "$IN_SCREEN" == "1" ]] then
+    print -Pn "\033k$1\033\\"
+  fi
+}
+
+function precmd() {
+  # set term title (screen passes this thru)
+  print -Pn "\e]0;%~\a"
+
+  # set screen title
+  if [[ "$IN_SCREEN" == "1" ]] then
+    print -Pn "\033k%~\033\\"
+  fi
+}
