@@ -45,6 +45,7 @@ apt:
 		$(HOME)/.config/pip/pip.conf
 
 
+
 fzf:
 	@git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 	@~/.fzf/install
@@ -55,5 +56,8 @@ BASHSTR = '[ -f ~/knio/config/bash/bash ] && source ~/knio/config/bash/bash'
 bash:
 	grep -qxF $(BASHSTR) ~/.bashrc || echo $(BASHSTR) >> ~/.bashrc
 
+py:
+	python ../python/usercustomize_install.py
 
-.PHONY: link ssh fzf bash
+
+.PHONY: link ssh fzf bash py

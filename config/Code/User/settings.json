@@ -16,7 +16,6 @@
     "files.associations": {
         "BUILD": "python",
         "*.cu": "cpp",
-        "*.toml": "ini",
     },
     "editor.minimap.enabled": false,
     "files.watcherExclude": {
@@ -27,10 +26,10 @@
         "https://dl.espressif.com/dl/package_esp32_dev_index.json",
         "http://arduino.esp8266.com/stable/package_esp8266com_index.json"
     ],
-    "git.autofetch": true,
     "arduino.ignoreBoards": [
         "Adafruit HUZZAH ESP8266"
     ],
+    "git.autofetch": true,
     "git.confirmSync": false,
     "editor.largeFileOptimizations": false,
     "workbench.tree.indent": 20,
@@ -38,16 +37,15 @@
         79
     ],
     "remote.SSH.remotePlatform": {
-        "tom-zoox": "linux",
-        "zkpq": "linux",
+        "dfg.hjkl.ca": "linux",
         "rpi5.zkpq.ca": "linux",
+        "rpi5": "linux",
+        "tom-zoox": "linux",
         "zkpq.ca": "linux",
-        "10.87.1.16": "linux"
     },
     "workbench.editor.closeEmptyGroups": false,
     "editor.cursorSurroundingLines": 30,
     "workbench.colorCustomizations": {
-
         "editor.lineHighlightBackground": "#423b1b",
         "editorGroupHeader.tabsBackground": "#444444",
         "editor.findMatchBackground": "#ff00aa",
@@ -119,19 +117,20 @@
         "--disable=pointless-string-statement",
     ],
     "codeium.enableConfig": {
-        "*": true,
+        "*": false,
         "plaintext": true
     },
-    "cmake.showOptionsMovedNotification": false,
     "codeium.enableCodeLens": false,
+    "cmake.showOptionsMovedNotification": false,
     "python.analysis.autoFormatStrings": true,
     "python.analysis.diagnosticSeverityOverrides": {
         "reportMissingImports": "none",
     },
     "editor.stickyScroll.maxLineCount": 10,
     "C_Cpp.default.compilerPath": "C:\\msys64\\mingw64\\bin\\g++.exe",
-    "editor.stickyScroll.maxLineCount": 10,
     "graphviz-interactive-preview.renderLockAdditionalTimeout": 10000,
     "graphviz-interactive-preview.renderInterval": 500,
-    "rust-analyzer.inlayHints.typeHints.enable": false
+    "rust-analyzer.inlayHints.typeHints.enable": false,
+    "python.analysis.autoIndent": false,
+    "outline.showVariables": false,
 }
