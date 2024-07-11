@@ -114,11 +114,14 @@ def main():
     else:
       diffs.append(open(i).read())
 
-  git_diff = subprocess.check_output(['git','diff','--color=never'])
-  if (not diffs) and git_diff:
-    diffs.append(git_diff.decode('utf8'))
+  try:
+    git_diff = subprocess.check_output(['git','diff','--color=never'], stderr=subprocess.DEVNULL)
+    if (not diffs) and git_diff:
+      diffs.append(git_diff.decode('utf8'))
+  except subprocess.CalledProcessError:
+    pass
 
-  git_show = subprocess.check_output(['git','show','--color=never'])
+  git_show = subprocess.check_output(['git','show','--color=never'], stderr=subprocess.DEVNULL)
   if (not diffs) and git_show:
     diffs.append(git_show.decode('utf8'))
 
