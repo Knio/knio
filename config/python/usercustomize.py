@@ -1,3 +1,3 @@
 
 from rich.traceback import install
-install(show_locals=False)
+install(show_locals=True)

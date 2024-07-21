@@ -1,6 +1,7 @@
 dominate
 git+https://github.com/Knio/whirl.git
 
+
 requests
 python-kasa
 IPython

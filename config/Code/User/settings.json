@@ -1,60 +1,15 @@
 {
     "editor.renderWhitespace": "boundary",
-    "files.exclude": {
-        ".cache": true,
-        "**/__pycache__": true,
-        "**/.cache": true,
-        "**/*.pyc": true,
-        "bazel-*": true
-    },
     "editor.copyWithSyntaxHighlighting": false,
     "editor.hover.delay": 100,
     "editor.renderControlCharacters": true,
-    "workbench.commandPalette.history": 500,
-    "window.title": "${activeEditorLong}${separator}${rootName}",
-    "files.trimTrailingWhitespace": true,
-    "files.associations": {
-        "BUILD": "python",
-        "*.cu": "cpp",
-    },
     "editor.minimap.enabled": false,
-    "files.watcherExclude": {
-        "**/bazel-*/**": true
-    },
-    "files.autoSave": "off",
-    "arduino.additionalUrls": [
-        "https://dl.espressif.com/dl/package_esp32_dev_index.json",
-        "http://arduino.esp8266.com/stable/package_esp8266com_index.json"
-    ],
-    "arduino.ignoreBoards": [
-        "Adafruit HUZZAH ESP8266"
-    ],
-    "git.autofetch": true,
-    "git.confirmSync": false,
     "editor.largeFileOptimizations": false,
-    "workbench.tree.indent": 20,
+    "editor.cursorSurroundingLines": 30,
+    "editor.multiDocumentOccurrencesHighlight": true,
     "editor.rulers": [
         79
     ],
-    "remote.SSH.remotePlatform": {
-        "10.87.1.16": "linux",
-        "dfg.hjkl.ca": "linux",
-        "rpi5.local.zkpq.ca": "linux",
-        "rpi5.zkpq.ca": "linux",
-        "rpi5": "linux",
-        "tom-zoox": "linux",
-        "zkpq.ca": "linux",
-    },
-    "workbench.editor.closeEmptyGroups": false,
-    "editor.cursorSurroundingLines": 30,
-    "workbench.colorCustomizations": {
-        "editor.lineHighlightBackground": "#423b1b",
-        "editorGroupHeader.tabsBackground": "#444444",
-        "editor.findMatchBackground": "#ff00aa",
-        "editor.findMatchHighlightBackground": "#ff83d6",
-        "tab.activeBackground": "#696b5a",
-        "tab.inactiveBackground": "#3a3b32",
-    },
     "editor.tokenColorCustomizations": {
         "textMateRules": [
             {
@@ -70,32 +25,94 @@
             }
         ]
     },
+    "editor.stickyScroll.enabled": true,
+    "editor.tabSize": 2,
+    "editor.stickyScroll.maxLineCount": 10,
+
+
+    "files.autoSave": "off",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.associations": {
+        "BUILD": "python",
+        "*.cu": "cpp",
+    },
+    "files.watcherExclude": {
+        "**/.vscode*/**": true,
+        "**/bazel-*/**": true,
+        "**/__pycache__": true,
+        "**/.cache": true,
+        "**/*.pyc": true,
+    },
+    "files.exclude": {
+        "**/.git/**": true,
+        "**/.vscode*/**": true,
+        ".cache": true,
+        "**/__pycache__": true,
+        "**/.cache": true,
+        "**/*.pyc": true,
+        "bazel-*": true,
+    },
+
+    "window.title": "${activeEditorLong}${separator}${rootName}",
+    "workbench.tree.indent": 20,
+    "workbench.commandPalette.history": 500,
+    "workbench.editor.closeEmptyGroups": false,
+    "workbench.colorCustomizations": {
+        "editor.lineHighlightBackground": "#423b1b",
+        "editorGroupHeader.tabsBackground": "#444444",
+        "editor.findMatchBackground": "#ff00aa",
+        "editor.findMatchHighlightBackground": "#ff83d6",
+        "tab.activeBackground": "#696b5a",
+        "tab.inactiveBackground": "#3a3b32",
+    },
+    "workbench.activityBar.location": "top",
+    "workbench.editor.doubleClickTabToToggleEditorGroupSizes": "maximize",
     "workbench.colorTheme": "Visual Studio Dark",
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter-notebook"
     },
-    "extensions.ignoreRecommendations": true,
+
+
     "debug.onTaskErrors": "showErrors",
     "security.workspace.trust.untrustedFiles": "open",
-    "files.insertFinalNewline": true,
-    "editor.stickyScroll.enabled": true,
-    "editor.tabSize": 2,
-    "arduino.useArduinoCli": true,
-    "[python]": {
-        "editor.formatOnType": true
-    },
-    "cmake.configureOnOpen": false,
-    "git.openRepositoryInParentFolders": "never",
     "window.zoomLevel": 1,
     "explorer.confirmDragAndDrop": false,
+    "outline.showVariables": false,
+
+
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.openRepositoryInParentFolders": "never",
+
+
+    "remote.SSH.remotePlatform": {
+        "dfg.hjkl.ca": "linux",
+        "rpi5.zkpq.ca": "linux",
+        "tom-zoox": "linux",
+        "zkpq.ca": "linux",
+    },
+
+    "arduino.useArduinoCli": true,
+    "arduino.additionalUrls": [
+        "https://dl.espressif.com/dl/package_esp32_dev_index.json",
+        "http://arduino.esp8266.com/stable/package_esp8266com_index.json"
+    ],
+    "arduino.ignoreBoards": [
+        "Adafruit HUZZAH ESP8266"
+    ],
+
+
+
     "gitlens.fileAnnotations.command": "blame",
     "gitlens.plusFeatures.enabled": true,
     "gitlens.advanced.repositorySearchDepth": 8,
     "gitlens.blame.ignoreWhitespace": true,
     "gitlens.telemetry.enabled": false,
-    "workbench.activityBar.location": "top",
-    "workbench.editor.doubleClickTabToToggleEditorGroupSizes": "maximize",
-    "editor.multiDocumentOccurrencesHighlight": true,
+
+    "cmake.configureOnOpen": false,
+    "cmake.showOptionsMovedNotification": false,
+
     "pylint.showNotifications": "onError",
     "pylint.args": [
         "--disable=W0311",
@@ -118,25 +135,28 @@
         "--disable=logging-not-lazy",
         "--disable=pointless-string-statement",
     ],
+
     "codeium.enableConfig": {
         "*": false,
         "plaintext": true
     },
     "codeium.enableCodeLens": false,
-    "cmake.showOptionsMovedNotification": false,
+
+    "python.analysis.autoIndent": false,
     "python.analysis.autoFormatStrings": true,
     "python.analysis.diagnosticSeverityOverrides": {
         "reportMissingImports": "none",
     },
-    "editor.stickyScroll.maxLineCount": 10,
+    "[python]": {
+        "editor.formatOnType": true
+    },
+
+
     "graphviz-interactive-preview.renderLockAdditionalTimeout": 10000,
     "graphviz-interactive-preview.renderInterval": 500,
+
     "rust-analyzer.inlayHints.typeHints.enable": false,
-    "python.analysis.autoIndent": false,
-    "outline.showVariables": false,
-    "C_Cpp.default.compilerPath": "C:\\msys64\\mingw64\\bin\\g++.exe",
-    "security.allowedUNCHosts": [
-        "10.87.1.10"
-    ],
-    "explorer.confirmDelete": false
+    "C_Cpp.intelliSenseEngine": "disabled",
+
+
 }

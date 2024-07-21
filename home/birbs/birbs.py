@@ -1,110 +1,65 @@
-import time
 import argparse
-import pathlib
-import subprocess
-import itertools
-import pprint
-import json
-import queue
-import threading
-import random
 import concurrent.futures
+import datetime
+import itertools
+import json
 import multiprocessing as mp
+import pathlib
+import pprint
+import queue
+import random
+import subprocess
+import threading
+import time
 from dataclasses import dataclass
 
 import ultralytics
+import ephem
+import pytz
 
 
 TMP = pathlib.Path(r"c:\Temp")
 ROOT = pathlib.Path(r"F:\Temp\birbs")
 FFMPEG = pathlib.Path(r"C:\Users\Tom\Desktop\Files\Software\FFmpeg\ffmpeg-7.0.1-full_build\bin\ffmpeg.exe")
-MODEL = ultralytics.YOLO("yolov10s.pt")
-
+MODEL = "birb-2024-07-26.pt"
 
 class Seg(pathlib.Path):
   def json(self):
     return self.with_suffix('.json')
-
-  def small(self):
-    out = self.with_stem(self.stem + '.small')
-    out = TMP / out.name
-    if out.is_file(): return out
-    subprocess.check_call([
-      FFMPEG,
-      '-i', self,
-      '-vf', 'fps=1 , scale=640:-1',
-      out
-    ])
-    return out
 
   def detections(self):
     j = self.json()
     if j.is_file():
       return json.loads(j.read_text())
     print(f'DETECT START {self}')
-
-    classes = set(range(1024))
-    classes -= {
-      47, # apple
-      49, # orange
-      56, # chair
-      58, # potted plant
-      25, # umbrella
-      75, # vase
-      32, # sports ball
-      13, # bench
-      60, # dining table
-      8, # boat
-    }
-    # print(classes)
     # re-create MODEL for thread safety
-    model = ultralytics.YOLO("yolov10s.pt")
-    results = model(self, vid_stride=15, classes=list(classes), stream=True)
+    model = ultralytics.YOLO(MODEL)
+    results = model(self, vid_stride=15, stream=True)
     boxes = [r.summary() for r in results]
     j.write_text(json.dumps(boxes, sort_keys=True, indent=2))
     print(f'DETECT END {self}')
     return boxes
 
   def seconds(self):
-    thresholds = dict(
-      person=2,
-      car=2,
-      chair=2,
-      orange=2,
-      apple=2,
-      umbrella=2,
-      vase=2,
-      bench=2,
-      boat=2,
-      train=2,
-      bicycle=2,
-      cow=2,
-      donut=2,
-      clock=2,
-      sandwich=2,
-      skis=2,
-      airplane=2,
-    )
-    thresholds['potted plant'] = 2
-    thresholds['sports ball'] = 2
-    thresholds['dining table'] = 2
-    thresholds['stop sign'] = 2
-
-    def take(d):
+    def filter(d):
       x = set()
       for box in d:
         n = box['name']
         c = box['confidence']
-        if c < thresholds.get(n, 0.2): continue
+        # if c < thresholds.get(n, 0.2): continue
+        if not (n in {'bird', 'cat','dog', 'bear'}):
+          continue
+        if c < 0.4:
+          continue
         x.add(n)
       return x
 
-    cuts = [take(d) for d in self.detections()]
-    return cuts
+    return [filter(d) for d in self.detections()]
 
 
   def cuts(self):
     sss = list(self.seconds())
+    #  +/- 1s
     for i, s in enumerate(sss):
       if i > 0: sss[i - 1] |= s
     for i, s in reversed(list(enumerate(sss))):
@@ -132,25 +87,34 @@ class Cut:
   length: int = 0
 
 
-def encode(out, data):
+def encode(args, data):
+  out = args.root.parent / f'{args.root.name}.mp4'
+  if args.suffix:
+    out = out.with_stem(out.stem + '.' + args.suffix)
+  out_timelapse = out.with_stem(out.stem + '.timelapse')
   encoder = subprocess.Popen(cmd := [
     FFMPEG,
     # input
     '-f', 'nut',
-    '-r', '15',
-    '-i', 'pipe:0',
+    '-r', '60',
+    '-i',
+      'pipe:0',
     '-an',
 
     # encoder
     '-codec:v', 'libx264',
+      '-pix_fmt', 'yuv420p',
       '-profile:v', 'high',
       '-preset', 'medium',
-      '-crf', '24',
+      '-crf', '22',
       '-movflags', '+faststart',
 
     # output
-    '-y',
-    out,
+    '-y', out,
+
+    # out
+    '-vf', 'framestep=5,setpts=PTS/5,fps=60',
+    '-y', out_timelapse,
     ],
     stdin=subprocess.PIPE,
     # stderr=subprocess.DEVNULL,
@@ -161,11 +125,11 @@ def encode(out, data):
       n = encoder.stdin.write(bytes)
       bytes = bytes[n:]
   encoder.stdin.close()
-  encoder.wait(60)
+  encoder.wait(300)
   assert encoder.returncode == 0, encoder.returncode
 
 
-def decode_cut(cut, counter=[0]):
+def decode(cut, counter=[0]):
   drawtext = dict(
     box=1,
     boxcolor='#00000080',
@@ -184,10 +148,10 @@ def decode_cut(cut, counter=[0]):
   ]
 
   counter[0] += 1
-  if counter[0] & 1:
+  if 1 or counter[0] & 1:
     cmd += [
         # decoder
-      # '-hwaccel', 'nvdec',
+      '-hwaccel', 'nvdec',
     ]
   cmd += [
     # cut
@@ -198,15 +162,14 @@ def decode_cut(cut, counter=[0]):
     '-an',
 
     # filters
-    '-vf', f'fps=fps={"15" if cut.selected else "0.125"}'
-      ',drawtext=' +
-      ':'.join(f'{k}={v}' for k,v in drawtext.items()),
-
+    '-vf', f'framestep={"1" if cut.selected else "30"}'
+      # ',drawtext=' +
+      # ':'.join(f'{k}={v}' for k,v in drawtext.items()),
+,
     # encoder
     '-codec:v', 'rawvideo',
 
     # output
-    # '-r', '15',
     '-f', 'nut',
     'pipe:1',
   ]
@@ -227,7 +190,7 @@ def decode_cut(cut, counter=[0]):
   assert decoder.returncode == 0, decoder.returncode
 
 
-def iter_thread_producer(input, size=10, process=False):
+def iter_thread_producer(input, size=1, process=False):
   '''puts the input iterator in its own thread'''
   if process:
     q = mp.Queue(maxsize=size)
@@ -259,11 +222,11 @@ def iter_thread_producer(input, size=10, process=False):
   return consume()
 
 
-def parallel_gens(iters, size=4, process=False):
+def parallel_gens(iters, size):
   '''for generators that yield generators'''
   def consume():
     for iter in iters:
-      yield iter_thread_producer(iter, process=process)
+      yield iter_thread_producer(iter)
   return iter_thread_producer(consume(), size=size)
 
 
@@ -272,14 +235,69 @@ def flatten(iter):
     yield from i
 
 
-def cat_dir(root):
-  files = list(root.glob("*.mp4"))
+def sun_times(date):
+  localtz = pytz.timezone('US/Pacific')
+  dt_naive = datetime.datetime.strptime(date, '%Y-%m-%d')
+  dt_local = localtz.localize(dt_naive)
+  dt_utc = dt_local.astimezone(datetime.timezone.utc)
+
+  print(
+    f'naive: {dt_naive}\n'
+    f'local: {dt_local}\n'
+    f'utc:   {dt_utc}\n'
+  )
+
+  obs = ephem.Observer()
+  obs.lon = '-122.020545' # must be strings lol
+  obs.lat = '37.297260'
+  obs.date = dt_utc
+  sun = ephem.Sun()
+  # time is 00:00
+  sunrise = obs.next_rising(sun)
+  sunset = obs.next_setting(sun)
+  return (
+    ephem.localtime(sunrise),
+    ephem.localtime(sunset)
+  )
+
+
+def dir_daylight_wait(root: pathlib.Path):
+  sr, ss = sun_times(root.name)
+  print(f'sunrise: {sr}, sunset: {ss}')
+  et = datetime.timedelta(minutes=30)
+  done = set()
+  while 1:
+    files = list(root.glob('birbs_*.mp4'))
+    for f in sorted(files)[:-2]:
+      if f in done:
+        continue
+      tm = datetime.datetime.strptime(f.stem, 'birbs_%Y%m%d-%H%M')
+      if tm < sr - et:
+        print(f'skipping before sunrise {f}')
+        done.add(f)
+        continue
+      if tm > ss + et:
+        print(f'stopping after sunset {f}')
+        return # done!
+
+      print(f'adding {f}')
+      done.add(f)
+      yield f
+
+    print('waiting for more files...')
+    time.sleep(10)
+
+
+def cat_dir(args):
+  # files = list(args.root.glob("birbs_*.mp4"))
+  files = dir_daylight_wait(args.root)
   cuts = map(lambda f:Seg(f).cuts(), files)
-  cuts = flatten(parallel_gens(cuts))
-  framegens = map(decode_cut, cuts)
-  # frames = flatten(parallel_gens(framegens, size=4))
+  cuts = flatten(parallel_gens(cuts, size=6))
+  framegens = map(decode, cuts)
+  # framegens = parallel_gens(framegens, size=4) ### something broken
   frames = flatten(framegens)
-  encode(root.parent / f'{root.name}.mp4', frames)
+  encode(args, frames)
+
   # TODO:
   # https://github.com/davidrazmadzeExtra/YouTube_Python3_Upload_Video/blob/main/upload_video.py
   # python3 upload_video.py --file="example.mov" --title="Summer vacation in California" --description="Had fun surfing in Santa Cruz" --keywords="surfing,Santa Cruz" --category="22" --privacyStatus="private"
@@ -289,7 +307,7 @@ def cat_dir(root):
 
 def main(args):
   print('Hello, World!')
-  cat_dir(args.root)
+  cat_dir(args)
 
 
 if __name__ == '__main__':
@@ -298,6 +316,7 @@ if __name__ == '__main__':
     description=__doc__,
   )
   parser.add_argument('root', type=pathlib.Path)
+  parser.add_argument('--suffix', type=str, default=False)
   args = parser.parse_args()
   main(args)
 

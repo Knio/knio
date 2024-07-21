@@ -36,6 +36,7 @@ function set_term_title() {
   # TODO make work with unicode
   print -Pn "\e]0;$1\a"
 }
+
 function set_screen_title() {
   # TODO make work with unicode
   if [[ "$IN_SCREEN" == "1" ]] then
