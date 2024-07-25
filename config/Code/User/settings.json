@@ -37,7 +37,9 @@
         79
     ],
     "remote.SSH.remotePlatform": {
+        "10.87.1.16": "linux",
         "dfg.hjkl.ca": "linux",
+        "rpi5.local.zkpq.ca": "linux",
         "rpi5.zkpq.ca": "linux",
         "rpi5": "linux",
         "tom-zoox": "linux",
@@ -127,10 +129,14 @@
         "reportMissingImports": "none",
     },
     "editor.stickyScroll.maxLineCount": 10,
-    "C_Cpp.default.compilerPath": "C:\\msys64\\mingw64\\bin\\g++.exe",
     "graphviz-interactive-preview.renderLockAdditionalTimeout": 10000,
     "graphviz-interactive-preview.renderInterval": 500,
     "rust-analyzer.inlayHints.typeHints.enable": false,
     "python.analysis.autoIndent": false,
     "outline.showVariables": false,
+    "C_Cpp.default.compilerPath": "C:\\msys64\\mingw64\\bin\\g++.exe",
+    "security.allowedUNCHosts": [
+        "10.87.1.10"
+    ],
+    "explorer.confirmDelete": false
 }
