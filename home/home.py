@@ -13,7 +13,7 @@ from dominate import tags
 from whirl.domx import dx
 
 from devices import denon_avr
-from devices import kasa_light
+from devices import kasa
 
 
 LOG = logging.getLogger('home')
@@ -155,8 +155,8 @@ class Home:
   def __init__(self):
     self.amp = denon_avr.DenonAVR('10.87.1.22')
     self.lights = [
-      kasa_light.Light('10.87.1.25'),
-      kasa_light.Light('10.87.1.26'),
+      kasa.SmartPlug('10.87.1.25'),
+      kasa.SmartPlug('10.87.1.26'),
     ]
     self.radar = None
 

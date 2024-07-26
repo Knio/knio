@@ -5,7 +5,7 @@ sudo sysctl -w kernel.pid_max=9999
 # https://www.kernel.org/doc/Documentation/sysctl/vm.txt
 
 # don't agressively swap
-echo 20 | sudo tee /proc/sys/vm/swappiness
+echo 10 | sudo tee /proc/sys/vm/swappiness
 
 # prefer caching fs metadata
 echo 1 | sudo tee /proc/sys/vm/vfs_cache_pressure

@@ -18,7 +18,6 @@ RESET - pulled high internally
 
 import argparse
 import logging
-import struct
 
 import serial
 

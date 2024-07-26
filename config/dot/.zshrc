@@ -27,7 +27,7 @@ setopt HIST_IGNORE_SPACE
 
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.history
+HISTFILE=~/.zsh_history
 
 
 

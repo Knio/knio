@@ -5,8 +5,6 @@ import sys
 
 class DatumMeta(type):
   def __new__(cls, name, bases, dct):
-    print((cls, name, bases, dct))
-
     A = dct.get('__annotations__', {})
     for k, v in A.items():
       if isinstance(v, functools.partial):
@@ -214,9 +212,9 @@ i64 = functools.partial(datum_bigint, size=8)
 
 # TODO: if feild a is X, interpret feild b as Y
 
-# TODO: make crc type that validates itself
+# TODO: make crc type that sets/validates itself
 
-# TODO: make start/header type that validates itself
+# TODO: make start/header type that sets/validates itself
 
-# TODO: make size type that validates itself
+# TODO: make size type that sets/validates itself
 

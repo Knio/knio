@@ -28,14 +28,14 @@ def post_frame(data):
 
 
 
-def post(ns, **kv):
+def post(ns, interval=2, **kv):
   auth = 'Bearer {}:{}'.format(59684, config['grafana_token'])
   now = int(time.time())
   data = [{
     'name': '.'.join((ns, k)),
     'value': v,
     'time': now,
-    'interval': 2,
+    'interval': interval,
   } for k,v in kv.items()]
   try:
     p = requests.post(
