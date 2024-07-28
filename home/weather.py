@@ -6,31 +6,9 @@ import subprocess
 import time
 import toml
 
+import grafana
 
-log = logging.getLogger('weather')
-
-config = toml.load('config.toml')['grafana']
-
-# https://grafana.com/docs/grafana-cloud/metrics-graphite/http-api/
-
-
-def post_grafana(key, value):
-  auth = 'Bearer {}:{}'.format(59684, config['grafana_token'])
-  data = [{
-    'name': 'rtl.' + key,
-    'value': value,
-    'time': int(time.time()),
-    'interval': 60,
-  }]
-  try:
-    p = requests.post(
-      config['grafana_uri'],
-      headers={'Authorization': auth, 'Content-Type':'application/json'},
-      json=data
-    )
-    # log.info(p.text)
-  except Exception as e:
-    log.error(e)
+LOG = logging.getLogger('weather')
 
 
 def f_to_c(x):
@@ -50,7 +28,7 @@ def main():
       '-M', 'level',
       '-M', 'noise',
   ]
-  log.info(f"cmd: {' '.join(cmd)}")
+  LOG.info(f"cmd: {' '.join(cmd)}")
   rtl = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 
   def process(line):
@@ -73,14 +51,19 @@ def main():
       ch_id = data.get('channel'), data.get('id')
       namex = id_ch_to_name_x.get(ch_id)
       if namex is None:
-        log.warning(f'\n\nUnknown sensor: {line_s}\n\n')
+        LOG.warning(f'\n\nUnknown sensor: {line_s}\n\n')
       else:
         name, t_c, h_c = namex
-        log.info(f'{name:<12s} {line_s}')
-        post_grafana(f'Temperature_{name}', data['temperature_C'] - t_c)
-        post_grafana(f'Humidity_{name}', data['humidity'] - h_c)
+        LOG.info(f'{name:<12s} {line_s}')
+        grafana.post('rtl',
+          interval=300,
+          **{
+            f'Temperature_{name}': data['temperature_C'] - t_c,
+            f'Humidity_{name}': data['humidity'] - h_c,
+          }
+        )
     else:
-      log.warning(f'\n\nUnknown sensor: {line}\n\n')
+      LOG.warning(f'\n\nUnknown sensor: {line}\n\n')
 
   try:
     for line in rtl.stdout:

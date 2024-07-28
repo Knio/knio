@@ -2,8 +2,6 @@ import argparse
 import logging
 import time
 import serial
-import pathlib
-import toml
 
 
 import grafana
@@ -13,8 +11,7 @@ from devices import solar_mppt_ampinvt
 
 LOG = logging.getLogger('solar')
 
-# TODO move this to util
-config = toml.load(pathlib.Path(__file__).parent / 'config.toml')['kasa']
+config = grafana.CONF['kasa']
 
 
 def main(args):

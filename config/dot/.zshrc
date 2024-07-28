@@ -41,7 +41,7 @@ compinit
 
 function preexec() {
   # set term title (screen passes this thru)
-  print -Pn "\e]0;$1\a"
+  print -Pn "\e]0;%m: $1\a"
 
   # set screen title
   if [[ "$IN_SCREEN" == "1" ]] then
@@ -51,7 +51,7 @@ function preexec() {
 
 function precmd() {
   # set term title (screen passes this thru)
-  print -Pn "\e]0;%~\a"
+  print -Pn "\e]0;%m: %~\a"
 
   # set screen title
   if [[ "$IN_SCREEN" == "1" ]] then

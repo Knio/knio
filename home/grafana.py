@@ -7,7 +7,9 @@ import requests
 
 LOG = logging.getLogger(__name__)
 
-config = toml.load(pathlib.Path(__file__).parent / 'config.toml')['grafana']
+CONF = toml.load(pathlib.Path(__file__).parent / 'config.toml')
+
+config = CONF['grafana']
 
 # https://grafana.com/docs/grafana-cloud/metrics-graphite/http-api/
 
