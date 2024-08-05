@@ -24,11 +24,11 @@ def main(args):
     return
 
   plugs = [
+      # TODO try add
       kasa.Synced(kasa.discover('10.87.1.41', **config)),
       kasa.Synced(kasa.discover('10.87.1.42', **config)),
       kasa.Synced(kasa.discover('10.87.1.43', **config)),
-      # TODO try add
-      #  kasa_light.Synced(kasa_light.discover('10.87.1.44', **config)),
+      # kasa_light.Synced(kasa_light.discover('10.87.1.44', **config)),
   ]
   for p in plugs:
     p.update()
@@ -40,8 +40,12 @@ def main(args):
   while 1:
     r = {}
     for i, p in enumerate(plugs):
-      p.update()
-      e = p.dev.emeter_realtime
+      try:
+        p.update()
+        e = p.dev.emeter_realtime
+      except:
+        LOG.exception('Failed to query device')
+        continue
       r[f'kasa_plug_{i+1}.power_w'] = e.power
       r[f'kasa_plug_{i+1}.consumption_kwh'] = e.total
       # TODO get daily usage?

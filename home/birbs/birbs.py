@@ -280,6 +280,10 @@ def cat_dir(root):
   # frames = flatten(parallel_gens(framegens, size=4))
   frames = flatten(framegens)
   encode(root.parent / f'{root.name}.mp4', frames)
+  # TODO:
+  # https://github.com/davidrazmadzeExtra/YouTube_Python3_Upload_Video/blob/main/upload_video.py
+  # python3 upload_video.py --file="example.mov" --title="Summer vacation in California" --description="Had fun surfing in Santa Cruz" --keywords="surfing,Santa Cruz" --category="22" --privacyStatus="private"
+
 
 
 

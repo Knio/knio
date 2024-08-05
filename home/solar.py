@@ -3,15 +3,21 @@ import logging
 import time
 import serial
 
-
-import grafana
 from devices import utils
 from devices import kasa
 from devices import solar_mppt_ampinvt
 
+import grafana
+import config
+
+# TODO
+import home2
+import utils as homeutils
+
 LOG = logging.getLogger('solar')
 
-config = grafana.CONF['kasa']
+KC = config.CONF['kasa']
+
 
 
 def main(args):
@@ -25,15 +31,15 @@ def main(args):
   )
   ss = utils.PySerial(ser, timeout=0.1)
   mppt = solar_mppt_ampinvt.MPPTAmpivnt(ss)
-  ups = kasa.Synced(kasa.discover('10.87.1.41', **config))
-  ups.update()
+  ups = home2.KasaPlug('10.87.1.41', **KC)
+  runner = homeutils.Runner()
+  runner.add_async(ups)
 
   last_battery_ok = 0
   try:
     while 1:
       time.sleep(2)
       if time.time() - last_battery_ok > 60:
-        ups.update()
         ups.turn_on()
       data = mppt.poll()
       LOG.info(data)
@@ -42,18 +48,18 @@ def main(args):
       grafana.post('solar', interval=10, **data)
 
       bv = data['battery_volts_cv'] * 1e-2
-      if bv < 54.0:
-        ups.update()
+      # Batteries are safe to go down to 46V, but the
+      # UPS will try to charge the battery to 54.5V
+      # We don't want to waste grid power to charge the batteries.
+      if bv < 53.5:
         ups.turn_on()
       elif bv > 56.9:
-        ups.update()
         ups.turn_off()
       last_battery_ok = time.time()
 
   except KeyboardInterrupt:
-    pass
+    LOG.info("Stop requested")
   finally:
-    ups.update()
     ups.turn_on()
 
 
@@ -69,7 +75,7 @@ def parse_args():
 if __name__ == '__main__':
   logging.basicConfig(
     format='%(asctime)s:%(levelname)s:%(name)s:%(funcName)s:%(lineno)d %(message)s',
-    # level=logging.DEBUG,
-    level=logging.INFO,
+    level=logging.DEBUG,
+    # level=logging.INFO,
   )
   main(parse_args())

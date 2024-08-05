@@ -9,7 +9,10 @@ termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 termcapinfo xterm|xterms|xs|rxvt ti@:te@
 
 # Erase background with current bg color
-defbce "on"
+defbce on
+
+defutf8 on
+
 
 # Enable 256 color term
 term xterm-256color
