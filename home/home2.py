@@ -17,7 +17,11 @@ KC = config.CONF['kasa']
 LOG = logging.getLogger(__name__)
 
 class KasaPlug(utils.Device):
-  interval = 1.9
+  interval = 1.
+  def check(self):
+    if self.dev is None:
+      raise utils.DeviceReset
+
   async def reset(self):
     LOG.info(f'Connecting to kasa device {self.a!r}')
     kd = kasa.Discover.discover_single(*self.a, **self.kw)
@@ -27,13 +31,14 @@ class KasaPlug(utils.Device):
 
   async def tick(self):
     LOG.debug("tick")
+    self.check()
     await self.dev.update()
     energy = self.dev.modules["Energy"]
     # await energy.get_status() # TODO doesn't update!!
     # do this instead and take raw values:
     # have to do own error checking
     # res = await energy.call("get_energy_usage")
-    r = dict(
+    r = utils.DottedDict(
       power_w = energy.current_consumption,
       consumption_daily_kwh = energy.consumption_today,
       consumption_monthly_kwh = energy.consumption_this_month,
@@ -41,10 +46,16 @@ class KasaPlug(utils.Device):
     self.set_state('emeter', r)
 
   def turn_on(self):
+    if self.dev is None:
+      LOG.warning(f"Attempt to turn on {self!r} but it's not initialized")
+      return
     LOG.info(f'Turning on plug {self.a!r}')
     return self.runner.start_async(self.dev.turn_on())
 
   def turn_off(self):
+    if self.dev is None:
+      LOG.warning(f"Attempt to turn off {self!r} but it's not initialized")
+      return
     LOG.info(f'Turning off plug {self.a!r}')
     return self.runner.start_async(self.dev.turn_off())
 
@@ -52,6 +63,7 @@ class KasaPlug(utils.Device):
 class KasaSwitch(KasaPlug):
   interval = 60.
   async def tick(self):
+    self.check()
     await self.dev.update()
 
 
@@ -67,7 +79,7 @@ def dfs2(root, path=()):
   for k, v in root.items():
     p = path + (k,)
     if isinstance(v, dict):
-      dfs(v, f, p)
+      yield from dfs2(v, p)
     else:
       yield p, v
 
@@ -81,7 +93,7 @@ class GrafanaUpdate(utils.Device):
     def add(dev, p):
       for k, (t, v) in dev.last_state.items():
         for p2, x in dfs2(v):
-          data['.'.join(p + p2)] = (dev.interval, t, x)
+          data['.'.join(p + (k,) + p2)] = (dev.interval, t, x)
     dfs(DEVICES, add)
     last = self.last_data or {}
     self.last_data = data
@@ -90,23 +102,16 @@ class GrafanaUpdate(utils.Device):
       name = k,
       value = v[2],
       time = int(v[1]),
-      interval = int(v[0] + 1),
+      interval = int(v[0] + 2),
     ) for k,v in update.items()]
     LOG.debug(post)
     if post:
       grafana.post_frame(post)
 
 
-class DottedDict(dict):
-  def __getattr__(self, name: str):
-    return self[name]
 
-  def flatten(self, char='.'):
-    return {char.join(p):v for p, v in dfs2(self)}
-
-
-DEVICES = DottedDict(
-  kasa = DottedDict(
+DEVICES = utils.DottedDict(
+  kasa = utils.DottedDict(
     plug_1 = KasaPlug('10.87.1.41', **KC),
     plug_2 = KasaPlug('10.87.1.42', **KC),
     plug_3 = KasaPlug('10.87.1.43', **KC),

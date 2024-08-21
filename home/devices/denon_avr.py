@@ -123,6 +123,10 @@ class DenonAVR:
   def set_power(self, pw):
     return self.cmd('PW', pw.name)
 
+
+  def set_z2(self, cmd):
+    return self.cmd('Z2', cmd)
+
   def get_vol(self):
     LOG.info('get_vol')
     r = self.query('MV')
@@ -147,11 +151,13 @@ def main():
     formatter_class=argparse.RawTextHelpFormatter,
     description=__doc__)
 
-  parser.add_argument('--ip', type=str, default='10.0.0.22')
+  parser.add_argument('--ip', type=str, default='10.87.1.22')
   args = parser.parse_args()
 
   amp = DenonAVR(args.ip)
   print(amp.get_power())
+  amp.set_z2('OFF')
+  amp.set_power(DenonAVR.PowerState.STANDBY)
 
 
 if __name__ == '__main__':

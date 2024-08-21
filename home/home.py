@@ -174,6 +174,7 @@ class Home:
     with self.do_amp() as a:
       a.set_power(a.PowerState.ON)
       a.set_source('TV')
+      a.set_z2('OFF')
       a.set_vol(-50)
     self.lights[0].turn_on()
     self.lights[1].turn_on()
@@ -183,6 +184,7 @@ class Home:
     with self.do_amp() as a:
       a.set_power(a.PowerState.ON)
       a.set_source('TV')
+      a.set_z2('OFF')
       a.set_vol(-55)
     self.lights[0].turn_on()
     self.lights[1].turn_on()
@@ -192,6 +194,7 @@ class Home:
     with self.do_amp() as a:
       a.set_power(a.PowerState.ON)
       a.set_source('TV')
+      a.set_z2('OFF')
       # TODO: move this to devices.foobar
       requests.post('http://10.87.1.10:8880/api/player/play', timeout=1)
       a.set_vol(-55)
@@ -200,8 +203,10 @@ class Home:
     return True
 
   def scene_movie(self):
+    # TODO pause foobar
     with self.do_amp() as a:
       a.set_source('NET')
+      a.set_z2('OFF')
     self.lights[0].turn_off()
     self.lights[1].turn_off()
     return True

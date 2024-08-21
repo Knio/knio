@@ -76,13 +76,13 @@ class MPPTAmpivnt:
     LOG.debug(f'bytes: ({len(cmd_bytes)}) {cmd_bytes.hex(" ")}')
 
     response = MPPTRealtimeStatus()
-
     self.serial.write(cmd_bytes)
     d = self.serial.read_all()
     LOG.debug(f'{len(d)} {d.hex(" ")}')
-    if len(d) != response.size():
+    if len(d) < response.size():
       LOG.info(f'Ignoring incomplete data: ({len(d)} != {response.size()}): {d.hex()}')
       return
+    d = d[:response.size()]
 
     response.deserialize_into(d)
 

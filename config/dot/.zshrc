@@ -26,33 +26,36 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
-source ~/knio/config/bash/aliases
-
 autoload -U compinit
 compinit
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+function set_term_title() {
+  # sceen passes this through
+  # TODO make work with unicode
+  print -Pn "\e]0;$1\a"
+}
+function set_screen_title() {
+  # TODO make work with unicode
+  if [[ "$IN_SCREEN" == "1" ]] then
+    print -Pn "\033k$1\033\\"
+  fi
+}
 
 # runs before command
 function preexec() {
-  # set term title (screen passes this thru)
-  print -Pn "\e]0;%m: ~█~ $1\a"
+  set_term_title "%m: »$1"
+  set_screen_title "*$1"
 
-  # set screen title
-  if [[ "$IN_SCREEN" == "1" ]] then
-    print -Pn "\033k ~█~ $1\033\\"
-  fi
+  # TODO: start timer
 }
 
 
 # runs after command finishes (before printing PS*)
 function precmd() {
-  # set term title (screen passes this thru)
-  print -Pn "\e]0;%m: %~\a"
-
-  # set screen title
-  if [[ "$IN_SCREEN" == "1" ]] then
-    print -Pn "\033k%~\033\\"
-  fi
+  set_term_title "%m: %~"
+  set_screen_title "%~"
 }
+
+source ~/knio/config/bash/aliases

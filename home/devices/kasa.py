@@ -12,16 +12,16 @@ class SmartPlug(kasa.SmartPlug):
     self.update()
 
   def update(self):
-    self.AIOL.run_until_complete(super().update())
+    AIOL.run_until_complete(super().update())
 
   def turn_on(self):
-    self.AIOL.run_until_complete(super().turn_on())
+    AIOL.run_until_complete(super().turn_on())
 
   def turn_off(self):
-    self.AIOL.run_until_complete(super().turn_off())
+    AIOL.run_until_complete(super().turn_off())
 
   def emeter(self):
-    return self.AIOL.run_until_complete(super().get_emeter_realtime())
+    return AIOL.run_until_complete(super().get_emeter_realtime())
 
 def discover(*a, **kw):
   return AIOL.run_until_complete(kasa.Discover.discover_single(*a, **kw))

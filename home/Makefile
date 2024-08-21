@@ -13,9 +13,9 @@ air:
 	python air.py /dev/ttyCH9344USB0
 
 co2:
-	python -m devices.arduino_cir_co2 /dev/ttyUSB0
+	python -m devices.arduino_cir_co2 /dev/ttyUSB1
 
-power:
-	python power.py
+solar:
+	python solar.py
 
 .PHONY: install home weather air co2 power

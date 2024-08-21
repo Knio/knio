@@ -138,6 +138,7 @@ def t_unicode():
     print_codes('Geometric shapes', map(chr, range(0x25a0, 0x2600)))
     print_codes('Miscellaneous symbols',
                                     map(chr, range(0x2b00, 0x2c00)))
+    print_codes('ASCI ++ ',         map(chr, range(0x0, 0xff)))
 
     print()
 
