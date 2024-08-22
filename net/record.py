@@ -27,7 +27,7 @@ import collections
 import time
 
 from bcc import BPF
-from .db import FlowDB
+from db import FlowDB
 
 
 LOG = logging.getLogger('net')

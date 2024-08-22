@@ -12,6 +12,12 @@
 !home/
 !home/**
 
+!net/
+!net/**
+
+!datum/
+!datum/**
+
 # python
 *.egg
 *.egg-info

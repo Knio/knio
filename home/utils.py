@@ -28,7 +28,7 @@ class Device:
     self.dev = None
     self.last_state = {}
 
-  def set_state(self, name=None, x=None, timeout=0.):
+  def set_state(self, name=None, x=None):
     LOG.debug(f'set_state({name!r}, {x!r})')
     self.last_state[name] = time.time(), x
 
