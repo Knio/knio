@@ -18,6 +18,7 @@ class Flow:
   # srcport
   # dstport
   # num packets
+  # ipv6
   bytes: int
 
 
