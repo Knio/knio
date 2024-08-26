@@ -1,0 +1,54 @@
+
+[project]
+name = "bwninja"
+description="A modern replacement for iftop"
+readme = "README.md"
+authors = [
+  {name="Tom Flanagan", email="tom@zkpq.ca"}
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console :: Curses",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: End Users/Desktop",
+  "Intended Audience :: Information Technology",
+  "Intended Audience :: System Administrators",
+  "Intended Audience :: Telecommunications Industry",
+  "License :: Free For Educational Use",
+  "License :: Free For Home Use",
+  "License :: Free for non-commercial use",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python",
+  "Topic :: Internet",
+  "Topic :: System :: Monitoring",
+  "Topic :: System :: Networking :: Monitoring",
+  "Topic :: Utilities",
+]
+dynamic = ["version"]
+
+dependencies = [
+  "blessed",
+  "bcc",
+  "pandas",
+]
+
+[project.urls]
+Homepage = "https://bwninja.zkpq.ca"
+
+[project.scripts]
+bwninja = "bwninja.tui:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["bwninja"]
+
+[tool.setuptools.dynamic]
+version = {attr = "bwninja._version.version"}
+
+[tool.setuptools.package-data]
+bwninja = ["net.c"]

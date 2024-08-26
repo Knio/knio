@@ -1,3 +1,4 @@
+import functools
 import ipaddress
 import logging
 import pathlib
@@ -14,18 +15,22 @@ class Flow:
   src: ipaddress.IPv4Address
   dst: ipaddress.IPv4Address
   # TODO:
+  # ipv6
   # protocol
   # srcport
   # dstport
   # num packets
-  # ipv6
   bytes: int
 
 
-def monitor(attachment, interface, printk=False):
-  src_path = str(pathlib.Path(__file__).parent/"net.c")
-  b = BPF(src_file=src_path, debug=0)
+@functools.cache
+def get_bpf():
+  src_path = str(pathlib.Path(__file__).parent/'net.c')
+  return BPF(src_file=src_path, debug=0)
 
+
+def monitor(attachment, interface, printk=False):
+  b = get_bpf()
   if attachment == 'socket':
     fn=b.load_func("sock_peek_packet", BPF.SOCKET_FILTER)
     BPF.attach_raw_socket(dev=interface, fn=fn)

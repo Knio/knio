@@ -1,7 +1,21 @@
 
 run:
-	PYTHONPATH=. python net.py
+	sudo -H PYTHONPATH=. python3 -m bwninja.tui
 
-install:
+install-editable:
+	sudo -H python3 -m pip install --editable . --break-system-packages
+
+install-deps:
 	sudo apt install python3-bpfcc
 
+publish-deps:
+	python3 -m pip install build twine 'setuptools>=68'
+
+publish: clean
+	python3 -m build --no-isolation
+	python3 -m twine upload dist/*
+
+clean:
+	-rm dist/ -rf
+	-rm build/ -rf
+	-rm *.egg-info/ -rf
