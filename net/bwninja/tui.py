@@ -12,11 +12,12 @@ def dep_check():
   assert (r := platform.system()) == 'Linux', \
     f'{NAME} requires Linux. You have: {r}'
 
-  if (r := platform.release()) < '5.9':
+  pmaj, pmin, _ = platform.release().split('.', 2)
+  if (int(pmaj), int(pmin)) < (5, 9):
     errors.append(f'{NAME} requires Linux kernel >= 5.9. You have: {r}')
 
   try:
-    import bcc
+    from bcc import BPF
   except ImportError:
     errors.append(
         f'{NAME} requires python3-bpfcc which may not be satisfiable from pip. \n'
@@ -38,9 +39,9 @@ def dep_check():
   if errors:
     errs = "\n\n".join(errors)
     print(f'Unable to run. please correct the following errors:\n\n{errs}', file=sys.stderr)
-    exit(-1)
+    # exit(-1)
 
-dep_check()
+# dep_check()
 
 
 import argparse
@@ -48,13 +49,19 @@ import dataclasses
 import enum
 import ipaddress
 import logging
+import os
 import socket
+import subprocess
+import sys
+import pathlib
 import threading
 import time
 
 import blessed
 import pandas
+import bcc
 
+from . import _version
 from . import net
 
 LOG = logging.getLogger('nettui')
@@ -72,7 +79,6 @@ LOG = logging.getLogger('nettui')
 # TODO show time series graph of selected row
 
 
-dep_check()
 
 def get_local_addresses():
   import fcntl
@@ -137,6 +143,7 @@ DNS = DNSCache()
 HOST = socket.gethostname()
 LOCAL = get_local_addresses()
 
+
 class Address(ipaddress.IPv4Address):
   # TODO IPv6
   class Type(enum.IntEnum):
@@ -199,6 +206,9 @@ class NetTui:
     self.df = pandas.DataFrame()
     self.log = {}
     self.history = 600
+    # some ui state
+    self.pairs = []
+    self.selected = None
 
 
   def run(self):
@@ -206,23 +216,45 @@ class NetTui:
     print("press 'q' to quit.")
     with TERM.cbreak(), TERM.hidden_cursor(), TERM.fullscreen():
       while 1:
-        self.update_flows()
         print(TERM.home, end='')
-        # print(TERM.home + TERM.clear, end='')
 
-        self.draw_flows()
         try:   val = TERM.inkey(timeout=self.interval)
         except KeyboardInterrupt: break
 
-        # timeout
-        if val == '': continue
+        if val.lower() == 'q':
+          break
 
-        if val.is_sequence:
+
+        # cursor
+        elif val.is_sequence and val.name in ('KEY_UP', 'KEY_DOWN'):
+          try:
+            i = self.pairs.index(self.selected)
+            i += 1 if val.name == 'KEY_DOWN' else -1
+          except ValueError:
+            i = 0
+          try:
+            self.selected = self.pairs[i]
+          except IndexError:
+            pass
+
+        elif val.is_sequence:
           print("got sequence: {0}.".format((str(val), val.name, val.code)))
-          continue
+          time.sleep(1)
 
-        print("got {0}.".format(val))
-        if val.lower() == 'q': break
+        elif val != '':
+          print("got {0}.".format(val))
+          time.sleep(1)
+
+        # timeout
+        elif val == '':
+          self.update_flows()
+
+        if not TERM.kbhit(0): # TODO not working
+          self.draw_flows()
+
+
+
+
     print(f'bye!{TERM.normal}')
 
   def update_flows(self):
@@ -248,7 +280,7 @@ class NetTui:
         del self.log[ts]
 
 
-  def draw_flows(self):
+  de# TODO not workingf draw_flows(self):
     now = time.time()
     dur = 30
     since = now - dur
@@ -267,14 +299,18 @@ class NetTui:
       a, b = x
       return Address.sort_key(a) + Address.sort_key(b)
 
-    pairs = sorted(pairs, key=sort_key)
+    self.pairs = pairs = sorted(pairs, key=sort_key)
 
+
+    # draw window
     W = TERM.width
+    H = TERM.height
+    Hpad = 3 # coud print one more line but has to make sure it doesn't end with \n
 
     s = 0
-    e = len(pairs)
+    e = min(len(pairs), s + H - Hpad)
     # print(TERM.move_xy(0, 1), end='')
-    print(f'{TERM.black_on_white}    Network Flows past {dur}s {s+1}-{len(pairs)}{TERM.clear_eol}{TERM.normal}')
+    print(f'{TERM.black_on_white}    Network Flows past {dur}s {s+1}-{e} of {len(pairs)}{TERM.clear_eol}{TERM.normal}')
     for i, (src, dst) in enumerate(pairs[s:e]):
       try:
         tx = grouped.get_group((src, dst))
@@ -287,13 +323,18 @@ class NetTui:
       except KeyError:
         rx_bytes = 0
 
-      P = 24
+      P = 25
       src_s = TERM.ljust(src.pretty(), W // 2 - P)
       dst_s = TERM.rjust(dst.pretty(), W // 2 - P)
-      print(f'{TERM.dim}{i+s+1:3d}{TERM.normal}  {src_s} {tx_bytes:10,.0f} <--> {rx_bytes:10,.0f} {dst_s}{TERM.clear_eol}')
+      if self.selected == (src, dst):
+        sel = f'{TERM.RED}⮞'
+      else:
+        sel = f'{TERM.dim} '
+      print(f'{sel}{i+s+1:3d}{TERM.normal}  {src_s} {tx_bytes:10,.0f} <--> {rx_bytes:10,.0f} {dst_s}{TERM.clear_eol}')
     print(f'{TERM.black_on_white}end{TERM.clear_eol}{TERM.normal}')
 
-    for w in range(e - s + 3, TERM.height):
+    for w in range(e - s + Hpad, H):
+      # visualize blank/available space
       print(TERM.normal + '>' + TERM.clear_eol)
 
     # TODO debug logs
@@ -306,12 +347,52 @@ def main():
     formatter_class=argparse.RawTextHelpFormatter,
     description=__doc__)
 
-  parser.add_argument('--interfaces', '-i', nargs='*', type=str, default=())
-  parser.add_argument('--interval', '-t', type=float, default=0.3)
-  parser.add_argument('--attachment', '-a', type=str, default='socket')
-  parser.add_argument('--printk', default=False, action='store_true')
+  parser.add_argument('--interfaces',
+    '-i', nargs='*', type=str, default=())
+  parser.add_argument('--interval',
+    '-t', type=float, default=0.3)
+  parser.add_argument('--attachment', '-a',
+    type=str, default='socket')
+
+  parser.add_argument('--upgraded',
+    help=argparse.SUPPRESS,
+    default=False, action='store_true')
+
+  print(f'bwninja version {_version.version} from {__file__} args {list(sys.argv)}')
 
   args = parser.parse_args()
+
+  if args.upgraded and (os.getuid() == 0):
+    LOG.info('sudo successful')
+
+  #### upgrade
+  if not args.upgraded and (os.getuid() != 0):
+    LOG.info('root required, attempting to sudo..')
+    # collect deps
+    ppaths = set()
+    ppaths.add(pathlib.Path(_version.__file__).parent.parent)
+    ppaths.add(pathlib.Path(blessed.__file__).parent.parent)
+    ppaths.add(pathlib.Path(pandas.__file__).parent.parent)
+    ppaths.add(pathlib.Path(bcc.__file__).parent.parent)
+
+    env = dict(
+      PYTHONDONTWRITEBYTECODE='1',
+      PYTHONPATH=':'.join(map(str, ppaths))
+    )
+    LOG.debug(env)
+
+    cmd = [
+      'sudo', '-E',
+      *[f"'{k}={v}'" for k, v in env.items()],
+      *sys.argv, '--upgraded',
+    ]
+    LOG.debug(cmd)
+    os.execv('/usr/bin/sudo', cmd)
+
+  del args.upgraded
+
+
+
   NetTui(**vars(args)).run()
 
 

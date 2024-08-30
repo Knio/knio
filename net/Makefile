@@ -19,3 +19,4 @@ clean:
 	-rm dist/ -rf
 	-rm build/ -rf
 	-rm *.egg-info/ -rf
+	-rm __pycache__ -rf

@@ -25,24 +25,26 @@ class Flow:
 
 @functools.cache
 def get_bpf():
-  src_path = str(pathlib.Path(__file__).parent/'net.c')
+  src_path = str(pathlib.Path(__file__).parent / 'net.c')
+  LOG.info(f'compiling bpf code from {src_path}')
   return BPF(src_file=src_path, debug=0)
 
 
 def monitor(attachment, interface, printk=False):
   b = get_bpf()
   if attachment == 'socket':
-    fn=b.load_func("sock_peek_packet", BPF.SOCKET_FILTER)
+    fn=b.load_func('sock_peek_packet', BPF.SOCKET_FILTER)
     BPF.attach_raw_socket(dev=interface, fn=fn)
   elif attachment == 'xdp':
-    fn=b.load_func("xdp_peek_packet", BPF.XDP)
+    fn=b.load_func('xdp_peek_packet', BPF.XDP)
     BPF.attach_xdp(dev=interface, fn=fn)
   else:
     # TODO: tc (traffic control)
     raise ValueError(attachment)
 
-  flows_hash = b["flows"]
-  LOG.info('bpf ok')
+  flows_hash = b['flows']
+  LOG.info('bpf attached')
+
   if printk:
     b.trace_print()
 
