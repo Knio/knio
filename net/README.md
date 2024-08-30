@@ -12,17 +12,19 @@ Why?
 ## Install
 
 ```sh
-sudo pip install bwninja --break-system-packages
+pip install bwninja
 ```
-
-Yup, as root ¯\_(ツ)_/¯.  Just like `iftop`
-
-LMK if you have a better way to package a python tool that requires running
-as root.
 
 
 ## Run
 
+bwninja requires root to access the network interfaces.
+
+
 ```sh
-sudo bwninja
+bwninja # bwninja will try to escalate itself.
+
+python -m bwninja.tui # same. if bin script was not installed
+
+sudo bwninja # will work only if bwninja is installed as a system package
 ```

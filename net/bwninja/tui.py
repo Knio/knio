@@ -252,10 +252,7 @@ class NetTui:
         if not TERM.kbhit(0): # TODO not working
           self.draw_flows()
 
-
-
-
-    print(f'bye!{TERM.normal}')
+    print(f'{TERM.normal}bye!{TERM.clear_eol}')
 
   def update_flows(self):
     # LOG.debug("update")
@@ -280,7 +277,7 @@ class NetTui:
         del self.log[ts]
 
 
-  de# TODO not workingf draw_flows(self):
+  def draw_flows(self):
     now = time.time()
     dur = 30
     since = now - dur
@@ -301,14 +298,20 @@ class NetTui:
 
     self.pairs = pairs = sorted(pairs, key=sort_key)
 
-
     # draw window
     W = TERM.width
-    H = TERM.height
-    Hpad = 3 # coud print one more line but has to make sure it doesn't end with \n
+    Hpad = 3 # could print one more line but has to make sure it doesn't end with \n
+    H = TERM.height - Hpad
+
+    try:
+      k = self.pairs.index(self.selected)
+    except ValueError:
+      k = 0
 
     s = 0
-    e = min(len(pairs), s + H - Hpad)
+    e = min(len(pairs), s + H)
+
+
     # print(TERM.move_xy(0, 1), end='')
     print(f'{TERM.black_on_white}    Network Flows past {dur}s {s+1}-{e} of {len(pairs)}{TERM.clear_eol}{TERM.normal}')
     for i, (src, dst) in enumerate(pairs[s:e]):
@@ -333,7 +336,7 @@ class NetTui:
       print(f'{sel}{i+s+1:3d}{TERM.normal}  {src_s} {tx_bytes:10,.0f} <--> {rx_bytes:10,.0f} {dst_s}{TERM.clear_eol}')
     print(f'{TERM.black_on_white}end{TERM.clear_eol}{TERM.normal}')
 
-    for w in range(e - s + Hpad, H):
+    for w in range(e - s, H):
       # visualize blank/available space
       print(TERM.normal + '>' + TERM.clear_eol)
 
@@ -342,11 +345,40 @@ class NetTui:
     # print(TERM.move_xy(0, 40))
 
 
+def get_import_paths():
+  paths = set()
+  paths.add(pathlib.Path(_version.__file__).parent.parent)
+  paths.add(pathlib.Path(blessed.__file__).parent.parent)
+  paths.add(pathlib.Path(pandas.__file__).parent.parent)
+  paths.add(pathlib.Path(bcc.__file__).parent.parent)
+  return list(map(str, paths))
+
+
+def escalate():
+  env = dict(
+    PYTHONDONTWRITEBYTECODE='1',
+    PYTHONPATH=':'.join(get_import_paths())
+  )
+  LOG.debug(env)
+
+  argv = pathlib.Path('/proc/self/cmdline').read_text().split('\0')[1:-1]
+  LOG.debug(argv)
+
+  cmd = [
+    'sudo', '-E',
+    *[f"'{k}={v}'" for k, v in env.items()],
+    sys.executable, *argv, '--escalated',
+  ]
+  LOG.debug(cmd)
+  os.execv('/usr/bin/sudo', cmd)
+
+
 def main():
   parser = argparse.ArgumentParser(
     formatter_class=argparse.RawTextHelpFormatter,
     description=__doc__)
 
+  # TODO these should be part of a config file
   parser.add_argument('--interfaces',
     '-i', nargs='*', type=str, default=())
   parser.add_argument('--interval',
@@ -354,44 +386,24 @@ def main():
   parser.add_argument('--attachment', '-a',
     type=str, default='socket')
 
-  parser.add_argument('--upgraded',
+  # internal args for escalation
+  parser.add_argument('--escalated',
     help=argparse.SUPPRESS,
     default=False, action='store_true')
 
-  print(f'bwninja version {_version.version} from {__file__} args {list(sys.argv)}')
+  print(f'bwninja version {_version.version} from {__file__} running as {os.getuid()}')
 
   args = parser.parse_args()
 
-  if args.upgraded and (os.getuid() == 0):
-    LOG.info('sudo successful')
+  if args.escalated and (os.getuid() == 0):
+    print('sudo successful')
 
-  #### upgrade
-  if not args.upgraded and (os.getuid() != 0):
-    LOG.info('root required, attempting to sudo..')
-    # collect deps
-    ppaths = set()
-    ppaths.add(pathlib.Path(_version.__file__).parent.parent)
-    ppaths.add(pathlib.Path(blessed.__file__).parent.parent)
-    ppaths.add(pathlib.Path(pandas.__file__).parent.parent)
-    ppaths.add(pathlib.Path(bcc.__file__).parent.parent)
+  # run as user. needs upgrade
+  if (not args.escalated) and (os.getuid() != 0):
+    print('root required, attempting to sudo..')
+    escalate()
 
-    env = dict(
-      PYTHONDONTWRITEBYTECODE='1',
-      PYTHONPATH=':'.join(map(str, ppaths))
-    )
-    LOG.debug(env)
-
-    cmd = [
-      'sudo', '-E',
-      *[f"'{k}={v}'" for k, v in env.items()],
-      *sys.argv, '--upgraded',
-    ]
-    LOG.debug(cmd)
-    os.execv('/usr/bin/sudo', cmd)
-
-  del args.upgraded
-
-
+  del args.escalated
 
   NetTui(**vars(args)).run()
 
