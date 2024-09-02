@@ -1,61 +1,104 @@
 #include <linux/if_ether.h>
 #include <linux/inet.h>
 #include <linux/ip.h>
+#include <linux/ipv6.h>
+
+// TODO: bpf_get_socket_cookie
+// (same as inode?)
 
 
-struct Flow {
-  u32 ip_a;
-  u32 ip_b;
+struct Flow4 {
+  u32 src;
+  u32 dst;
 };
 
+struct Flow6 {
+  struct	in6_addr src;
+  struct	in6_addr dst;
+};
 
-BPF_HASH(flows, struct Flow, u32, 1024);
+struct Stat {
+  u32 bytes;
+  u32 packets;
+};
 
-static void log_packet(const struct iphdr* ip) {
-  struct Flow flow;
-  u32 z = 0;
-  flow.ip_a = ntohl(ip->saddr);
-  flow.ip_b = ntohl(ip->daddr);
+BPF_HASH(flows4, struct Flow4, struct Stat, 1024);
+BPF_HASH(flows6, struct Flow6, struct Stat, 1024);
 
-  u32 *bytes = flows.lookup_or_try_init(&flow, &z);
-  if (bytes) {
-      *bytes += ntohs(ip->tot_len);
+static void log_packet4(const struct iphdr* ip) {
+  struct Flow4 flow;
+  struct Stat z = {0,0};
+  flow.src = ntohl(ip->saddr);
+  flow.dst = ntohl(ip->daddr);
+
+  struct Stat *stat = flows4.lookup_or_try_init(&flow, &z);
+  if (stat) {
+      stat->bytes += ntohs(ip->tot_len);
+      stat->packets ++;
+  } else {
+    bpf_trace_printk("no map entry");
+  }
+}
+
+static void log_packet6(const struct ipv6hdr* ip6) {
+  struct Flow6 flow;
+  struct Stat z = {0,0};
+  flow.src = ip6->saddr;
+  flow.dst = ip6->daddr;
+
+  struct Stat *stat = flows6.lookup_or_try_init(&flow, &z);
+  if (stat) {
+      stat->bytes += ntohs(ip6->payload_len);
+      stat->packets ++;
   } else {
     bpf_trace_printk("no map entry");
   }
 }
 
 
-int sock_peek_packet(struct __sk_buff *skb) {
-  bpf_trace_printk("protocol: %x", skb->protocol);
-  bpf_trace_printk("pkt_type: %x", skb->pkt_type);
-  struct ethhdr e_hdr;
-  u32 off = 0;
-  if (bpf_skb_load_bytes(skb, off, &e_hdr, sizeof(e_hdr))) {
-     bpf_trace_printk("no eth header");
-    return 1;
+static void handle_ip(struct __sk_buff *skb, const u32 offset) {
+  struct iphdr ip4;
+
+  // Cannot do direct packets access for "socket"
+  // https://stackoverflow.com/a/61726788/132076
+  // So we use bpf_skb_load_bytes
+
+  if (bpf_skb_load_bytes(skb, offset, &ip4, sizeof(ip4))) {
+    bpf_trace_printk("could not load ip4 bytes");
+    return;
   }
-  u8 ipproto = *((u8*)(&e_hdr)) & 0xf0;
-  if (e_hdr.h_proto == htons(ETH_P_IP)) {
-    off += sizeof(e_hdr);
+  if (ip4.version == 4) {
+    log_packet4(&ip4);
+    return;
   }
-  else if (ipproto == 0x40) {
-    // ipv4
-    bpf_trace_printk("lol idk");
-  } else {
-    bpf_trace_printk("not an ip packet: %x", e_hdr.h_proto);
-    return 1;
+  else if (ip4.version == 6) {
+    struct ipv6hdr ip6;
+    if (bpf_skb_load_bytes(skb, offset, &ip6, sizeof(ip6))) {
+      bpf_trace_printk("could not load ip6 bytes");
+      return;
+    }
+    log_packet6(&ip6);
+    return;
   }
-  struct iphdr ip_hdr;
-  if (bpf_skb_load_bytes(skb, off, &ip_hdr, sizeof(ip_hdr))) {
-     bpf_trace_printk("no ip header");
-    return 1;
+  else {
+    bpf_trace_printk("unknown ip version %x", ip4.version);
+    return;
   }
-  bpf_trace_printk("socket packet 3 %x %x", ip_hdr.saddr, ip_hdr.daddr);
-  log_packet(&ip_hdr);
-  return 1;
+
 }
 
+// Example: https://elixir.bootlin.com/linux/v6.1/source/samples/bpf/parse_varlen.c#L113
+int sock_peek_packet_eth(struct __sk_buff *skb) {
+  handle_ip(skb, sizeof(struct ethhdr));
+  return 0;
+}
+
+int sock_peek_packet_ip(struct __sk_buff *skb) {
+  // On wireguard interfaces, sk_buff is L3 and not L2,
+  // so there is no ethernet header and just an IP header.
+  handle_ip(skb, 0);
+  return 0;
+}
 
 int xdp_peek_packet(struct xdp_md *ctx) {
   bpf_trace_printk("packet");
@@ -82,7 +125,7 @@ int xdp_peek_packet(struct xdp_md *ctx) {
     return XDP_PASS;
   }
 
-  log_packet(ip);
+  log_packet4(ip);
 
   return XDP_PASS;
 }

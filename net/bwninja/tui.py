@@ -47,6 +47,7 @@ def dep_check():
 import argparse
 import dataclasses
 import enum
+import functools
 import ipaddress
 import logging
 import os
@@ -63,15 +64,15 @@ import bcc
 
 from . import _version
 from . import net
+from . import utils
 
 LOG = logging.getLogger('nettui')
 
 # TODO print pretty bar graph
+# TODO fast double buffered term library
 # TODO lan rdns somehow
 # TODO process (pid) tracking
 # TODO hsz() coloring
-# TODO cursor
-# TODO ipv6 support
 # TODO tree of flows to expand host rollup to ports etc
 # TODO root tree by pid, protocol, etc
 # TODO mouse cursor
@@ -79,23 +80,38 @@ LOG = logging.getLogger('nettui')
 # TODO show time series graph of selected row
 
 
-
-def get_local_addresses():
+def get_local_ipv4_addresses():
   import fcntl
   import struct
   addrs = {}
-  s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+  s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+  s6 = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
   for i, name in socket.if_nameindex():
     try:
-      ip = socket.inet_ntoa(fcntl.ioctl(
-          s.fileno(),
+      ip4 = socket.inet_ntoa(fcntl.ioctl(
+          s4.fileno(),
           0x8915,  # SIOCGIFADDR
           struct.pack('256s', name[:15].encode('utf8'))
       )[20:24])
-      addrs[ipaddress.IPv4Address(ip)] = name
+      addrs[ipaddress.IPv4Address(ip4)] = name
     except OSError:
-      LOG.warning(f'Could not resolve address for interface {name}')
+      LOG.warning(f'Could not resolve IPv4 address for interface {name}')
   return addrs
+
+
+def get_local_ipv6_addresses():
+  tokens = map(
+    str.split,
+    pathlib.Path('/proc/net/if_inet6').read_text().splitlines()
+  )
+  return {ipaddress.IPv6Address(bytes.fromhex(t[0])): t[5] for t in tokens}
+
+
+def get_local_addresses():
+  v4 = get_local_ipv4_addresses()
+  v6 = get_local_ipv6_addresses()
+  v4.update(v6)
+  return v6
 
 
 class DNSCache:
@@ -143,9 +159,11 @@ DNS = DNSCache()
 HOST = socket.gethostname()
 LOCAL = get_local_addresses()
 
+@functools.total_ordering
+class PrettyAddress:
+  def __init__(self, addr):
+    self.addr = addr
 
-class Address(ipaddress.IPv4Address):
-  # TODO IPv6
   class Type(enum.IntEnum):
     LOCAL       = enum.auto()
     UNKNOWN     = enum.auto()
@@ -157,30 +175,50 @@ class Address(ipaddress.IPv4Address):
     UNSPECIFIED = enum.auto()
     GLOBAL      = enum.auto()
 
+  @classmethod
+  def type_key(cls, addr):
+    if addr in LOCAL:        return cls.Type.LOCAL
+    if addr.is_global:       return cls.Type.GLOBAL
+    if addr.is_link_local:   return cls.Type.LINK_LOCAL
+    if addr.is_loopback:     return cls.Type.LOOPBACK
+    if addr.is_multicast:    return cls.Type.MULTICAST
+    if addr.is_private:      return cls.Type.PRIVATE
+    if addr.is_reserved:     return cls.Type.RESERVED
+    if addr.is_unspecified:  return cls.Type.UNSPECIFIED
+    return cls.Type.UNKNOWN
 
-  def type_key(self):
-    if self in LOCAL:        return Address.Type.LOCAL
-    if self.is_global:       return Address.Type.GLOBAL
-    if self.is_link_local:   return Address.Type.LINK_LOCAL
-    if self.is_loopback:     return Address.Type.LOOPBACK
-    if self.is_multicast:    return Address.Type.MULTICAST
-    if self.is_private:      return Address.Type.PRIVATE
-    if self.is_reserved:     return Address.Type.RESERVED
-    if self.is_unspecified:  return Address.Type.UNSPECIFIED
-    return Address.Type.UNKNOWN
+  @classmethod
+  def _sort_key(cls, addr):
+    return cls.type_key(addr), *ipaddress.get_mixed_type_key(addr)
 
   def sort_key(self):
-    return self.type_key(), self
+    return type(self)._sort_key(self.addr)
+
+  def __lt__(self, other):
+    return (
+      type(self)._sort_key(self.addr) <
+      type(other)._sort_key(other.addr)
+    )
+
+  def __eq__(self, other):
+    return (
+      self.addr == other.addr
+    )
+
+  def __hash__(self):
+    return hash(self.addr)
 
   def pretty(self):
+    cls = type(self)
     c = {
-      Address.Type.LOCAL: TERM.on_green,
-      Address.Type.PRIVATE: TERM.orange,
-      Address.Type.GLOBAL: TERM.cyan,
-      Address.Type.MULTICAST: TERM.red,
-    }.get(self.type_key(), TERM.grey)
-    s = DNS.resolve(self)
+      cls.Type.LOCAL: TERM.on_green,
+      cls.Type.PRIVATE: TERM.orange,
+      cls.Type.GLOBAL: TERM.cyan,
+      cls.Type.MULTICAST: TERM.red,
+    }.get(cls.type_key(self.addr), TERM.grey)
+    s = DNS.resolve(self.addr)
     return c + s + TERM.normal
+
 
 class Stats:
   def __init__(self, ser):
@@ -224,7 +262,6 @@ class NetTui:
         if val.lower() == 'q':
           break
 
-
         # cursor
         elif val.is_sequence and val.name in ('KEY_UP', 'KEY_DOWN'):
           try:
@@ -252,18 +289,17 @@ class NetTui:
         if not TERM.kbhit(0): # TODO not working
           self.draw_flows()
 
-    print(f'{TERM.normal}bye!{TERM.clear_eol}')
+    print(f'{TERM.normal}bye!')
 
   def update_flows(self):
-    # LOG.debug("update")
-
+    LOG.debug("update")
     for name, mon in self.mons.items():
       now = time.time()
       rows = []
       for flow in next(mon):
         d = dataclasses.asdict(flow)
-        d['src'] = Address(d['src'].packed)
-        d['dst'] = Address(d['dst'].packed)
+        d['src'] = PrettyAddress(d['src'])
+        d['dst'] = PrettyAddress(d['dst'])
         rows.append(d)
       if rows:
         df = pandas.DataFrame.from_records(rows, index=['src', 'dst'])
@@ -271,7 +307,7 @@ class NetTui:
         self.log[now] = df
 
     if self.log:
-      self.df = pandas.concat(self.log.values())
+      self.df = pandas.concat(self.log.values(), sort=False)
     for ts in list(self.log.keys()):
       if ts + self.history < now:
         del self.log[ts]
@@ -286,15 +322,16 @@ class NetTui:
     window = self.df.loc[self.df['timestamp'] > since]
     if len(window) == 0: return
 
-    grouped = window.groupby(level=['src', 'dst'], observed=True)
+    grouped = window.groupby(level=['src', 'dst'],
+      observed=True, sort=False)
     pairs = set()
     for pair in grouped.indices.keys():
-      key = tuple(sorted(pair, key=Address.sort_key))
+      key = tuple(sorted(pair))
       pairs.add(key)
 
     def sort_key(x):
       a, b = x
-      return Address.sort_key(a) + Address.sort_key(b)
+      return PrettyAddress.sort_key(a) + PrettyAddress.sort_key(b)
 
     self.pairs = pairs = sorted(pairs, key=sort_key)
 
@@ -345,34 +382,6 @@ class NetTui:
     # print(TERM.move_xy(0, 40))
 
 
-def get_import_paths():
-  paths = set()
-  paths.add(pathlib.Path(_version.__file__).parent.parent)
-  paths.add(pathlib.Path(blessed.__file__).parent.parent)
-  paths.add(pathlib.Path(pandas.__file__).parent.parent)
-  paths.add(pathlib.Path(bcc.__file__).parent.parent)
-  return list(map(str, paths))
-
-
-def escalate():
-  env = dict(
-    PYTHONDONTWRITEBYTECODE='1',
-    PYTHONPATH=':'.join(get_import_paths())
-  )
-  LOG.debug(env)
-
-  argv = pathlib.Path('/proc/self/cmdline').read_text().split('\0')[1:-1]
-  LOG.debug(argv)
-
-  cmd = [
-    'sudo', '-E',
-    *[f"'{k}={v}'" for k, v in env.items()],
-    sys.executable, *argv, '--escalated',
-  ]
-  LOG.debug(cmd)
-  os.execv('/usr/bin/sudo', cmd)
-
-
 def main():
   parser = argparse.ArgumentParser(
     formatter_class=argparse.RawTextHelpFormatter,
@@ -401,7 +410,8 @@ def main():
   # run as user. needs upgrade
   if (not args.escalated) and (os.getuid() != 0):
     print('root required, attempting to sudo..')
-    escalate()
+    paths = utils.get_import_paths(utils, blessed, bcc, pandas)
+    utils.escalate(paths, '--escalated')
 
   del args.escalated
 

@@ -393,3 +393,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    raise ValueError("DEPRECATED! use treecat.term instead")
