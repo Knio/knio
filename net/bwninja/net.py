@@ -17,12 +17,11 @@ import dataclasses
 class Flow:
   src: ipaddress.IPv4Address
   dst: ipaddress.IPv4Address
-  # TODO:
-  # ipv6
-  # protocol
-  # srcport
-  # dstport
-  # num packets
+  protocol: int
+  sport: int
+  dport: int
+  # payload
+  packets: int
   bytes: int
 
 
@@ -75,7 +74,7 @@ def monitor(attachment, interface, printk=False):
         a = ipaddress.ip_address(flow.src)
         b = ipaddress.ip_address(flow.dst)
         LOG.debug(f'{a} -> {b}: {stat}')
-        f = Flow(b, a, stat.bytes)
+        f = Flow(a, b, flow.ports.protocol, flow.ports.sport, flow.ports.dport, stat.packets, stat.bytes)
         results.append(f)
 
       flows6 = list(flows6_hash.items_lookup_and_delete_batch())
@@ -84,7 +83,7 @@ def monitor(attachment, interface, printk=False):
         a = ipaddress.ip_address(bytes(flow.src))
         b = ipaddress.ip_address(bytes(flow.dst))
         LOG.debug(f'{a} -> {b}: {stat}')
-        f = Flow(b, a, stat.bytes)
+        f = Flow(a, b, flow.ports.protocol, flow.ports.sport, flow.ports.dport, stat.packets, stat.bytes)
         results.append(f)
 
       yield results

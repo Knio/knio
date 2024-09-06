@@ -68,6 +68,8 @@ from . import utils
 
 LOG = logging.getLogger('nettui')
 
+
+# TODO port number tracking
 # TODO print pretty bar graph
 # TODO fast double buffered term library
 # TODO lan rdns somehow
@@ -289,7 +291,7 @@ class NetTui:
         if not TERM.kbhit(0): # TODO not working
           self.draw_flows()
 
-    print(f'{TERM.normal}bye!')
+    print(f'{TERM.normal}bye!{TERM.clear_eol}')
 
   def update_flows(self):
     LOG.debug("update")

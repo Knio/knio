@@ -1,3 +1,0 @@
-blessed
-bcc
-pandas
