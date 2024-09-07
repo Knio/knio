@@ -91,6 +91,8 @@
         "rpi5.zkpq.ca": "linux",
         "tom-zoox": "linux",
         "zkpq.ca": "linux",
+        "rpi5": "linux",
+        "dfg": "linux"
     },
 
     "arduino.useArduinoCli": true,
