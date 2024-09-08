@@ -141,7 +141,7 @@ def copyfile(src, dst, copyfnc=None, *fargs, **dargs):
         #fdst.seek(0)
 
         copyfnc(fsrc, fdst, *fargs, **dargs)
-        assert fdst.tell() == sz
+        assert fdst.tell() == os.path.getsize(src)
 
     finally:
         if fdst:

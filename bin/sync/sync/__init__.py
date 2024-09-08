@@ -31,12 +31,12 @@ def ctime(f, ctime_ns):
         return
     # See: https://support.microsoft.com/en-us/help/167296
     timestamp = int((ctime_ns / 100) + 116444736000000000)
-    ctime = wintypes.FILETIME(timestamp & 0xFFFFFFFF, timestamp >> 32)
+    ct = wintypes.FILETIME(timestamp & 0xFFFFFFFF, timestamp >> 32)
     if os.path.isdir(f):
         handle = windll.kernel32.CreateFileW(f, 256, 0, None, 3, 128 | 0x02000000, None)
     else:
         handle = windll.kernel32.CreateFileW(f, 256, 0, None, 3, 128, None)
-    windll.kernel32.SetFileTime(handle, byref(ctime), None, None)
+    windll.kernel32.SetFileTime(handle, byref(ct), None, None)
     windll.kernel32.CloseHandle(handle)
 
 
