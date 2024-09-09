@@ -24,7 +24,7 @@ stream:
 		-an \
 		-codec:v copy \
 		-f segment -segment_atclocktime 1 -segment_time 60 -reset_timestamps 1 -strftime 1 \
-				"/home/tom/mnt/desktop/media/Temp/birbs/%Y-%m-%d/birbs_%Y%m%d-%H%M.mp4" \
+				"/home/tom/mnt/desktop/temp/Temp/birbs/%Y-%m-%d/birbs_%Y%m%d-%H%M.mp4" \
 		-vf "scale=-1:720" -pix_fmt yuv420p \
 		-c:v libx264 -profile:v baseline -preset veryfast \
 		-crf 25 -maxrate:v 4M -bufsize:v 5M \

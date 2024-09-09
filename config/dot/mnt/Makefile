@@ -23,10 +23,13 @@ mount.desktop:
 mount.desktop.local:
 	mkdir -p desktop/docs
 	mkdir -p desktop/media
+	mkdir -p desktop/temp
 	-sudo umount -lf desktop/docs
 	-sudo umount -lf desktop/media
+	-sudo umount -lf desktop/temp
 	sudo mount.cifs '\\10.87.1.10\docs'  desktop/docs  -o $(MOUNTOPS)
 	sudo mount.cifs '\\10.87.1.10\media' desktop/media -o $(MOUNTOPS)
+	sudo mount.cifs '\\10.87.1.10\temp'  desktop/temp  -o $(MOUNTOPS)
 
 
 mount.laptop:
