@@ -83,6 +83,7 @@ LOG = logging.getLogger('nettui')
 
 
 def get_local_ipv4_addresses():
+  # TODO not working on dfg
   import fcntl
   import struct
   addrs = {}
@@ -350,8 +351,6 @@ class NetTui:
     s = 0
     e = min(len(pairs), s + H)
 
-
-    # print(TERM.move_xy(0, 1), end='')
     print(f'{TERM.black_on_white}    Network Flows past {dur}s {s+1}-{e} of {len(pairs)}{TERM.clear_eol}{TERM.normal}')
     for i, (src, dst) in enumerate(pairs[s:e]):
       try:
@@ -372,11 +371,11 @@ class NetTui:
         sel = f'{TERM.RED}⮞'
       else:
         sel = f'{TERM.dim} '
-      print(f'{sel}{i+s+1:3d}{TERM.normal}  {src_s} {tx_bytes:10,.0f} <--> {rx_bytes:10,.0f} {dst_s}{TERM.clear_eol}')
+      print(f'{sel}{i+s+1:3d}{TERM.normal}  {src_s} {rx_bytes:10,.0f} <--> {tx_bytes:10,.0f} {dst_s}{TERM.clear_eol}')
     print(f'{TERM.black_on_white}end{TERM.clear_eol}{TERM.normal}')
 
     for w in range(e - s, H):
-      # visualize blank/available space
+      # visualize/debug blank/available space
       print(TERM.normal + '>' + TERM.clear_eol)
 
     # TODO debug logs
@@ -402,6 +401,7 @@ def main():
     help=argparse.SUPPRESS,
     default=False, action='store_true')
 
+  # TODO clean up duplicate prints
   print(f'bwninja version {_version.version} from {__file__} running as {os.getuid()}')
 
   args = parser.parse_args()

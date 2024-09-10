@@ -15,6 +15,7 @@ def get_import_paths(*modules):
 
 
 def escalate(paths, *args):
+  # TODO just return cmd
   env = dict(
     PYTHONDONTWRITEBYTECODE='1',
     PYTHONPATH=':'.join(paths)
@@ -29,6 +30,7 @@ def escalate(paths, *args):
     *[f"'{k}={v}'" for k, v in env.items()],
     sys.executable, *argv, *args,
   ]
+  # TODO make cleaner
   LOG.debug(cmd)
   os.execv('/usr/bin/sudo', cmd)
 

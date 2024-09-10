@@ -9,8 +9,10 @@ import bcc
 
 from . import utils
 
-
 LOG = logging.getLogger('net.net')
+
+# TODO parse /proc/net/udp & /proc/net/tcp
+
 
 import dataclasses
 @dataclasses.dataclass
