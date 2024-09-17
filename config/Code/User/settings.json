@@ -45,13 +45,14 @@
         "**/*.pyc": true,
     },
     "files.exclude": {
-        "**/.git/**": true,
-        "**/.vscode*/**": true,
         ".cache": true,
         "**/__pycache__": true,
         "**/.cache": true,
+        "**/.git/**": true,
+        "**/.vscode*/**": true,
         "**/*.pyc": true,
         "bazel-*": true,
+        "knio/mnt/*": true,
     },
 
     "window.title": "${activeEditorLong}${separator}${rootName}",
@@ -92,7 +93,8 @@
         "tom-zoox": "linux",
         "zkpq.ca": "linux",
         "rpi5": "linux",
-        "dfg": "linux"
+        "dfg": "linux",
+        "tom-server": "linux"
     },
 
     "arduino.useArduinoCli": true,

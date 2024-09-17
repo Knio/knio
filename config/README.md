@@ -12,14 +12,11 @@ sudo /sbin/adduser tom
 sudo /sbin/usermod -aG sudo tom
 ```
 
-
 `visudo`
 Add:
 ```conf
 Defaults        timestamp_timeout=1380
 ```
-
-
 
 Login as you:
 `su - tom`
@@ -29,8 +26,7 @@ Login as you:
 `sudo nano /etc/ssh/sshd_config`
 
 ```conf
-HostKey /etc/ssh/ssh_host_rsa_key
-#HostKey /etc/ssh/ssh_host_ecdsa_key
+# HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_ed25519_key
 
 # Ciphers
@@ -94,6 +90,7 @@ cat ~/.ssh/id_ed25519.pub
 Copy to GitHub settings
 
 ```sh
+sudo apt install git
 git clone git@github.com:Knio/knio
 
 cd knio/config/install
