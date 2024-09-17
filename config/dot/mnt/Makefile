@@ -32,6 +32,12 @@ mount.desktop.local:
 	sudo mount.cifs '\\10.87.1.10\temp'  desktop/temp  -o $(MOUNTOPS)
 
 
+mount.server.local:
+	mkdir -p server/temp
+	-sudo umount -lf server/temp
+	sudo mount.cifs '\\10.87.1.3\zp_temp'  server/temp  -o $(MOUNTOPS)
+
+
 mount.laptop:
 	mkdir -p laptop/data
 	-sudo umount -lf laptop/data
