@@ -19,6 +19,9 @@ HOSTS = CONFIG['host']
 #  /16  /32  /48  /64  /80  /96 /112 /128
 
 
+# TODO: use ipaddress stdlib
+
+
 def get_pubkey(config):
   if pubkey := config.get('PublicKey'):
     return pubkey
@@ -95,6 +98,8 @@ def get_config_for_host(host):
     wg_peer |= dict(
       PersistentKeepalive = peer['PersistentKeepalive'],
       PublicKey = get_pubkey(peer),
+      # TODO wg doesn't like the masked part the address
+      # being :0001, should be :0000
       AllowedIPs =
         f'{addr}/{mask}, '
         f'{addr6}/{mask6}',

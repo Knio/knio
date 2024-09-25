@@ -1,7 +1,6 @@
 install:
 	python3 -m pip install -r requirements.txt
 
-
 home:
 	python home.py
 
@@ -18,4 +17,3 @@ co2:
 solar:
 	python solar.py
 
-.PHONY: install home weather air co2 power
