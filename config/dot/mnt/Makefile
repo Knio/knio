@@ -1,56 +1,35 @@
 
 VC = ~/bin/VeraCrypt/src/Main/veracrypt
 
-mount.docs:
+mount-truecrypt-docs:
 	mkdir -p ~/mnt/Docs
 	sudo $(VC) --mount /dev/nvme1n1 ~/mnt/Docs --protect-hidden=no
 
-unmount.docs:
+unmount-truecrypt-docs:
 	sudo $(VC) --dismount ~/mnt/Docs
+
 
 MOUNTOPS = "username=Tom,uid=tom,gid=0,file_mode=0750,dir_mode=0750,soft,dirsync,sync"
 
-
-mount.desktop:
-	mkdir -p desktop
-	mkdir -p desktop/docs
-	mkdir -p desktop/media
-	-sudo umount -lf desktop/docs
-	-sudo umount -lf desktop/media
-	sudo mount.cifs '\\10.87.0.10\docs'  desktop/docs  -o $(MOUNTOPS)
-	sudo mount.cifs '\\10.87.0.10\media' desktop/media -o $(MOUNTOPS)
-
-mount.desktop.local:
-	mkdir -p desktop/docs
-	mkdir -p desktop/media
-	mkdir -p desktop/temp
-	-sudo umount -lf desktop/docs
-	-sudo umount -lf desktop/media
-	-sudo umount -lf desktop/temp
-	sudo mount.cifs '\\10.87.1.10\docs'  desktop/docs  -o $(MOUNTOPS)
-	sudo mount.cifs '\\10.87.1.10\media' desktop/media -o $(MOUNTOPS)
-	sudo mount.cifs '\\10.87.1.10\temp'  desktop/temp  -o $(MOUNTOPS)
-
-
-mount.server.local:
-	mkdir -p server/temp
-	-sudo umount -lf server/temp
-	sudo mount.cifs '\\10.87.1.3\zp_temp'  server/temp  -o $(MOUNTOPS)
-
-
-mount.laptop:
+mount-laptop-lan:
 	mkdir -p laptop/data
 	-sudo umount -lf laptop/data
-	sudo mount.cifs '\\10.87.0.12\data'  laptop/data -o $(MOUNTOPS)
+	sudo mount.cifs -vvvv '\\10.87.0.12\data'  laptop/data -o $(MOUNTOPS)
 
-mount.laptop.local:
+mount-laptop-wan:
 	mkdir -p laptop/data
 	-sudo umount -lf laptop/data
-	sudo mount.cifs '\\10.87.1.12\data'  laptop/data -o $(MOUNTOPS)
+	sudo mount.cifs -vvvv '\\10.87.1.12\data'  laptop/data -o $(MOUNTOPS)
 
 
-.PHONY: \
-		mount.docs \
-		unmount.docs \
-		mount.desktop \
-		rpizw.mount.desktop
+mount-truenas-lan:
+	# home dir over NFS so that symlinks work
+	mkdir -p truenas/tom_home
+	-sudo umount -lf truenas/tom_home
+	sudo mount.nfs -vvvv '10.87.1.5:/mnt/zp/tom/home' truenas/tom_home -o "nfsvers=4,soft,softreval,timeo=10,nconnect=5"
+
+	# everything else over cifs because it can see recursive child zfs's
+	mkdir -p truenas/tom
+	-sudo umount -lf truenas/tom
+	sudo mount.cifs -vvvv '\\10.87.1.5\tom' truenas/tom -o "username=tom,uid=tom,gid=0,file_mode=0750,dir_mode=0750,soft,dirsync,sync"
+

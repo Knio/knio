@@ -8,7 +8,7 @@ install-editable:
 install-deps:
 	sudo apt install python3-bpfcc
 
-publish-deps:
+install-publish-deps:
 	python3 -m pip install build twine 'setuptools>=68'
 
 publish: clean
