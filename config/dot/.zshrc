@@ -1,3 +1,5 @@
+# disable global rwx
+umask 027
 
 set VISUAL=nano
 set EDITOR=nano

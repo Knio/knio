@@ -11,7 +11,7 @@ stop: /etc/wireguard/wg0_start.sh
 	sudo $< stop
 
 install:
-	sudo apt install wireguard iptables
+	sudo apt install wireguard iptables tcpdump
 	python3 -m pip install toml
 
 /etc/wireguard:
