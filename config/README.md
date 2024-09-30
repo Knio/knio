@@ -68,6 +68,7 @@ Can now test login from other shell.
 
 ## Update OS software
 
+Make swapfile:
 ```
 time sudo dd if=/dev/zero of=/swapfile bs=128M count=32
 sudo chmod 0600 /swapfile
@@ -77,6 +78,15 @@ sudo swapon --show
 sudo echo '/swapfile swap swap defaults 0 0' >> /etc/fstab
 ```
 
+
+## Mount home
+
+`sudo apt install nfs-common cifs-utils`
+`sudo nano /etc/fstab`:
+```conf
+10.87.1.5:/mnt/zp/tom/home /home/tom nfs soft,softreval,timeo=10,nconnect=5,vers=4.2,addr=10.87.1.5,clientaddr=10.87.1.4     0 0
+\\10.87.1.5\tom /mnt/zp/tom    cifs username=tom,uid=tom,gid=tom,soft,noperm,noacl    0 0
+```
 
 ## Install home
 ```
