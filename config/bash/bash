@@ -1,6 +1,7 @@
 export PATH="$PATH:$HOME/.local/bin"
 
 # make less pass-though valid unicode chars, and not replace them with <U+12345>
+export LANG=C.UTF-8
 export LESSUTFBINFMT=*n%C
 
 

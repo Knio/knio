@@ -1,8 +1,12 @@
 # disable global rwx
 umask 027
 
-set VISUAL=nano
-set EDITOR=nano
+# not sure who is supposed to actually set this
+export LANG=C.UTF-8
+export LESSUTFBINFMT=*n%C
+
+export VISUAL=nano
+export EDITOR=nano
 
 setopt PROMPT_SUBST
 PS1='%F{green}%n%f@%F{blue}%m %F{yellow}%~%f%# '
@@ -26,7 +30,8 @@ setopt HIST_IGNORE_SPACE
 
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.zsh_history
+mkdir -p ~/.config/zsh
+HISTFILE=~/.config/zsh/history
 
 autoload -U compinit
 compinit
