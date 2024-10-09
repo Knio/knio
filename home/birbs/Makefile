@@ -1,11 +1,11 @@
 
 
 run:
-	python birbs.py
+	python3 birbs.py
 
 
 install:
-	python -m pip install -r requirements.txt
+	python3 -m pip install -r requirements.txt
 
 
 # IN_USB=-f video4linux2 -i /dev/video0

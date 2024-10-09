@@ -1,6 +1,5 @@
-SHELL=/bin/bash -o pipefail
+SHELL=/bin/bash -x -u -o pipefail
 HOST ?= `hostname`
-
 
 update: ini start
 
@@ -11,7 +10,7 @@ stop: /etc/wireguard/wg0_start.sh
 	sudo $< stop
 
 install:
-	sudo apt install wireguard iptables tcpdump
+	sudo apt install net-tools wireguard-tools iptables tcpdump
 	python3 -m pip install toml
 
 /etc/wireguard:

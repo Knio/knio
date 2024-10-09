@@ -1,9 +1,9 @@
 
 run:
-	sudo -H PYTHONPATH=. python3 -m bwninja.tui
+	PYTHONPATH=. python3 -m bwninja.tui
 
 install-editable:
-	sudo -H python3 -m pip install --editable . --break-system-packages
+	python3 -m pip install -e .
 
 install-deps:
 	sudo apt install python3-bpfcc

@@ -2,6 +2,7 @@ import pytest
 
 import datum
 
+
 def test_basic():
     class Point(datum.Datum):
         x: datum.i32()
@@ -22,7 +23,6 @@ def test_basic():
     assert f'{p3}' == '<Point x=14 y=38>'
 
 
-
 def test_datum():
     class TestDatum(datum.Datum):
         x: datum.i8
@@ -34,9 +34,11 @@ def test_datum():
     d.x = 2
     assert d.x == 2
 
+
 def test_u64():
     f = datum.u128()
     assert f(1).serialize() == b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01'
+
 
 def test_basic_types():
   def check(cls, v, buf):

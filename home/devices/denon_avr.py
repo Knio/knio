@@ -151,10 +151,10 @@ def main():
     formatter_class=argparse.RawTextHelpFormatter,
     description=__doc__)
 
-  parser.add_argument('--ip', type=str, default='10.87.1.22')
+  parser.add_argument('--host', type=str, default='denon-avr-x2400h.home')
   args = parser.parse_args()
 
-  amp = DenonAVR(args.ip)
+  amp = DenonAVR(args.host)
   print(amp.get_power())
   amp.set_z2('OFF')
   amp.set_power(DenonAVR.PowerState.STANDBY)

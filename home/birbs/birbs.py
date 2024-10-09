@@ -18,9 +18,7 @@ import ephem
 import pytz
 
 
-TMP = pathlib.Path(r"c:\Temp")
-ROOT = pathlib.Path(r"F:\Temp\birbs")
-FFMPEG = pathlib.Path(r"C:\Users\Tom\Desktop\Files\Software\FFmpeg\ffmpeg-7.0.1-full_build\bin\ffmpeg.exe")
+FFMPEG = pathlib.Path(r"~/bin/ffmpeg-prebuilt/ffmpeg")
 MODEL = "birb-2024-07-26.pt"
 
 class Seg(pathlib.Path):

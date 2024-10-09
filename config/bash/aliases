@@ -10,6 +10,7 @@ alias gs="git lg | head -n 5 ; git status -sb -uno"
 alias p="ps -AO user,ppid,pgid,sess,start --forest -w -w"
 alias less="less -mmSRj.5"
 alias view="view -S ~/.vim/view.rc -"
+alias watch="watch --differences --color -n 1"
 
 # https://github.com/sharkdp/bat/releases
 alias bat="bat --color=always --wrap=never --decorations=always --style=full --wrap never"
