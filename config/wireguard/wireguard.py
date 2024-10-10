@@ -50,7 +50,7 @@ def get_site(host):
   gw = ipaddress.IPv4Interface((int(sn.network_address) | 1, conf['mask']))
 
   ips = [sn]
-  ips += [ipaddress.IPv4Interface(a) for a in conf['allowed']]
+  ips += [ipaddress.IPv4Network(a) for a in conf['allowed']]
 
   conf |= dict(
     sn = sn,
@@ -121,85 +121,6 @@ def get_config_for_client(host):
   )
 
   return wg_conf
-
-
-def get_config_for_host(host):
-  raise DeprecationWarning
-  config = dict(CONFIG['peer_defaults']) | HOSTS[host]
-
-  wg_conf = [('[Interface]', interface := {})]
-  interface |= CONFIG['interface_defaults']
-  if pk := config.get('PrivateKey'):
-    interface['PrivateKey'] = pk
-    if lp := config.get('ListenPort'):
-      interface['ListenPort'] = lp
-
-
-  if config.get('is_linux'):
-    pass # addresses handled by bash script
-  else: # windows
-    interface['Address'] = \
-        f'{get_addr(config["Address"])}/{LAN["MASK"]}, '
-    interface['Address'] += \
-        f'{get_addr6(config["Address"])}/{LAN["MASK6"]}'
-    interface['DNS'] = ', '.join(LAN['DNS'])
-
-
-  for name, peer_ in HOSTS.items():
-    if name == host:
-      continue # self
-
-    peer = dict(CONFIG['peer_defaults'])
-    peer |= peer_
-    gw = config['gateway']
-    px = config['proxy']
-    px6 = config['proxy6']
-    do = (
-      (peer['on_lan'] and config['on_lan']) or
-      (name == gw) or
-      (name == px) or
-      (peer.get('Endpoint')) or
-      (config.get('Endpoint'))
-    )
-
-    if not do:
-      # we won't have a route to them
-      continue
-
-    wg_conf.append(('Peer', wg_peer := {}))
-    wg_peer['# Host'] = name
-    mask = '32'
-    mask6 = LAN['PEER6']
-    addr = get_addr(peer['Address'])
-    addr6 = get_addr6(peer['Address'])
-    if (name == gw):
-      mask = LAN['MASK']
-      mask6 = LAN['MASK6']
-    if (name == px):
-      mask = '0'
-      addr = '0.0.0.0'
-    if (name == px6):
-      mask6 = '0'
-      addr6 = '0::'
-    wg_peer |= dict(
-      PersistentKeepalive = peer['PersistentKeepalive'],
-      PublicKey = get_pubkey(peer),
-      # TODO wg doesn't like the masked part the address
-      # being :0001, should be :0000
-      AllowedIPs =
-        f'{addr}/{mask}, '
-        f'{addr6}/{mask6}',
-    )
-
-    ep = peer.get('Endpoint')
-    if not ep and (peer['on_lan'] and config['on_lan']):
-      ep = f'{LAN["LAN"]}{peer["Address"]}'
-    if ep:
-      lp = peer.get('ListenPort', CONFIG['interface_defaults']['ListenPort'])
-      wg_peer['Endpoint'] = f'{ep}:{lp}'
-
-  return wg_conf
-
 
 
 def get_script_for_site(host):

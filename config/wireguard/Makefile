@@ -1,4 +1,4 @@
-SHELL=/bin/bash -x -u -o pipefail
+SHELL=/bin/bash -x -o pipefail
 HOST ?= `hostname`
 
 update: ini start
