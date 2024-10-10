@@ -11,7 +11,7 @@ stop: /etc/wireguard/wg0_start.sh
 
 install:
 	sudo apt install net-tools wireguard-tools iptables tcpdump
-	python3 -m pip install toml
+	python3 -m pip install toml qrcode
 
 /etc/wireguard:
 	sudo mkdir -p /etc/wireguard
@@ -36,9 +36,10 @@ listen_inner:
 listen_outer:
 	sudo tcpdump -i ens5 'port 123'
 
-ini: $(shell python3 wireguard.py --list-hosts)
 
-$(shell python3 wireguard.py --list-hosts): wireguard.py config.toml
+ini: $(shell python3 wireguard.py --list-clients)
+
+$(shell python3 wireguard.py --list-clients): wireguard.py config.toml
 	-python3 wireguard.py $@ > host.$@.ini
 
 debug:

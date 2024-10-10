@@ -11,6 +11,7 @@ import ipaddress
 import pathlib
 import subprocess
 import toml
+import io
 
 CONFIG = toml.load(pathlib.Path(__file__).parent / 'config.toml')
 LAN = CONFIG['LAN']
@@ -94,7 +95,7 @@ def get_config_for_site(host):
   return wg_conf
 
 
-def get_config_for_client(host):
+def get_config_for_client(host, gw=None):
   conf = dict(CONFIG['client_defaults']) | CLIENT[host]
   wg_conf = [(f'[Interface] # {host}', interface := {})]
   pk = conf.get('PrivateKey')
@@ -103,7 +104,8 @@ def get_config_for_client(host):
 
   interface['DNS'] = ', '.join(LAN['DNS'])
 
-  gw = conf['gateway']
+  if not gw:
+    gw = conf['gateway']
   site = get_site(gw)
 
   ip = ipaddress.IPv4Interface((
@@ -196,15 +198,25 @@ iptables -A POSTROUTING -o '{wan}' -j MASQUERADE -t nat
   return script
 
 def print_config(config):
+  b = io.StringIO()
   for heading, section in config:
-    print(heading)
+    print(heading, file=b)
     for key, value in section.items():
-      print(f'{key:<20} = {value}')
-    print('')
+      print(f'{key:<20} = {value}', file=b)
+    print('', file=b)
+  import qrcode
+  qr = qrcode.QRCode()
+  qr.add_data(b.getvalue())
+  q = io.StringIO()
+  qr.print_ascii(out=q)
+  for line in q.getvalue().splitlines():
+    print(f'# {line}', file=b)
+  print(b.getvalue())
+
 
 
 def main(args):
-  if args.list_hosts:
+  if args.list_clients:
     print('\n'.join(SITE.keys() | CLIENT.keys()))
     return
   elif args.type == 'conf':
@@ -227,7 +239,7 @@ def main(args):
 if __name__ == '__main__':
   import argparse
   parser = argparse.ArgumentParser(argparse.RawTextHelpFormatter, description=__doc__)
-  parser.add_argument('--list-hosts', action='store_true')
+  parser.add_argument('--list-clients', action='store_true')
   parser.add_argument('host', nargs='?')
   parser.add_argument('--type', default='conf')
   main(parser.parse_args())
