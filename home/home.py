@@ -188,6 +188,7 @@ class Home:
       a.set_vol(-55)
     self.lights[0].turn_on()
     self.lights[1].turn_on()
+    requests.post('http://10.87.1.10:8880/api/player/play', timeout=1)
     return True
 
   def scene_lounge(self):

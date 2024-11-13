@@ -29,13 +29,8 @@ class Flow:
 
 @functools.cache
 def get_bpf():
-  # sanity warning
-  try:
-    assert 1 == int(pathlib.Path('/proc/sys/net/core/bpf_jit_enable').read_text())
-  except Exception as e:
-    LOG.warning(f'eBPF JIT is not enabled. This could slow performance. ({e!r})')
   src_path = str(pathlib.Path(__file__).parent / 'net.c')
-  LOG.info(f'compiling bpf code from {src_path}')
+  LOG.info(f'Compiling bpf code from {src_path}')
   return bcc.BPF(src_file=src_path, debug=0)
 
 
@@ -55,7 +50,7 @@ def monitor(attachment, interface, printk=False):
     bcc.BPF.attach_raw_socket(dev=interface, fn=fn)
   elif attachment == 'xdp':
     fn=b.load_func('xdp_peek_packet', bcc.BPF.XDP)
-    bc.BPF.attach_xdp(dev=interface, fn=fn)
+    bcc.BPF.attach_xdp(dev=interface, fn=fn)
   else:
     # TODO: tc (traffic control)
     raise ValueError(attachment)

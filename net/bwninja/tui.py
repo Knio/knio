@@ -3,7 +3,6 @@
 def dep_check():
   import platform
   import pathlib
-  import os
   import sys
 
   errors = []
@@ -23,25 +22,12 @@ def dep_check():
         f'{NAME} requires python3-bpfcc which may not be satisfiable from pip. \n'
         '    See: https://github.com/iovisor/bcc/blob/master/INSTALL.md')
 
-  if os.getuid() != 0:
-    errors.append(f'{NAME} must be run as root')
-
-  try:
-    from . import net
-  except ImportError as e:
-    errors.append(
-      f'Could not import required {NAME} module. ({e})\n'
-      '    Did you perhaps install to a venv or user-install location, but then run it as root?\n'
-      '    Unfortunately, it will have to be installed as root.\n'
-      '    Try:\n'
-      f'        sudo -H python3 -m pip install {NAME} --break-system-packages')
-
   if errors:
     errs = "\n\n".join(errors)
     print(f'Unable to run. please correct the following errors:\n\n{errs}', file=sys.stderr)
-    # exit(-1)
+    exit(-1)
 
-# dep_check()
+dep_check()
 
 
 import argparse
@@ -89,6 +75,7 @@ def get_local_ipv4_addresses():
   addrs = {}
   s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
   s6 = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
+  # TODO just use /proc/net/dev
   for i, name in socket.if_nameindex():
     try:
       ip4 = socket.inet_ntoa(fcntl.ioctl(
@@ -301,11 +288,12 @@ class NetTui:
       rows = []
       for flow in next(mon):
         d = dataclasses.asdict(flow)
+        d['iface'] = name
         d['src'] = PrettyAddress(d['src'])
         d['dst'] = PrettyAddress(d['dst'])
         rows.append(d)
       if rows:
-        df = pandas.DataFrame.from_records(rows, index=['src', 'dst'])
+        df = pandas.DataFrame.from_records(rows, index=['src', 'dst', 'iface'])
         df['timestamp'] = now
         self.log[now] = df
 
@@ -325,16 +313,16 @@ class NetTui:
     window = self.df.loc[self.df['timestamp'] > since]
     if len(window) == 0: return
 
-    grouped = window.groupby(level=['src', 'dst'],
+    grouped = window.groupby(level=['iface', 'src', 'dst'],
       observed=True, sort=False)
     pairs = set()
-    for pair in grouped.indices.keys():
-      key = tuple(sorted(pair))
+    for ifn, *pair in grouped.indices.keys():
+      key = ifn, *sorted(pair)
       pairs.add(key)
 
     def sort_key(x):
-      a, b = x
-      return PrettyAddress.sort_key(a) + PrettyAddress.sort_key(b)
+      ifn, a, b = x
+      return PrettyAddress.sort_key(a) + PrettyAddress.sort_key(b) + (ifn,)
 
     self.pairs = pairs = sorted(pairs, key=sort_key)
 
@@ -352,14 +340,15 @@ class NetTui:
     e = min(len(pairs), s + H)
 
     print(f'{TERM.black_on_white}    Network Flows past {dur}s {s+1}-{e} of {len(pairs)}{TERM.clear_eol}{TERM.normal}')
-    for i, (src, dst) in enumerate(pairs[s:e]):
+    for i, key in enumerate(pairs[s:e]):
+      ifn, src, dst = key
       try:
-        tx = grouped.get_group((src, dst))
+        tx = grouped.get_group(key)
         tx_bytes = Stats(tx).mean_bytes
       except KeyError:
         tx_bytes = 0
       try:
-        rx = grouped.get_group((dst, src))
+        rx = grouped.get_group(key)
         rx_bytes = Stats(rx).mean_bytes
       except KeyError:
         rx_bytes = 0
@@ -367,11 +356,11 @@ class NetTui:
       P = 25
       src_s = TERM.ljust(src.pretty(), W // 2 - P)
       dst_s = TERM.rjust(dst.pretty(), W // 2 - P)
-      if self.selected == (src, dst):
+      if self.selected == key:
         sel = f'{TERM.RED}⮞'
       else:
         sel = f'{TERM.dim} '
-      print(f'{sel}{i+s+1:3d}{TERM.normal}  {src_s} {rx_bytes:10,.0f} <--> {tx_bytes:10,.0f} {dst_s}{TERM.clear_eol}')
+      print(f'{sel}{i+s+1:3d}{TERM.normal}  {ifn:<10s} {src_s} {rx_bytes:10,.0f} <--> {tx_bytes:10,.0f} {dst_s}{TERM.clear_eol}')
     print(f'{TERM.black_on_white}end{TERM.clear_eol}{TERM.normal}')
 
     for w in range(e - s, H):
@@ -401,21 +390,23 @@ def main():
     help=argparse.SUPPRESS,
     default=False, action='store_true')
 
-  # TODO clean up duplicate prints
-  print(f'bwninja version {_version.version} from {__file__} running as {os.getuid()}')
-
   args = parser.parse_args()
 
   if args.escalated and (os.getuid() == 0):
-    print('sudo successful')
+    print('..sudo successful')
+  else:
+    print(f'bwninja version {_version.version} from {__file__} running as {os.getuid()}')
 
   # run as user. needs upgrade
   if (not args.escalated) and (os.getuid() != 0):
-    print('root required, attempting to sudo..')
+    print('root required, attempting to sudo.. ', end='', flush=True)
     paths = utils.get_import_paths(utils, blessed, bcc, pandas)
     utils.escalate(paths, '--escalated')
 
   del args.escalated
+
+  for k, v in LOCAL.items():
+    print(f'{v} is {k}')
 
   NetTui(**vars(args)).run()
 

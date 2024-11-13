@@ -11,10 +11,15 @@ install:
 # IN_USB=-f video4linux2 -i /dev/video0
 IN_IP=-i 'rtsp://10.87.1.29:8554/user=admin_password=tlJwpbo6_channel=0_stream=0&onvif=0.sdp'
 # OUT1=[f=segment:segment_atclocktime=1:segment_time=60:reset_timestamps=1:strftime=1]/home/tom/mnt/desktop/media/Temp/birbs/birbs_%Y%m%d-%H%M.mp4
-OUT2=[f=rtsp:rtsp_transport=tcp]rtsp://10.87.0.2:8554/birbs
+OUT2=[f=rtsp:rtsp_transport=tcp]rtsp://10.87.7.1:8554/birbs
+
+# FFMPEG=~/bin/ffmpeg/ffmpeg
+# FFMPEG=ffmpeg
+FFMPEG=/home/tom/bin/ffmpeg/ffmpeg
+FFMPEG=/home/tom/bin/ffmpeg-prebuilt/ffmpeg
 
 stream:
-	~/bin/ffmpeg/ffmpeg \
+		$(FFMPEG) \
 		$(IN_IP) \
 		-an \
 		-codec:v copy \

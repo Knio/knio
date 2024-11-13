@@ -107,6 +107,7 @@ class DenonAVR:
     self.poll(timeout=0)
     s = f'{cmd}{value}\r'
     self.ser.write(s.encode('ascii'))
+    self.poll(timeout=0.05)
 
   def get_power(self):
     LOG.info('get_power')

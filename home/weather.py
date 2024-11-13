@@ -36,7 +36,7 @@ def main():
     line_s = line.decode('ascii').strip()
     if data.get('model') == 'Ambientweather-F007TH':
       id_ch_to_name_x = {
-        (1, 222): ('House_Common', -0.200, -7.0),
+        (1, 201): ('House_Common', -0.200, -7.0),
         (2, 166): ('Outside_Back',  0.086, -3.0),
         (3, 38):  ('Bathroom',  0.146,  1.0),
 
@@ -45,7 +45,7 @@ def main():
         (3, 13):   ('AC_Cool',     -0.084,  0.0),
 
         (2,   3):  ('Freezer',        0.,  0.0),
-        (1,  52):  ('Fridge',         0.,  0.0),
+        (1,  14):  ('Fridge',         0.,  0.0),
         (3, 114):  ('Tom_Cooler',     0.,  0.0),
       }
       ch_id = data.get('channel'), data.get('id')

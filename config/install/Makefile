@@ -58,7 +58,7 @@ bash:
 	grep -qxF $(BASHSTR) ~/.bashrc || echo $(BASHSTR) >> ~/.bashrc
 
 py:
-	python ../python/usercustomize_install.py
+	python3 ../python/usercustomize_install.py
 
 
 .PHONY: link ssh fzf bash py
