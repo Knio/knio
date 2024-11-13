@@ -9,7 +9,7 @@
 	untracked = no
 
 [user]
-	email = tom@zkpq.ca
+	email = tom@zoox.com
 	name = Tom Flanagan
 
 [pull]
@@ -63,10 +63,5 @@
 	detachedHead = false
 
 [safe]
-	directory = %(prefix)///desktop.zkpq.ca
-	directory = %(prefix)///desktop.zkpq.ca/docs
-	directory = %(prefix)///desktop.zkpq.ca/docs/Programming
-	directory = %(prefix)///desktop.zkpq.ca/docs/Programming/everdb2
-	directory = %(prefix)///desktop.zkpq.ca/docs/Programming/phototools
-	directory = %(prefix)///desktop.zkpq.ca/docs
-	directory = %(prefix)///desktop.zkpq.ca/docs/Programming/whirl
+	directory = /etc/zoox/calibration
+	directory = /mnt/data/home/tom/driving

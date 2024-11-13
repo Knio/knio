@@ -7,6 +7,7 @@ export LESSUTFBINFMT=*n%C
 
 export VISUAL=nano
 export EDITOR=nano
+export PAGER=less
 
 setopt PROMPT_SUBST
 PS1='%K{238}%F{118}%n%F{black}@%F{45}%m %F{209}%~%F{231}%# '
@@ -39,6 +40,10 @@ HISTFILE=~/.config/zsh/history
 
 autoload -U compinit
 compinit
+
+autoload -U compinit
+compinit
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
