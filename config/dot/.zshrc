@@ -9,7 +9,7 @@ export VISUAL=nano
 export EDITOR=nano
 
 setopt PROMPT_SUBST
-PS1='%F{green}%n%f@%F{blue}%m %F{yellow}%~%f%# '
+PS1='%K{238}%F{118}%n%F{black}@%F{45}%m %F{209}%~%F{231}%# '
 RPS1='ret: %?'
 
 #  %(?..(%?%)) exit code
@@ -20,6 +20,10 @@ bindkey  "^[[F"   end-of-line
 bindkey  "^[[1~"  beginning-of-line
 bindkey  "^[[4~"  end-of-line
 bindkey  "^[[3~"  delete-char
+
+# `stty -a` to debug control chars
+# https://jvns.ca/blog/2024/10/31/ascii-control-characters/
+
 
 setopt NO_BANG_HIST
 setopt SHARE_HISTORY
@@ -39,8 +43,8 @@ compinit
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 function set_term_title() {
-  # sceen passes this through
   # TODO make work with unicode
+  # set term title (screen passes this thru)
   print -Pn "\e]0;$1\a"
 }
 
@@ -53,6 +57,7 @@ function set_screen_title() {
 
 # runs before command
 function preexec() {
+  print -Pn '%k%f'
   set_term_title "%m: »$1"
   set_screen_title "*$1"
 
