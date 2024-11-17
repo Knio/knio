@@ -36,6 +36,7 @@
     "files.associations": {
         "BUILD": "python",
         "*.cu": "cpp",
+        "*.prty": "jsonnet"
     },
     "files.watcherExclude": {
         "**/.vscode*/**": true,
@@ -94,7 +95,10 @@
         "zkpq.ca": "linux",
         "rpi5": "linux",
         "dfg": "linux",
-        "tom-server": "linux"
+        "tom-server": "linux",
+        "10.87.1.3": "linux",
+        "10.87.1.4": "linux",
+        "dev.home.zkpq.ca": "linux"
     },
 
     "arduino.useArduinoCli": true,
@@ -161,6 +165,10 @@
 
     "rust-analyzer.inlayHints.typeHints.enable": false,
     "C_Cpp.intelliSenseEngine": "disabled",
+    "window.newWindowProfile": "Default",
+    "files.eol": "\n",
+    "[makefile]": {
+    },
 
 
 }
