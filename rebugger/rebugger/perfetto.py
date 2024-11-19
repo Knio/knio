@@ -2,6 +2,7 @@ import pickle
 import sys
 import os
 import pathlib
+import time
 
 
 # thanks again, google
@@ -27,8 +28,8 @@ def pickles(f):
       break
 
 
-def perfetto_file_from_tracep(tracep_fn):
-  input = open(tracep_fn, 'rb')
+def perfetto_file_from_tracep(tracep_fn: pathlib.Path):
+  input = tracep_fn.with_suffix('.tracep').open('rb')
   threads = {}
   output = trace_pb2.Trace()
 
@@ -37,6 +38,8 @@ def perfetto_file_from_tracep(tracep_fn):
   td.uuid = uuid()
   td.process.pid = os.getpid()
   td.process.process_name = "process name"
+
+  offset = time.time_ns() - time.perf_counter_ns()
 
   for el in pickles(input):
     ts, tid, event, *a = el
@@ -52,7 +55,7 @@ def perfetto_file_from_tracep(tracep_fn):
 
     if event == 'line':
       pkt = output.packet.add()
-      pkt.timestamp = ts
+      pkt.timestamp = ts + offset
       pkt.track_event.type = TrackEvent.Type.TYPE_INSTANT
       pkt.track_event.track_uuid = threads[tid].uuid
       pkt.track_event.name = 'line'
@@ -64,7 +67,7 @@ def perfetto_file_from_tracep(tracep_fn):
 
     elif event == 'call':
       pkt = output.packet.add()
-      pkt.timestamp = ts
+      pkt.timestamp = ts + offset
       pkt.track_event.type = TrackEvent.Type.TYPE_SLICE_BEGIN
       pkt.track_event.track_uuid = threads[tid].uuid
       pkt.track_event.name = f'{a[0]}'
@@ -81,7 +84,7 @@ def perfetto_file_from_tracep(tracep_fn):
 
     elif event == 'return':
       pkt = output.packet.add()
-      pkt.timestamp = ts
+      pkt.timestamp = ts + offset
       pkt.track_event.type = TrackEvent.Type.TYPE_SLICE_END
       pkt.track_event.track_uuid = threads[tid].uuid
       pkt.trusted_packet_sequence_id = tid
@@ -91,7 +94,7 @@ def perfetto_file_from_tracep(tracep_fn):
 
     elif event == 'exception':
       pkt = output.packet.add()
-      pkt.timestamp = ts
+      pkt.timestamp = ts + offset
       pkt.track_event.type = TrackEvent.Type.TYPE_INSTANT
       pkt.track_event.track_uuid = threads[tid].uuid
       pkt.track_event.name = a[0]
@@ -99,7 +102,7 @@ def perfetto_file_from_tracep(tracep_fn):
 
     elif event == 'log':
       pkt = output.packet.add()
-      pkt.timestamp = ts
+      pkt.timestamp = ts + offset
       pkt.track_event.type = TrackEvent.Type.TYPE_INSTANT
       pkt.track_event.track_uuid = threads[tid].uuid
       pkt.track_event.name = a[0]
@@ -112,6 +115,33 @@ def perfetto_file_from_tracep(tracep_fn):
 
     else:
       print(el)
+
+
+  def parse_time(st: str):
+    s, ns = st.strip('<>').split('.')
+    return int(s) * 1000000000 + int(ns)
+
+  strace_file = tracep_fn.with_suffix('.strace').open('r')
+  for strace in strace_file:
+    tokens = strace.split()
+    if tokens[0] == 'strace:':
+      continue
+    if tokens[-1] == 'detached':
+      continue
+    start = parse_time(tokens[0])
+    dur = parse_time(tokens[-1])
+    pkt = output.packet.add()
+    pkt.timestamp = start
+    pkt.track_event.type = TrackEvent.Type.TYPE_SLICE_BEGIN
+    pkt.track_event.track_uuid = threads[tid].uuid
+    pkt.track_event.name = ' '.join(tokens[1:-1])
+    pkt.trusted_packet_sequence_id = tid
+    pkt = output.packet.add()
+    pkt.timestamp = start + dur
+    pkt.track_event.type = TrackEvent.Type.TYPE_SLICE_END
+    pkt.track_event.track_uuid = threads[tid].uuid
+    pkt.trusted_packet_sequence_id = tid
+
 
   tracep_fn.with_suffix('.perfetto').write_bytes(
     output.SerializeToString())

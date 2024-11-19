@@ -9,7 +9,6 @@ classifiers = [
   "Environment :: Console",
   "Intended Audience :: Developers",
   "Intended Audience :: System Administrators",
-  "Intended Audience :: End Users/Desktop",
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
@@ -24,9 +23,6 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/Knio/knio/rebugger"
 Source = "https://github.com/Knio/knio/rebugger"
-
-# [project.scripts]
-# tcat = "rebugger:main"
 
 [build-system]
 requires = ["setuptools>=68"]

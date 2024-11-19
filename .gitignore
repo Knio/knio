@@ -18,6 +18,9 @@
 !datum/
 !datum/**
 
+!rebugger/
+!rebugger/**
+
 # python
 *.egg
 *.egg-info

@@ -20,4 +20,4 @@ def hello():
 if __name__ == '__main__':
   rebugger.start()
   hello()
-  rebugger.finish()
+  # rebugger.finish() # oops i forgot to call finish

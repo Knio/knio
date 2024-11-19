@@ -29,8 +29,9 @@ hardstatus alwayslastline
 hardstatus string '%{= Kd} %{= Kd}%-w%{= Kr}[%{= KW}%n %t%{= Kr}]%{= Kd}%+w %-= %{KG} %H%{KW} %{KY}%101`%{KW} %D %M %d %Y%{= Kc} %c%{-}'
 
 # this traps mouse events, meaning you can't select text
-# mousetrack on
-# defmousetrack on
+
+mousetrack off
+defmousetrack off
 
 # idk
 # defmonitor on

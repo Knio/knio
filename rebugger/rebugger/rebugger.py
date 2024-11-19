@@ -1,10 +1,13 @@
 import atexit
+import signal
 import sys
 import threading
 import pickle
 import time
 import queue
 import pathlib
+import subprocess
+import os
 
 from . import perfetto
 
@@ -27,8 +30,8 @@ class TraceWriter:
   def __init__(self, fn=None):
     if not fn:
       nf = time.strftime(f'%Y%m%d-%H%M%S.{time.perf_counter_ns()}')
-      self.fn = pathlib.Path(f'rebugger_trace_{nf}.tracep')
-    self.file = open(self.fn, 'wb')
+      self.fn = pathlib.Path(f'_rebugger_trace_{nf}')
+    self.file = self.fn.with_suffix('.tracep').open('wb')
     self.tracers = []
     self.start_writer()
     return
@@ -40,6 +43,7 @@ class TraceWriter:
     tt = ThreadTracer()
     self.tracers.append(tt)
     tt.start()
+    self.start_strace()
 
   def stop(self):
     for tt in self.tracers:
@@ -50,20 +54,27 @@ class TraceWriter:
   def finish(self):
     if self.stopper.is_set():
       return
-    print('rebugger stopping', file=sys.stderr)
-    self.stop()
     self.stopper.set()
+    print('rebugger stopping', file=sys.stderr)
+    self.strace.send_signal(signal.SIGINT)
     self.writer.join()
+    self.strace.wait()
+    self.strace_file.close()
+    self.stop()
     print('rebugger processing trace logs, please wait and do not kill the process', file=sys.stderr)
     self.file.close()
     perfetto.perfetto_file_from_tracep(self.fn)
-    self.fn.unlink()
+    self.fn.with_suffix('.tracep').unlink()
+    self.fn.with_suffix('.strace').unlink()
 
   def __enter__(self):
     self.start()
 
   def __exit__(self, exc_type, exc_value, traceback):
     self.stop()
+
+  def __del__(self):
+    self.finish()
 
   def poll(self):
     for t in self.tracers:
@@ -78,10 +89,25 @@ class TraceWriter:
   def start_writer(self):
     self.stopper = threading.Event()
     def loop():
-      while not self.stopper.wait(0.1):
+      while not self.stopper.wait(0.100):
         self.poll()
     self.writer = threading.Thread(target=loop)
+    self.writer.daemon = True
     self.writer.start()
+
+  def start_strace(self):
+    self.strace_file = self.fn.with_suffix('.strace').open('wb')
+    self.strace = subprocess.Popen([
+        'sudo', '-n',
+        'strace',
+        '-p', f'{os.getpid()}',
+        '--timestamps=unix,ns',
+        '--syscall-times=ns',
+      ],
+      stdin=subprocess.DEVNULL,
+      stderr=self.strace_file,
+    )
+    time.sleep(0.1)
 
 
 _logger_qns = {
@@ -94,9 +120,10 @@ _logger_qns = {
 }
 
 class ThreadTracer:
-  def __init__(self):
+  def __init__(self, stopper=None):
     self.q = queue.Queue()
     self.tid = threading.get_native_id()
+    self.stopper = stopper or threading.Event()
     self.disable_until_frame = None
 
   def start(self):
@@ -110,9 +137,12 @@ class ThreadTracer:
     # sys.setprofile(self.trace_cb)
 
   def stop(self):
-    sys.settrace(None)
+    self.stopper.set()
 
   def trace_cb(self, frame, event, arg):
+    if self.stopper.is_set():
+      sys.settrace(None)
+      return None
     ts = time.perf_counter_ns()
     el = ts, self.tid, event,
     rt = self.trace_cb
@@ -143,7 +173,7 @@ class ThreadTracer:
         self.q.put(el)
         self.disable_until_frame = frame
         return rt
-
+      # normal call
       el += qn, lc, fn, no
 
     elif event == 'return':
