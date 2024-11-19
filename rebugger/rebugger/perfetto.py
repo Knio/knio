@@ -121,27 +121,27 @@ def perfetto_file_from_tracep(tracep_fn: pathlib.Path):
     s, ns = st.strip('<>').split('.')
     return int(s) * 1000000000 + int(ns)
 
-  strace_file = tracep_fn.with_suffix('.strace').open('r')
-  for strace in strace_file:
-    tokens = strace.split()
-    if tokens[0] == 'strace:':
-      continue
-    if tokens[-1] == 'detached':
-      continue
-    start = parse_time(tokens[0])
-    dur = parse_time(tokens[-1])
-    pkt = output.packet.add()
-    pkt.timestamp = start
-    pkt.track_event.type = TrackEvent.Type.TYPE_SLICE_BEGIN
-    pkt.track_event.track_uuid = threads[tid].uuid
-    pkt.track_event.name = ' '.join(tokens[1:-1])
-    pkt.trusted_packet_sequence_id = tid
-    pkt = output.packet.add()
-    pkt.timestamp = start + dur
-    pkt.track_event.type = TrackEvent.Type.TYPE_SLICE_END
-    pkt.track_event.track_uuid = threads[tid].uuid
-    pkt.trusted_packet_sequence_id = tid
-
+  strace_file = tracep_fn.with_suffix('.strace')
+  if strace_file.is_file():
+    for strace in strace_file.open('r'):
+      tokens = strace.split()
+      if tokens[0] == 'strace:':
+        continue
+      if tokens[-1] == 'detached':
+        continue
+      start = parse_time(tokens[0])
+      dur = parse_time(tokens[-1])
+      pkt = output.packet.add()
+      pkt.timestamp = start
+      pkt.track_event.type = TrackEvent.Type.TYPE_SLICE_BEGIN
+      pkt.track_event.track_uuid = threads[tid].uuid
+      pkt.track_event.name = ' '.join(tokens[1:-1])
+      pkt.trusted_packet_sequence_id = tid
+      pkt = output.packet.add()
+      pkt.timestamp = start + dur
+      pkt.track_event.type = TrackEvent.Type.TYPE_SLICE_END
+      pkt.track_event.track_uuid = threads[tid].uuid
+      pkt.trusted_packet_sequence_id = tid
 
   tracep_fn.with_suffix('.perfetto').write_bytes(
     output.SerializeToString())

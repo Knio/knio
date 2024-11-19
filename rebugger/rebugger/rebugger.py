@@ -43,7 +43,10 @@ class TraceWriter:
     tt = ThreadTracer()
     self.tracers.append(tt)
     tt.start()
-    self.start_strace()
+    try:
+      self.start_strace()
+    except Exception as e:
+      print(f'Failed to start strace: {e}', file=sys.stdout)
 
   def stop(self):
     for tt in self.tracers:
@@ -56,10 +59,11 @@ class TraceWriter:
       return
     self.stopper.set()
     print('rebugger stopping', file=sys.stderr)
-    self.strace.send_signal(signal.SIGINT)
-    self.writer.join()
-    self.strace.wait()
+    if self.strace:
+      self.strace.send_signal(signal.SIGINT)
+      self.strace.wait()
     self.strace_file.close()
+    self.writer.join()
     self.stop()
     print('rebugger processing trace logs, please wait and do not kill the process', file=sys.stderr)
     self.file.close()
@@ -97,6 +101,7 @@ class TraceWriter:
 
   def start_strace(self):
     self.strace_file = self.fn.with_suffix('.strace').open('wb')
+    self.strace = None
     self.strace = subprocess.Popen([
         'sudo', '-n',
         'strace',
@@ -177,7 +182,10 @@ class ThreadTracer:
       el += qn, lc, fn, no
 
     elif event == 'return':
-      el += repr(arg),
+      try:
+        el += repr(arg),
+      except:
+        el += '<REPR ERROR>',
       if frame is self.disable_until_frame:
         self.disable_until_frame = None
         el = None
