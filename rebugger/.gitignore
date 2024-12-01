@@ -3,4 +3,5 @@ dist
 *.egg-info
 *.perfetto
 *.tracep
+*.strace
 

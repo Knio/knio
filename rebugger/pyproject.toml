@@ -6,7 +6,6 @@ authors = [
   {name="Tom Flanagan", email="tom@zkpq.ca"}
 ]
 classifiers = [
-  "Environment :: Console",
   "Intended Audience :: Developers",
   "Intended Audience :: System Administrators",
   "Operating System :: OS Independent",
@@ -17,6 +16,7 @@ classifiers = [
 dynamic = ["version"]
 
 dependencies = [
+  "protobuf",
 ]
 
 [project.urls]
@@ -28,7 +28,8 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["rebugger"]
+# packages = ["rebugger"]
+packages = {find = {}}
 
 [tool.setuptools.dynamic]
 version = {attr = "rebugger._version.version"}

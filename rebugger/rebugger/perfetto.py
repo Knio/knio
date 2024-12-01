@@ -6,7 +6,7 @@ import time
 
 
 # thanks again, google
-_proto_path = str(pathlib.Path(__file__).parent.parent)
+_proto_path = str(pathlib.Path(__file__).parent)
 sys.path.append(_proto_path)
 from protos.perfetto.trace import trace_pb2
 from protos.perfetto.trace.track_event.track_event_pb2 import TrackEvent
@@ -125,7 +125,7 @@ def perfetto_file_from_tracep(tracep_fn: pathlib.Path):
   if strace_file.is_file():
     for strace in strace_file.open('r'):
       tokens = strace.split()
-      if tokens[0] == 'strace:':
+      if tokens[0] in ('sudo:', 'strace:'):
         continue
       if tokens[-1] == 'detached':
         continue

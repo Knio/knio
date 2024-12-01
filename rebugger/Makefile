@@ -1,36 +1,43 @@
 
+all:
+	@echo "\n\nRun instead:\n  make perfetto && make protos"
+
+perfetto: build/perfetto/BUILD
+
+build/perfetto/BUILD: build
+	cd build &&\
+		git clone --depth 1 https://github.com/google/perfetto.git
+	# set mtime instead using git mtime
+	touch $@
+
 
 PROTOS := $(shell cd build/perfetto; find protos -type f -name "*.proto" -exec echo {} \;)
-PB2S := $(foreach proto, $(PROTOS), $(patsubst %.proto, %_pb2.py, $(proto)))
+PB2S := $(foreach proto, $(PROTOS), $(patsubst %.proto, rebugger/%_pb2.py, $(proto)))
 
 protos: $(PB2S)
 
-protos/%_pb2.py: build/bin/protoc build/perfetto/BUILD
+rebugger/protos/%_pb2.py: build/bin/protoc
 	build/bin/protoc \
-		--python_out=. \
+		--python_out=rebugger \
 		--proto_path=build/perfetto \
-		$(patsubst %_pb2.py, %.proto, $@)
+		$(patsubst rebugger/%_pb2.py, %.proto, $@)
 
-
-build/t:
+build:
 	mkdir -p build
-	touch $@
 
 
-build/bin/protoc: build/t
+build/bin/protoc: build
 	# version must not be newer than python-pip installed proto runtime version
-	cd build; wget https://github.com/protocolbuffers/protobuf/releases/download/v28.3/protoc-28.3-linux-x86_64.zip
-	cd build; unzip *.zip
+	cd build &&\
+		wget https://github.com/protocolbuffers/protobuf/releases/download/v28.3/protoc-28.3-linux-x86_64.zip &&\
+		unzip *.zip
+	# set mtime instead using git mtime
 	touch $@
-
-
-build/perfetto/BUILD: build/t
-	cd build; git clone --depth 1 https://github.com/google/perfetto.git
 
 
 clean_protos:
 	-rm build -rf
-	-rm protos -rf
+	-rm rebugger/protos -rf
 
 
 install-editable:
