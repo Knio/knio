@@ -6,9 +6,19 @@ import sys
 class DatumMeta(type):
   def __new__(cls, name, bases, dct):
     A = dct.get('__annotations__', {})
+    D = {}
     for k, v in A.items():
       if isinstance(v, functools.partial):
         A[k] = v()
+      if clsattr := dct.get(k):
+        if not callable(clsattr):
+          D[k] = clsattr
+          dct.pop(k)
+
+
+
+    dct['_defaults'] = D
+    print(f'meta {name} {bases}')
     T = super().__new__(cls, name, bases, dct)
     return T
 
@@ -42,40 +52,62 @@ class DatumBase:
 class Datum(DatumBase, metaclass=DatumMeta):
   __slots__ = ['_size', '_items']
   def __init__(self, *args, **kwargs):
+    # TODO compute these in the metaclass
     T = type(self)
-    A = T.__annotations__
-    # self._items = {}
-    object.__setattr__(self, '_items', {})
+    A = {}
+    D = {}
+    num_ann = 0
+    for bb in reversed(T.__mro__):
+      if an := getattr(bb, '__annotations__', None):
+        A.update(an)
+        D.update(getattr(bb, '_defaults'))
+        num_ann += 1
+    # print(T.__mro__)
+    print((A, D))
+    object.__setattr__(self, '_items', {}) # TODO should i just use __dict__?
     args = list(args)
     size = 0
     for k, v in A.items():
       if args:
+        if num_ann > 1:
+          # TODO actually could be ok as long as inheritance chain is linera
+          raise ValueError('Must call inherited class with kwargs, not positional args')
         pv = args.pop(0)
         if k in kwargs:
           raise ValueError(f'{k} provided twice')
+        item = v(pv)
       else:
-        pv = kwargs.pop(k, None)
-        if not pv:
-          # get default value
-          pv = getattr(T, k, None)
+        if k in kwargs:
+          item = v(kwargs.pop(k))
+        elif k in D:
+          item = v(D[k])
+        else:
+          item = v()
 
-      item = v(pv)
       self._items[k] = item
-      size += item.size()
+      if size is not None and hasattr(item, 'size'): # TODO typecheck
+        size += item.size()
+      else:
+        size = None
     object.__setattr__(self, '_size', size)
 
+  # TODO replace with property() protocol?
   def __getattr__(self, k):
-    try:
-      return self._items[k].value()
-    except KeyError:
+    item = self._items.get(k)
+    if item is None:
       raise AttributeError(k)
+    if v := getattr(item, 'value', None): # TODO typecheck on datumbase
+      return v()
+    return item
 
   def __setattr__(self, k, v):
-    if k in self._items:
-      self._items[k].set_value(v)
-    else:
+    item = self._items.get(k)
+    if item is None:
       raise AttributeError(k)
-    return super().__setattr__(k, v)
+    if s_v := getattr(item, 'set_value', None): # TODO typecheck on datumbase
+      s_v(v)
+    else:
+      super().__setattr__(k, v)
 
   def __repr__(self):
     return ''.join((
@@ -89,10 +121,10 @@ class Datum(DatumBase, metaclass=DatumMeta):
     return tuple(v.value() for v in self._items.values())
 
   def items(self):
-    return tuple((k, v.value()) for k, v in self._items.items())
+    return tuple((k, getattr(self, k)) for k in self._items.keys())
 
   def dict(self):
-    return {k: v.value() for k, v in self._items.items()}
+    return dict(self.items())
 
   def size(self):
     return self._size
@@ -210,7 +242,7 @@ i32 = functools.partial(datum_bigint, size=4)
 i64 = functools.partial(datum_bigint, size=8)
 
 
-# TODO: if feild a is X, interpret feild b as Y
+# TODO: if field a is X, interpret field b as Y
 
 # TODO: make crc type that sets/validates itself
 

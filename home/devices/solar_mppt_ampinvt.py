@@ -22,6 +22,7 @@ class Protocol:
 
 
 
+# pyright: reportInvalidTypeForm=false
 class MPPTCommand(datum.Datum):
   address:  datum.u8
   command:  datum.u8(enum=Protocol.Command)

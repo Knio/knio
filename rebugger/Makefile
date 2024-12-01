@@ -11,9 +11,11 @@ protos/%_pb2.py: build/bin/protoc build/perfetto/BUILD
 		--proto_path=build/perfetto \
 		$(patsubst %_pb2.py, %.proto, $@)
 
+
 build/t:
 	mkdir -p build
 	touch $@
+
 
 build/bin/protoc: build/t
 	# version must not be newer than python-pip installed proto runtime version
@@ -21,13 +23,25 @@ build/bin/protoc: build/t
 	cd build; unzip *.zip
 	touch $@
 
+
 build/perfetto/BUILD: build/t
 	cd build; git clone --depth 1 https://github.com/google/perfetto.git
 
-clean:
+
+clean_protos:
 	-rm build -rf
 	-rm protos -rf
 
 
 install-editable:
 	python3 -m pip install -e .
+
+
+clean:
+	-rm dist/ -r
+	-rm *.egg-info/ -r
+
+
+publish: clean
+	python3 -m build --sdist --no-isolation
+	python3 -m twine upload dist/*

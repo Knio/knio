@@ -3,7 +3,19 @@ import pytest
 import datum
 
 
-def test_basic():
+def test_datum():
+    class TestDatum(datum.Datum):
+        x: datum.i8
+        y: datum.u32
+
+    d = TestDatum(-1, 1)
+    assert d.x == -1
+    assert d.y == 1
+    d.x = 2
+    assert d.x == 2
+
+
+def test_serialize():
     class Point(datum.Datum):
         x: datum.i32()
         y: datum.i32()
@@ -23,16 +35,46 @@ def test_basic():
     assert f'{p3}' == '<Point x=14 y=38>'
 
 
-def test_datum():
-    class TestDatum(datum.Datum):
-        x: datum.i8
-        y: datum.u32
+def test_normal():
+  class Test(datum.Datum):
+    a: int
+    b: str
 
-    d = TestDatum(-1, 1)
-    assert d.x == -1
-    assert d.y == 1
-    d.x = 2
-    assert d.x == 2
+  t = Test(1, "foo")
+  assert t.a == 1
+  assert t.b == "foo"
+  assert f'{t}' == "<Test a=1 b='foo'>"
+
+
+def test_inheritance():
+  class A(datum.Datum):
+    a: int
+  class B(datum.Datum):
+    b: str
+  class C(A, B):
+    c: float
+
+  t = C(a=1, b="foo", c=2.71)
+  assert t.a == 1
+  assert t.b == "foo"
+  assert t.c == 2.71
+  t.a = 3
+  assert f'{t}' == "<C b='foo' a=3 c=2.71>"
+
+
+def test_defaults():
+  class A(datum.Datum):
+    x: int = 4
+  class B(A):
+    x = 5
+
+  assert B._defaults == {'x': 5}
+
+  assert A().x == 4
+  assert B().x == 5
+
+  assert A(1).x == 1
+  assert B(1).x == 1
 
 
 def test_u64():

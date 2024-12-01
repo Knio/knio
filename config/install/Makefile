@@ -40,11 +40,6 @@ apt:
 		screen \
 
 
-	mkdir -p $(HOME)/.config/pip
-	echo '[global]\nbreak-system-packages = true\n' > \
-		$(HOME)/.config/pip/pip.conf
-
-
 
 fzf:
 	-rm ~/.fzf -rf
