@@ -7,7 +7,7 @@
 Login as admin with private key with kitty:
 
 ```sh
-sudo hostname zkpq.ca
+sudo nano /etc/hostname zkpq.ca
 sudo /sbin/adduser tom
 sudo /sbin/usermod -aG sudo tom
 ```
@@ -52,7 +52,7 @@ Regenerate host keys
 cd /etc/ssh
 sudo rm ssh_host_*key*
 sudo ssh-keygen -t ed25519 -f ssh_host_ed25519_key -N "" < /dev/null
-sudo ssh-keygen -t rsa -b 4096 -f ssh_host_rsa_key -N "" < /dev/null
+# sudo ssh-keygen -t rsa -b 4096 -f ssh_host_rsa_key -N "" < /dev/null
 ```
 
 Restart sshd
@@ -75,7 +75,7 @@ sudo chmod 0600 /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
 sudo swapon --show
-sudo echo '/swapfile swap swap defaults 0 0' >> /etc/fstab
+echo '/swapfile swap swap defaults 0 0' | sudo tee -a /etc/fstab
 ```
 
 
@@ -100,7 +100,7 @@ cat ~/.ssh/id_ed25519.pub
 Copy to GitHub settings
 
 ```sh
-sudo apt install git
+sudo apt install git make
 git clone git@github.com:Knio/knio
 
 cd knio/config/install

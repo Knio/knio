@@ -38,6 +38,7 @@ apt:
 		cifs-utils \
 		mosh \
 		screen \
+		fzf \
 
 
 
