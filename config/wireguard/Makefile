@@ -21,14 +21,14 @@ install:
 	python3 wireguard.py --type conf $(HOST) | sudo tee $@
 	sudo chmod 600 /etc/wireguard/wg0.conf
 
-/etc/wireguard/wg0_start.sh: /etc/wireguard /etc/wireguard/wg0.conf wireguard.py config.toml
+/etc/wireguard/wg0_start.sh: /etc/wireguard /etc/wireguard/wg0.conf wireguard.py config.toml /etc/systemd/system/wg0.service
 	python3 wireguard.py --type script $(HOST) | sudo tee $@
 	sudo chmod +x $@
 
-	echo "USER DO: "
-	echo "$ sudo crontab -e"
-	echo "add:"
-	echo "@reboot ${@}"
+/etc/systemd/system/wg0.service: wg0.service
+	cat $< | sudo tee $@
+	sudo systemctl daemon-reload
+	sudo systemctl enable $@
 
 listen_inner:
 	sudo tcpdump -i wg0

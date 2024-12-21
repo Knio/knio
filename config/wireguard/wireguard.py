@@ -102,6 +102,9 @@ def get_config_for_client(host, gw=None):
   if pk:
     interface |= dict(PrivateKey=pk)
 
+  if (lp := conf.get('ListenPort')):
+    interface |= dict(ListenPort=lp)
+
   interface['DNS'] = ', '.join(LAN['DNS'])
 
   if not gw:

@@ -1,0 +1,10 @@
+[Unit]
+Description=Wireguard wg0
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/wireguard/wg0_start.sh
+
+[Install]
+WantedBy=multi-user.target
