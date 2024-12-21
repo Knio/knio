@@ -43,9 +43,13 @@ class Device:
   def reset(self):
     pass
 
+  def tick(self):
+    raise NotImplementedError
+
   def __repr__(self):
     a = ' '.join(map(repr, self.a))
     return f'<{type(self).__name__} {a}>'
+
 
 class Runner:
   def __init__(self):

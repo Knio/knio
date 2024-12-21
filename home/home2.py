@@ -12,9 +12,11 @@ import utils
 import grafana
 import config
 
+
 KC = config.CONF['kasa']
 
 LOG = logging.getLogger(__name__)
+
 
 class KasaPlug(utils.Device):
   interval = 1.
@@ -75,6 +77,7 @@ def dfs(root, f, path=()):
     else:
       f(v, p)
 
+
 def dfs2(root, path=()):
   for k, v in root.items():
     p = path + (k,)
@@ -84,10 +87,10 @@ def dfs2(root, path=()):
       yield p, v
 
 
-
 class GrafanaUpdate(utils.Device):
   interval = 1.
   last_data = {}
+
   def tick(self):
     data = {}
     def add(dev, p):
@@ -149,7 +152,6 @@ def home(args):
       time.sleep(10)
   except KeyboardInterrupt:
     LOG.info("Stop requested")
-
 
 
 def main():
