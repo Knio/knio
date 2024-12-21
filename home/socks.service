@@ -1,0 +1,11 @@
+[Unit]
+Description=SSH Socks
+After=network.target
+
+[Service]
+User=tom
+Group=tom
+ExecStart=/home/tom/knio/home/socks.py
+
+[Install]
+WantedBy=multi-user.target

@@ -17,3 +17,10 @@ co2:
 solar:
 	python3 solar.py
 
+
+socks-service: /etc/systemd/system/socks.service
+
+/etc/systemd/system/socks.service: socks.service
+	cat $< | sudo tee $@
+	sudo systemctl daemon-reload
+	sudo systemctl enable $@
