@@ -30,17 +30,19 @@ install:
 	sudo systemctl daemon-reload
 	sudo systemctl enable $@
 
+
 listen_inner:
 	sudo tcpdump -i wg0
 
+
 listen_outer:
-	sudo tcpdump -i ens5 'port 123'
+	sudo tcpdump -i ens5 'port 8443'
 
 
 ini: $(shell python3 wireguard.py --list-clients)
 
 $(shell python3 wireguard.py --list-clients): wireguard.py config.toml
-	-python3 wireguard.py $@ > host.$@.ini
+	-python3 wireguard.py $@ > host.$@.conf
 
 debug:
 	sudo wg

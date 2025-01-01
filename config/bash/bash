@@ -17,3 +17,8 @@ export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 # aliases
 [ -f ~/knio/config/bash/aliases ] && source ~/knio/config/bash/aliases
 
+pp=$(cat "/proc/$PPID/comm")
+if [[ "$pp" == "sshd" ]]; then
+  reset
+fi
+

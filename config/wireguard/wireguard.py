@@ -212,8 +212,9 @@ def print_config(config):
   qr.add_data(b.getvalue())
   q = io.StringIO()
   qr.print_ascii(out=q)
-  for line in q.getvalue().splitlines():
-    print(f'# {line}', file=b)
+
+  # for line in q.getvalue().splitlines():
+  #   print(f'# {line}', file=b)
   print(b.getvalue())
 
 
