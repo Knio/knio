@@ -6,6 +6,7 @@ After=network.target
 User=tom
 Group=tom
 ExecStart=/home/tom/knio/home/socks.py
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
