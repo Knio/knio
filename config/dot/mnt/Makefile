@@ -1,9 +1,9 @@
 
-VC = ~/bin/VeraCrypt/src/Main/veracrypt
+VC = veracrypt
 
 mount-truecrypt-docs:
 	mkdir -p ~/mnt/Docs
-	sudo $(VC) --mount /dev/nvme1n1 ~/mnt/Docs --protect-hidden=no
+	sudo $(VC) --mount ~/Docs.tc ~/mnt/Docs --protect-hidden=no
 
 unmount-truecrypt-docs:
 	sudo $(VC) --dismount ~/mnt/Docs

@@ -57,4 +57,16 @@ py:
 	python3 ../python/usercustomize_install.py
 
 
-.PHONY: link ssh fzf bash py
+~/bin/veracrypt-console-%-amd64.deb:
+	mkdir -p ~/bin
+	wget 'https://launchpad.net/veracrypt/trunk/1.26.14/+download/veracrypt-console-1.26.14-Debian-12-amd64.deb' \
+		-O $@
+
+veracrypt: ~/bin/veracrypt-console-1.26.14-Debian-12-amd64.deb
+	sudo apt install pcscd
+	sudo dpkg -i $<
+
+
+
+
+.PHONY: link ssh fzf bash py veracrypt
