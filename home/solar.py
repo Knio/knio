@@ -50,7 +50,11 @@ def main(args):
       data = mppt.poll()
       LOG.info(data)
       if not data:
+        LOG.info('no data')
         continue
+
+
+      LOG.info(data)
       data = homeutils.DottedDict(data)
 
       grafana.post('solar', interval=10, **data)
@@ -132,14 +136,15 @@ def parse_args():
   parser = argparse.ArgumentParser(
     formatter_class=argparse.RawTextHelpFormatter,
     description=__doc__)
-  parser.add_argument('--port', type=str, default='/dev/ttyUSB0')
+  parser.add_argument('--port', type=str, default='/dev/ttyUSB1')
   args = parser.parse_args()
   return args
 
 
 if __name__ == '__main__':
   logging.basicConfig(
-    format='%(asctime)s:%(levelname)s:%(name)s:%(funcName)s:%(lineno)d %(message)s',
+    format='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)d:%(funcName)s %(message)s',
+    datefmt='%y%m%d-%H%M%S',
     # level=logging.DEBUG,
     level=logging.INFO,
   )

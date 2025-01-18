@@ -15,10 +15,8 @@ class DatumMeta(type):
           D[k] = clsattr
           dct.pop(k)
 
-
-
     dct['_defaults'] = D
-    print(f'meta {name} {bases}')
+    # print(f'meta {name} {bases}')
     T = super().__new__(cls, name, bases, dct)
     return T
 
@@ -63,7 +61,7 @@ class Datum(DatumBase, metaclass=DatumMeta):
         D.update(getattr(bb, '_defaults'))
         num_ann += 1
     # print(T.__mro__)
-    print((A, D))
+    # print((A, D))
     object.__setattr__(self, '_items', {}) # TODO should i just use __dict__?
     args = list(args)
     size = 0

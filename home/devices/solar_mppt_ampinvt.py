@@ -87,7 +87,6 @@ class MPPTAmpivnt:
 
     response.deserialize_into(d)
 
-    print(response)
     data = response.dict()
     del data['checksum']
     del data['reserved0']
@@ -129,6 +128,7 @@ def main():
 if __name__ == '__main__':
   logging.basicConfig(
     format='%(asctime)s:%(levelname)s:%(name)s:%(funcName)s:%(lineno)d %(message)s',
+    datefmt='%y%m%d-%H%M%S',
     level=logging.DEBUG,
     # level=logging.INFO,
   )
