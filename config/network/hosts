@@ -14,7 +14,6 @@ prius.zkpq.ca.			300	IN	A	10.87.0.19
 ;	# LAN static map
 ;
 ;	2c:f0:5d:7c:9d:c0		tom								.10		tom desktop
-;	7c:5c:f8:5c:2a:65		118-laptop				.11		tom laptop zoox OLD
 ;	78:2b:46:37:46:4b		tom-laptop				.12		tom sp7
 ; 80:a9:97:1c:13:65		12378-laptop			.13		tom zoox macbook
 ;	ca:6c:dc:9f:85:33		tom-iphone				.15		tom iphone se2

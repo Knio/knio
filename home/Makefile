@@ -12,7 +12,7 @@ air:
 	python3 air.py /dev/ttyCH9344USB0
 
 co2:
-	python3 -m devices.arduino_cir_co2 /dev/ttyUSB0
+	python3 -m devices.arduino_cir_co2 /dev/ttyUSB1
 
 solar:
 	python3 solar.py

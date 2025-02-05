@@ -83,7 +83,8 @@ def main():
 if __name__ == '__main__':
   logging.basicConfig(
     level=logging.DEBUG,
-    format='%(asctime)s:%(levelname)s:%(name)s:%(funcName)s:%(lineno)s: %(message)s')
+    datefmt='%y%m%d-%H%M%S',
+    format='%(asctime)s:%(levelname)s:%(filename)s:%(lineno)s:%(funcName)s: %(message)s')
 
   logging.getLogger('urllib3').setLevel(logging.WARNING)
 

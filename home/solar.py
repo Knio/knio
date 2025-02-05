@@ -53,8 +53,6 @@ def main(args):
         LOG.info('no data')
         continue
 
-
-      LOG.info(data)
       data = homeutils.DottedDict(data)
 
       grafana.post('solar', interval=10, **data)
@@ -69,7 +67,7 @@ def main(args):
       is_float      = cs & (1<<3)
       # etc
 
-      if bv > 57.48 and (not is_mppt == 9):
+      if bv > 57.48:
         # fully charged, about to enter float
         ups.turn_off()
         load.turn_on()
@@ -136,7 +134,7 @@ def parse_args():
   parser = argparse.ArgumentParser(
     formatter_class=argparse.RawTextHelpFormatter,
     description=__doc__)
-  parser.add_argument('--port', type=str, default='/dev/ttyUSB1')
+  parser.add_argument('--port', type=str, default='/dev/ttyUSB0')
   args = parser.parse_args()
   return args
 
