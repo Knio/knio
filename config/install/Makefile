@@ -57,6 +57,11 @@ py:
 	python3 ../python/usercustomize_install.py
 
 
+systemd:
+	sudo loginctl enable-linger `whoami`
+	sudo systemctl --user daemon-reload
+
+
 ~/bin/veracrypt-console-%-amd64.deb:
 	mkdir -p ~/bin
 	wget 'https://launchpad.net/veracrypt/trunk/1.26.14/+download/veracrypt-console-1.26.14-Debian-12-amd64.deb' \
