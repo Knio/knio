@@ -38,8 +38,8 @@ apt:
 		cifs-utils \
 		mosh \
 		screen \
-		fzf \
-
+		zsh \
+		curl \
 
 
 fzf:

@@ -20,6 +20,8 @@ prius.zkpq.ca.			300	IN	A	10.87.0.19
 ; 04:72:95:cd:9b:5d		tom-iphone				.15		tom iphone se2 - actual mac
 ; d8:3a:dd:c0:76:25		rpi5							.16
 ;	b8:27:eb:cc:89:83		lab-rpizw					.17
+; 06:42:21:22:13:4d   tanix						.18
+
 
 ; # IoT things
 ;	00:05:cd:ae:3d:aa		denon-AVR-X2400H		.22
@@ -33,6 +35,7 @@ prius.zkpq.ca.			300	IN	A	10.87.0.19
 ; 00:12:33:7e:4e:58		birbcam							.29
 ; e2:30:57:f5:1b:7c		rigol-dho914s				.30
 ; c8:c9:a3:98:e3:c4		psu-rd6006p         .31
+; c0:4e:30:2c:cb:04		bambu-p1s           .32
 
 
 
