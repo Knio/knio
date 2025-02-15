@@ -6,7 +6,13 @@
     "editor.minimap.enabled": false,
     "editor.largeFileOptimizations": false,
     "editor.cursorSurroundingLines": 30,
-    "editor.multiDocumentOccurrencesHighlight": true,
+
+    // "editor.fontFamily": "Fira Code",
+    // "editor.fontFamily": "Hack",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 13,
+
+
     "editor.rulers": [
         79
     ],
@@ -33,6 +39,7 @@
     "files.autoSave": "off",
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
+    "files.eol": "\n",
     "files.associations": {
         "BUILD": "python",
         "*.cu": "cpp",
@@ -57,6 +64,8 @@
     },
 
     "window.title": "${activeEditorLong}${separator}${rootName}",
+    "window.newWindowProfile": "Default",
+
     "workbench.tree.indent": 20,
     "workbench.commandPalette.history": 500,
     "workbench.editor.closeEmptyGroups": false,
@@ -75,7 +84,6 @@
         "*.ipynb": "jupyter-notebook"
     },
 
-
     "debug.onTaskErrors": "showErrors",
     "security.workspace.trust.untrustedFiles": "open",
     "window.zoomLevel": 1,
@@ -90,17 +98,21 @@
 
     "remote.SSH.remotePlatform": {
         "dfg.hjkl.ca": "linux",
-        "rpi5.zkpq.ca": "linux",
-        "tom-zoox": "linux",
-        "zkpq.ca": "linux",
-        "rpi5": "linux",
-        "dfg": "linux",
-        "tom-server": "linux",
-        "10.87.1.3": "linux",
-        "10.87.1.4": "linux",
         "dev.home.zkpq.ca": "linux",
-        "dev": "linux"
+        "home": "linux"
+        "10.87.1.3": "linux",
+        "dfg": "linux",
+        "dev": "linux",
+        "cvb": "linux",
     },
+
+
+    "[python]": {
+        "editor.formatOnType": true
+    },
+
+
+    // Plugins
 
     "arduino.useArduinoCli": true,
     "arduino.additionalUrls": [
@@ -112,15 +124,16 @@
     ],
 
 
-
     "gitlens.fileAnnotations.command": "blame",
     "gitlens.plusFeatures.enabled": true,
     "gitlens.advanced.repositorySearchDepth": 8,
     "gitlens.blame.ignoreWhitespace": true,
     "gitlens.telemetry.enabled": false,
 
+
     "cmake.configureOnOpen": false,
     "cmake.showOptionsMovedNotification": false,
+
 
     "pylint.showNotifications": "onError",
     "pylint.args": [
@@ -145,6 +158,8 @@
         "--disable=pointless-string-statement",
     ],
 
+
+    "codeium.enableCodeLens": false,
     "codeium.enableConfig": {
         "*": false,
         "plaintext": true
@@ -154,34 +169,16 @@
     "python.analysis.diagnosticSeverityOverrides": {
         "reportMissingImports": "none",
     },
-    "[python]": {
-        "editor.formatOnType": true
-    },
 
 
     "graphviz-interactive-preview.renderLockAdditionalTimeout": 10000,
     "graphviz-interactive-preview.renderInterval": 500,
 
-    "rust-analyzer.inlayHints.typeHints.enable": false,
-    "C_Cpp.intelliSenseEngine": "disabled",
-    "window.newWindowProfile": "Default",
-    "files.eol": "\n",
-    "[makefile]": {
-    },
-    "editor.suggest.preview": true,
-    "editor.guides.bracketPairs": true,
-    "editor.autoClosingBrackets": "beforeWhitespace",
-    "editor.hover.above": false,
-    "github.copilot.enable": {
-        "*": false,
-        "plaintext": false,
-        "markdown": false,
-        "scminput": false
-    },
-    "python.languageServer": "Pylance",
-    "editor.autoIndent": "advanced",
-    "editor.inlineSuggest.edits.allowCodeShifting": "never",
-    "rainbow_csv.virtual_alignment_mode": "manual",
 
+    "rust-analyzer.inlayHints.typeHints.enable": false,
+
+
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "github.copilot.nextEditSuggestions.enabled": true,
 
 }
