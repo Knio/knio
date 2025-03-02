@@ -1,0 +1,100 @@
+/* General Body Styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #281414;
+  /* background-color: darkslategrey; */
+  color: #646565;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Main Container */
+div {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 10px;
+}
+
+/* Header */
+h1 {
+  font-size: 2em;
+  color: #444;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Section Headers */
+h2 {
+  font-size: 1.5em;
+  color: #666;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+  margin-top: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Section Container */
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+/* Button Groups */
+button-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+button {
+  font-weight: bold;
+  background-color: rgb(134, 151, 164);
+  padding: 0.7em 0.2em;
+}
+
+/*
+html {
+  background-color: darkslategrey;
+  color: rgb(23, 18, 15);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+body > div {
+  display: grid;
+  row-gap: 20px;
+  grid-template-columns: auto;
+}
+body > div > div {
+  border: 2px solid slategray;
+  border-radius: 2em;
+  padding: 2em;
+}
+body > div > div > div {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+body > div > div > div > * {
+  flex-grow: 1;
+}
+
+h2 {
+  margin-top: -2em;
+}
+h2 > span {
+  padding: 0.5ex;
+  background-color: darkslategray;
+}
+
+button {
+  margin: 0.7em;
+  font-weight: bold;
+  padding: 1em 0;
+  border-radius: 0.7em;
+  border-width: 0.2em;
+  background-color: rgb(134, 151, 164);
+}
+//*

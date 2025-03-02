@@ -1,0 +1,6 @@
+set readonly
+set hlsearch
+
+nmap q :q!<CR>
+nmap   <C-F><C-G>
+

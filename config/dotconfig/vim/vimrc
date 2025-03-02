@@ -1,0 +1,65 @@
+" Because vim
+set nocompatible
+
+" General
+set autoindent
+set backspace=indent,eol,start
+set colorcolumn=81
+set encoding=utf-8
+set foldmethod=manual
+set history=10000
+set hlsearch
+set ignorecase
+set incsearch
+set laststatus=2
+set nowrap
+set number
+set scrolloff=5
+set shell=/bin/sh
+set smartcase
+set ttyfast
+set wildmenu
+
+" Disable all file-based backup
+set nobackup
+set noswapfile
+set nowritebackup
+
+" Tabbing and Indents
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+
+" Set paste mode
+set pastetoggle=<F2>
+noremap <C-c> <Esc>
+inoremap <C-c> <Esc>
+
+" Show tabs and lists
+set listchars=tab:\|\ ,trail:_
+
+filetype plugin indent on
+
+" Automatically open quickfix window
+autocmd QuickFixCmdPost grep cwindow 5
+
+if has("gui_running")
+  " GUI is running or is about to start.
+  set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 16
+  set guioptions-=T "Toolbar
+  set guioptions-=L "Something
+  set guioptions-=l "Left scrollbar
+  set guioptions-=m "Menu
+
+  set background=light
+  colors base16-atelierplateau
+else
+  colors wombat256
+endif
+
+" Syntax and colors
+syntax on
+set t_Co=256
+set bg=dark
+

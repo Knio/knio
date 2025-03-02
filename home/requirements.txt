@@ -1,0 +1,10 @@
+dominate
+git+https://github.com/Knio/whirl.git
+
+
+requests
+python-kasa
+IPython
+pyserial
+pynput
+toml

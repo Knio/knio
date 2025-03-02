@@ -1,0 +1,12 @@
+[Unit]
+Description=Twillio
+StartLimitBurst=0
+
+[Service]
+ExecStart=python3 %h/knio/bin/phone.py
+Restart=always
+StandardOutput=append:%h/mnt/Docs/Life/twillio.json
+StandardError=journal
+
+[Install]
+WantedBy=basic.target

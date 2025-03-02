@@ -1,0 +1,32 @@
+# default ignore all
+*
+
+# add projects
+
+!bin/
+!bin/**
+
+!config/
+!config/**
+
+!home/
+!home/**
+
+!net/
+!net/**
+
+!datum/
+!datum/**
+
+!rebugger/
+!rebugger/**
+
+# python
+*.egg
+*.egg-info
+*.py[cod]
+__pycache__
+
+# misc
+netflow.db
+

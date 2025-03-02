@@ -1,0 +1,24 @@
+
+# make less pass-though valid unicode chars, and not replace them with <U+12345>
+export LANG=C.UTF-8
+export LESSUTFBINFMT=*n%C
+
+
+# muli-term bash history
+export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+export HISTSIZE=100000                   # big big history
+export HISTFILESIZE=100000               # big big history
+shopt -s histappend                      # append to history, don't overwrite it
+
+# save history
+export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
+
+# aliases
+[ -f ~/knio/config/bash/aliases ] && source ~/knio/config/bash/aliases
+
+pp=$(cat "/proc/$PPID/comm")
+if [[ "$pp" == "sshd" ]]; then
+  reset
+fi
+

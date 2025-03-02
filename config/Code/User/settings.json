@@ -1,0 +1,174 @@
+{
+    "editor.renderWhitespace": "boundary",
+    "editor.copyWithSyntaxHighlighting": false,
+    "editor.hover.delay": 100,
+    "editor.renderControlCharacters": true,
+    "editor.minimap.enabled": false,
+    "editor.largeFileOptimizations": false,
+    "editor.cursorSurroundingLines": 30,
+    "editor.multiDocumentOccurrencesHighlight": true,
+    "editor.rulers": [
+        79
+    ],
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "name": "Function name",
+                "scope": [
+                    "entity.name.function.definition.cpp",
+                    "entity.name.function.python",
+                ],
+                "settings": {
+                    "fontStyle": "bold",
+                    "foreground": "#3ff545",
+                }
+            }
+        ]
+    },
+    "editor.stickyScroll.enabled": true,
+    "editor.tabSize": 2,
+    "editor.stickyScroll.maxLineCount": 10,
+
+
+    "files.autoSave": "off",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.associations": {
+        "BUILD": "python",
+        "*.cu": "cpp",
+        "*.prty": "jsonnet"
+    },
+    "files.watcherExclude": {
+        "**/.vscode*/**": true,
+        "**/bazel-*/**": true,
+        "**/__pycache__": true,
+        "**/.cache": true,
+        "**/*.pyc": true,
+    },
+    "files.exclude": {
+        ".cache": true,
+        "**/__pycache__": true,
+        "**/.cache": true,
+        "**/.git/**": true,
+        "**/.vscode*/**": true,
+        "**/*.pyc": true,
+        "bazel-*": true,
+        "knio/mnt/*": true,
+    },
+
+    "window.title": "${activeEditorLong}${separator}${rootName}",
+    "workbench.tree.indent": 20,
+    "workbench.commandPalette.history": 500,
+    "workbench.editor.closeEmptyGroups": false,
+    "workbench.colorCustomizations": {
+        "editor.lineHighlightBackground": "#423b1b",
+        "editorGroupHeader.tabsBackground": "#444444",
+        "editor.findMatchBackground": "#ff00aa",
+        "editor.findMatchHighlightBackground": "#ff83d6",
+        "tab.activeBackground": "#696b5a",
+        "tab.inactiveBackground": "#3a3b32",
+    },
+    "workbench.activityBar.location": "top",
+    "workbench.editor.doubleClickTabToToggleEditorGroupSizes": "maximize",
+    "workbench.colorTheme": "Visual Studio Dark",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+
+
+    "debug.onTaskErrors": "showErrors",
+    "security.workspace.trust.untrustedFiles": "open",
+    "window.zoomLevel": 1,
+    "explorer.confirmDragAndDrop": false,
+    "outline.showVariables": false,
+
+
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.openRepositoryInParentFolders": "never",
+
+
+    "remote.SSH.remotePlatform": {
+        "dfg.hjkl.ca": "linux",
+        "rpi5.zkpq.ca": "linux",
+        "tom-zoox": "linux",
+        "zkpq.ca": "linux",
+        "rpi5": "linux",
+        "dfg": "linux",
+        "tom-server": "linux",
+        "10.87.1.3": "linux",
+        "10.87.1.4": "linux",
+        "dev.home.zkpq.ca": "linux"
+    },
+
+    "arduino.useArduinoCli": true,
+    "arduino.additionalUrls": [
+        "https://dl.espressif.com/dl/package_esp32_dev_index.json",
+        "http://arduino.esp8266.com/stable/package_esp8266com_index.json"
+    ],
+    "arduino.ignoreBoards": [
+        "Adafruit HUZZAH ESP8266"
+    ],
+
+
+
+    "gitlens.fileAnnotations.command": "blame",
+    "gitlens.plusFeatures.enabled": true,
+    "gitlens.advanced.repositorySearchDepth": 8,
+    "gitlens.blame.ignoreWhitespace": true,
+    "gitlens.telemetry.enabled": false,
+
+    "cmake.configureOnOpen": false,
+    "cmake.showOptionsMovedNotification": false,
+
+    "pylint.showNotifications": "onError",
+    "pylint.args": [
+        "--disable=W0311",
+        "--disable=W0511",
+        "--disable=W0702",
+        "--disable=W0603",
+        "--disable=W0612",
+        "--disable=W0613",
+        "--disable=W0718",
+        "--disable=W1203",
+        "--disable=E0401",
+        "--disable=C0114",
+        "--disable=C0103",
+        "--disable=C0104",
+        "--disable=C0115",
+        "--disable=C0116",
+        "--disable=C0321",
+        "--disable=R0903",
+        "--disable=R1735",
+        "--disable=logging-not-lazy",
+        "--disable=pointless-string-statement",
+    ],
+
+    "codeium.enableConfig": {
+        "*": false,
+        "plaintext": true
+    },
+    "codeium.enableCodeLens": false,
+
+    "python.analysis.autoIndent": false,
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingImports": "none",
+    },
+    "[python]": {
+        "editor.formatOnType": true
+    },
+
+
+    "graphviz-interactive-preview.renderLockAdditionalTimeout": 10000,
+    "graphviz-interactive-preview.renderInterval": 500,
+
+    "rust-analyzer.inlayHints.typeHints.enable": false,
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "window.newWindowProfile": "Default",
+    "files.eol": "\n",
+    "[makefile]": {
+    },
+
+
+}

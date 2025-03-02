@@ -1,0 +1,105 @@
+
+graph G {
+rankdir="LR";
+// dpi="200";
+// size="100";
+ranksep="2";
+forcelabels="true";
+
+node [fontsize="48", fontname="Helvetica"];
+node [shape="box", style="rounded,filled", fillcolor="grey", fixedsize="false", width="5", height="2"];
+edge [penwidth="5"]
+
+
+subgraph cluster_pm {
+    label = "ProxMox"
+    fontsize="56"
+    margin=100
+
+    bridge [
+        shape=record
+        label = "Proxmox Bridges | <wan>BR_WAN | <wifi>BR_WIFI | <lan>BR_LAN (10.87.1.3)";
+    ]
+
+    interface [
+        shape=record
+        label = "Physical Interfaces | <g0>1GbE_1 | <g1>1GbE_2 | <wifi>WiFi_6ax | <g25>2.5GbE";
+
+    ]
+
+    bridge:wan  -- interface:g0;
+    bridge:wifi -- interface:wifi;
+    bridge:lan  -- interface:g1;
+    bridge:lan  -- interface:g25;
+
+    subgraph cluster_pf {
+        label = "pfSense"
+        pf_if [
+            shape=record
+            label = "Interfaces | <wan>WAN  | <lan>LAN (10.87.1.1) /24  | <lan_ut>GUEST/IOT";
+        ]
+        pf_bridge [
+            shape=record
+            label="Bridges | <tr>Trusted | <ut>Untrusted"
+        ]
+        pf_lan_vlan [
+            shape=record
+            label="LAN VLANs | <tr>Trusted | <ut>Untrusted"
+        ]
+        pf_wifi_vlan [
+            shape=record
+            label="WiFi VLANs | <tr>Trusted | <ut>Untrusted"
+        ]
+        pf_port [
+            shape=record
+            label = "Ports | <wan>WAN | <wifi>WIFI  | <lan>LAN | <wg>WIREGUARD";
+        ]
+        pf_if:wan -- pf_port:wan
+
+        pf_if:lan -- pf_bridge:tr
+        pf_if:lan_ut -- pf_bridge:ut
+        pf_bridge:tr -- pf_lan_vlan:tr
+        pf_bridge:ut -- pf_lan_vlan:ut
+        pf_bridge:tr -- pf_wifi_vlan:tr
+        pf_bridge:ut -- pf_wifi_vlan:ut
+
+
+        pf_lan_vlan:tr -- pf_port:lan
+        pf_lan_vlan:ut -- pf_port:lan
+        pf_wifi_vlan:tr -- pf_port:wifi
+        pf_wifi_vlan:ut -- pf_port:wifi
+        pf_port:wg -- pf_bridge:tr
+
+    }
+    /*
+    pf_if:wan -- bridge:wan
+    pf_if:lan -- bridge:lan
+    pf_if:wifi -- bridge:wifi
+    // */
+    pf_port:wan -- bridge:wan
+    pf_port:lan -- bridge:lan
+    pf_port:wifi -- bridge:wifi
+
+    TrueNAS -- bridge:lan
+    VM1 -- bridge:lan
+    VM2 -- bridge:lan
+    Container1 -- bridge:lan
+    Container2 -- bridge:lan
+
+
+
+}
+
+"8x1GbE Dumb Switch";
+"Unify AC5 LR AP"
+node [shape="oval", fillcolor="yellow"]
+interface:g0 -- WAN;
+WAN [fillcolor="red"];
+interface:g1 -- "8x1GbE Dumb Switch":west -- { RPi5; BirbCam; "Etc wired"; "Unify AC5 LR AP" };
+
+"Unify AC5 LR AP" -- {Laptop; iPhone; "Internet of Shit"; "Etc Wifi 2.4GHz"}
+interface:wifi -- {Laptop; iPhone; "Etc WiFi 5GHz"}
+interface:g25 -- Desktop [penwidth=10]
+
+}
+

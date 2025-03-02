@@ -1,0 +1,23 @@
+[2023-11-08 05:43:01] WeeChat 3.8 (compiled on Jan 15 2023 08:34:04)
+[2023-11-08 05:43:01] Reading configuration file sec.conf
+[2023-11-08 05:43:01] Reading configuration file weechat.conf
+[2023-11-08 05:43:01] Reading configuration file plugins.conf
+[2023-11-08 05:43:01] Reading configuration file charset.conf
+[2023-11-08 05:43:01] Reading configuration file logger.conf
+[2023-11-08 05:43:01] Reading configuration file alias.conf
+[2023-11-08 05:43:01] Reading configuration file buflist.conf
+[2023-11-08 05:43:01] Reading configuration file xfer.conf
+[2023-11-08 05:43:01] Reading configuration file irc.conf
+[2023-11-08 05:43:01] Reading configuration file fset.conf
+[2023-11-08 05:43:01] irc: connecting to server new.zkpq.ca/6667 (SSL)...
+[2023-11-08 05:43:01] irc: connecting to server internetrelaychat.net/6697 (SSL)...
+[2023-11-08 06:10:40] Writing configuration file plugins.conf
+[2023-11-08 06:10:40] Writing configuration file xfer.conf
+[2023-11-08 06:10:40] Writing configuration file charset.conf
+[2023-11-08 06:10:40] Writing configuration file logger.conf
+[2023-11-08 06:10:40] Writing configuration file alias.conf
+[2023-11-08 06:10:40] Writing configuration file irc.conf
+[2023-11-08 06:10:40] Writing configuration file buflist.conf
+[2023-11-08 06:10:40] Writing configuration file fset.conf
+[2023-11-08 06:10:40] Writing configuration file weechat.conf
+[2023-11-08 06:10:40] Writing configuration file sec.conf

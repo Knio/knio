@@ -1,0 +1,72 @@
+[alias]
+	lg = log -n 15 --color --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%ae>%Creset'
+	s = status
+	st = status -sb
+	ss = show --stat
+	b = branch -vv --sort=-committerdate
+
+[status]
+	untracked = no
+
+[user]
+	email = tom@zkpq.ca
+	name = Tom Flanagan
+
+[pull]
+	rebase = interactive
+
+[fetch]
+	prune = true
+
+[push]
+	default = simple
+
+[core]
+	editor = vim
+	autocrlf = false
+	# pager = bat -l diff
+	pager = less -mmSRj.5
+
+[help]
+	autoCorrect = 1
+
+[diff]
+	renames = copies
+	algorithm = patience
+	compactionHeuristic = true
+
+[merge]
+	conflictStyle = diff3
+
+[color]
+	ui = auto
+	branch = always
+
+[rebase]
+	autoSquash = true
+
+[grep]
+	lineNumber = true
+
+[color "grep"]
+	linenumber = yellow bold
+	match = red
+	filename = magenta
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[advice]
+	detachedHead = false
+
+[safe]
+	directory = %(prefix)///desktop.zkpq.ca
+	directory = %(prefix)///desktop.zkpq.ca/docs
+	directory = %(prefix)///desktop.zkpq.ca/docs/Programming
+	directory = %(prefix)///desktop.zkpq.ca/docs/Programming/everdb2
+	directory = %(prefix)///desktop.zkpq.ca/docs/Programming/phototools
+	directory = %(prefix)///desktop.zkpq.ca/docs
+	directory = %(prefix)///desktop.zkpq.ca/docs/Programming/whirl

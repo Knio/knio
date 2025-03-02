@@ -1,0 +1,7 @@
+set linenumbers
+set indicator
+set positionlog
+set regexp
+set smarthome
+set numbercolor italic,lightcyan,grey
+set stateflags

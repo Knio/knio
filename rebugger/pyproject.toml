@@ -1,0 +1,35 @@
+[project]
+name = "rebugger"
+description="Captures detailed trace logs for viewing in Perfetto"
+readme = "README.md"
+authors = [
+  {name="Tom Flanagan", email="tom@zkpq.ca"}
+]
+classifiers = [
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Topic :: Utilities",
+]
+dynamic = ["version"]
+
+dependencies = [
+  "protobuf",
+]
+
+[project.urls]
+Homepage = "https://github.com/Knio/knio/rebugger"
+Source = "https://github.com/Knio/knio/rebugger"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+# packages = ["rebugger"]
+packages = {find = {}}
+
+[tool.setuptools.dynamic]
+version = {attr = "rebugger._version.version"}
