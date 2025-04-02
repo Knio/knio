@@ -20,6 +20,7 @@
 
 [push]
 	default = simple
+	autoSetupRemote = true
 
 [core]
 	editor = vim
@@ -32,8 +33,9 @@
 
 [diff]
 	renames = copies
-	algorithm = patience
+	algorithm = histogram
 	compactionHeuristic = true
+	colorMoved = dimmed-zebra
 
 [merge]
 	conflictStyle = diff3
