@@ -28,8 +28,10 @@ mount-truenas-lan:
 	-sudo umount -lf truenas/tom_home
 	sudo mount.nfs -vvvv '10.87.1.5:/mnt/zp/tom/home' truenas/tom_home -o "nfsvers=4,soft,softreval,timeo=10,nconnect=5"
 
+mount-truenas-cifs:
 	# everything else over cifs because it can see recursive child zfs's
 	mkdir -p truenas/tom
 	-sudo umount -lf truenas/tom
-	sudo mount.cifs -vvvv '\\10.87.1.5\tom' truenas/tom -o "username=tom,uid=tom,gid=0,file_mode=0750,dir_mode=0750,soft,dirsync,sync"
+	# gid=33 for www-data
+	sudo mount.cifs -vvvv '\\10.87.1.5\tom' truenas/tom -o "username=tom,uid=tom,gid=33,file_mode=0750,dir_mode=0750,soft,dirsync,sync"
 
