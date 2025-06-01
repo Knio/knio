@@ -89,7 +89,8 @@ def get_config_for_site(host):
     ips = ipaddress.IPv4Network(int(sn.network_address) | client['Address'])
     wg_peer |= dict(
       PublicKey = get_pubkey(client),
-      AllowedIPs = ips
+      AllowedIPs = ips,
+      PersistentKeepalive = 5, # TODO load from some config
     )
 
   return wg_conf

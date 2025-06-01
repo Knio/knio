@@ -8,7 +8,8 @@ weather:
 	python3 weather.py
 
 air:
-	-sh -c 'cd ~/bin/ch9344ser_linux/driver; sudo make load'
+	# see: bin/ch9344/Makefile
+	sudo chmod 666 /dev/ttyCH9344USB0
 	python3 air.py /dev/ttyCH9344USB0
 
 co2:

@@ -6,100 +6,144 @@ rankdir="LR";
 ranksep="2";
 forcelabels="true";
 
-node [fontsize="48", fontname="Helvetica"];
-node [shape="box", style="rounded,filled", fillcolor="grey", fixedsize="false", width="5", height="2"];
-edge [penwidth="5"]
+node [
+    fontsize="48",
+    fontname="Helvetica",
+    shape="box",
+    style="rounded,filled",
+    fillcolor="grey",
+    fixedsize="false",
+    width="5",
+    height="2"];
+
+edge [
+    penwidth="5",
+    fontsize=36,
+    dir=both
+    arrowhead=diamond,
+    arrowtail=diamond,
+]
 
 
-subgraph cluster_pm {
-    label = "ProxMox"
+WAN [fillcolor="red", shape=oval];
+
+
+subgraph cluster_house {
+    label = "House"
+    fontsize="56"
+    margin=100
+    modem [
+        shape=record
+        label="Telus Modem | home.zkpq.ca | 192.168.1.254/24 | <up>Fiber uplink | <e0>10GbE | <e1>1GbE | <e2>1GbE | <e3>1GbE | <e4>1GbE | RJ-11 "
+    ]
+
+
+
+    telus_wifi [
+        shape=record
+        label="Telus Wifi | <e0>2.5GbE uplink | <w2>WiFi 6E | <e1>1GbE | <e2>1GbE"
+    ]
+
+
+    sw0 [
+        shape=record
+        label="Switch 1 | <s0>SFP+ | <s1>SFP+ | <e0>2.5GbE| <e1>2.5GbE| <e2>2.5GbE| <e3>2.5GbE"
+    ]
+
+    telus_wifi:e0 -- sw0:e1 [penwidth=10]
+
+    Tenants [shape="oval", fillcolor="yellow"]
+    telus_wifi:w2 -- Tenants
+
+}
+
+
+
+subgraph cluster_garage {
+    label = "Garage"
     fontsize="56"
     margin=100
 
-    bridge [
+    sw1 [
         shape=record
-        label = "Proxmox Bridges | <wan>BR_WAN | <wifi>BR_WIFI | <lan>BR_LAN (10.87.1.3)";
+        label="Switch 2 | <s0>SFP+ | <s1>SFP+ | <e0>2.5GbE| <e1>2.5GbE| <e2>2.5GbE| <e3>2.5GbE"
     ]
 
-    interface [
-        shape=record
-        label = "Physical Interfaces | <g0>1GbE_1 | <g1>1GbE_2 | <wifi>WiFi_6ax | <g25>2.5GbE";
+    // sw3 [
+    //     shape=record
+    //     label="Switch 4 | <i0> 1GbE | <i1> 1GbE | <i2> 1GbE | <i3> 1GbE | <i4> 1GbE | <i5> 1GbE | <i6> 1GbE | <i7> 1GbE"
+    // ]
 
-    ]
 
-    bridge:wan  -- interface:g0;
-    bridge:wifi -- interface:wifi;
-    bridge:lan  -- interface:g1;
-    bridge:lan  -- interface:g25;
+    subgraph cluster_pm {
+        label = "ProxMox Server"
+        fontsize="56"
+        margin=100
 
-    subgraph cluster_pf {
-        label = "pfSense"
-        pf_if [
+
+        interface [
             shape=record
-            label = "Interfaces | <wan>WAN  | <lan>LAN (10.87.1.1) /24  | <lan_ut>GUEST/IOT";
-        ]
-        pf_bridge [
-            shape=record
-            label="Bridges | <tr>Trusted | <ut>Untrusted"
-        ]
-        pf_lan_vlan [
-            shape=record
-            label="LAN VLANs | <tr>Trusted | <ut>Untrusted"
-        ]
-        pf_wifi_vlan [
-            shape=record
-            label="WiFi VLANs | <tr>Trusted | <ut>Untrusted"
-        ]
-        pf_port [
-            shape=record
-            label = "Ports | <wan>WAN | <wifi>WIFI  | <lan>LAN | <wg>WIREGUARD";
-        ]
-        pf_if:wan -- pf_port:wan
+            label = "Physical Interfaces | <g25>2.5GbE (192.168.1.3) | <wifi>WiFi_6ax | <i0>10GbE_1 | <i1>10GbE_2";
 
-        pf_if:lan -- pf_bridge:tr
-        pf_if:lan_ut -- pf_bridge:ut
-        pf_bridge:tr -- pf_lan_vlan:tr
-        pf_bridge:ut -- pf_lan_vlan:ut
-        pf_bridge:tr -- pf_wifi_vlan:tr
-        pf_bridge:ut -- pf_wifi_vlan:ut
+        ]
 
+        vmbr0 [
+            shape = record
+            label="vmbr0 | 10.87.0.0/16 | iptables router "
+        ]
 
-        pf_lan_vlan:tr -- pf_port:lan
-        pf_lan_vlan:ut -- pf_port:lan
-        pf_wifi_vlan:tr -- pf_port:wifi
-        pf_wifi_vlan:ut -- pf_port:wifi
-        pf_port:wg -- pf_bridge:tr
+        edge [penwidth=15]
+        interface -- vmbr0
+
+        node [shape="oval", fillcolor="yellow"]
+        vmbr0 -- TrueNas
+        vmbr0 -- CTs
+        vmbr0 -- VMs
 
     }
-    /*
-    pf_if:wan -- bridge:wan
-    pf_if:lan -- bridge:lan
-    pf_if:wifi -- bridge:wifi
-    // */
-    pf_port:wan -- bridge:wan
-    pf_port:lan -- bridge:lan
-    pf_port:wifi -- bridge:wifi
 
-    TrueNAS -- bridge:lan
-    VM1 -- bridge:lan
-    VM2 -- bridge:lan
-    Container1 -- bridge:lan
-    Container2 -- bridge:lan
+    sw2 [
+        shape=record
+        label="Switch 3 | <s0>SFP+ | <s1>SFP+ | <e0>2.5GbE PoE+ | <e1>2.5GbE PoE+ | <e2>2.5GbE PoE+ | <e3>2.5GbE PoE+ | <e4>2.5GbE PoE+ | <e5>2.5GbE PoE+ | <e6>2.5GbE PoE+ | <e7>2.5GbE PoE+"
+    ]
 
+
+    tp_ap [
+        shape=record
+        label = "TP-Link EAP773 AP | <up>10 GbE PoE+ | <w2>WiFi 2.4 | <w5>WiFi 5 | <w6>WiFi 6E | <w7>WiFi 7"
+    ]
+    ubnt_ap [
+        shape=record
+        label = "Unify AC-LR 5 AP | <up>1 GbE PoE+ | <w2>WiFi 2.4 | <w5>WiFi 5"
+    ]
+
+    node [shape="oval", fillcolor="yellow"]
+
+    sw2:e3 -- tp_ap:up [penwidth=10]
+
+    tp_ap:w6 -- {Laptop; iPhone}
+    tp_ap:w2 -- {Laptop}
+    tp_ap:w7 -- {Laptop}
+
+    sw2:e2 -- ubnt_ap:up
+    ubnt_ap:w2 -- {"Garage door opener"; "Smart switches / lights"; "Internet of Shit etc"}
+
+    sw2:e7 -- AlleyCam
+    sw2:e6 -- DeskCam
+
+
+    Desktop -- interface:i0 [penwidth=15]
+    sw2:e0 -- interface:i1
 
 
 }
 
-"8x1GbE Dumb Switch";
-"Unify AC5 LR AP"
-node [shape="oval", fillcolor="yellow"]
-interface:g0 -- WAN;
-WAN [fillcolor="red"];
-interface:g1 -- "8x1GbE Dumb Switch":west -- { RPi5; BirbCam; "Etc wired"; "Unify AC5 LR AP" };
 
-"Unify AC5 LR AP" -- {Laptop; iPhone; "Internet of Shit"; "Etc Wifi 2.4GHz"}
-interface:wifi -- {Laptop; iPhone; "Etc WiFi 5GHz"}
-interface:g25 -- Desktop [penwidth=10]
+WAN -- "Telus Fiber" [penwidth=30]
+"Telus Fiber" -- modem:up [color=orange, penwidth=10, label="3Gb"]
+modem:e0 -- sw0:e0 [penwidth=8]
+sw0:s0 -- sw1:s0 [color=orange, penwidth=15, label="10Gb OM4"]
+sw1:e2 -- interface:g25 [penwidth=10]
+
 
 }
-

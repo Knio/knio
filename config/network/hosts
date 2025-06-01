@@ -20,14 +20,11 @@ prius.zkpq.ca.			300	IN	A	10.87.0.19
 ; 04:72:95:cd:9b:5d		tom-iphone				.15		tom iphone se2 - actual mac
 ; d8:3a:dd:c0:76:25		rpi5							.16
 ;	b8:27:eb:cc:89:83		lab-rpizw					.17
-; 06:42:21:22:13:4d   tanix						.18
+; 06:42:21:22:13:4d   tanix							.18
 
 
 ; # IoT things
 ;	00:05:cd:ae:3d:aa		denon-AVR-X2400H		.22
-
-;	48:22:54:43:ed:2e		light1-hs210				.25
-;	48:22:54:43:ed:3f		light2-hs210 				.26
 
 ; 1c:90:ff:88:ee:ca		plug1								.27
 
@@ -43,5 +40,11 @@ prius.zkpq.ca.			300	IN	A	10.87.0.19
 ; 24:2f:d0:26:4d:f3		kasa-plug-2-kp125m	.42
 ; 24:2f:d0:26:39:c8		kasa-plug-3-kp125m	.43
 ; 24:2f:d0:26:1b:8d		kasa-plug-4-kp125m	.44
+
+; bc:24:11:bb:f6:49   homeassistant       .50
+; 40:ae:30:aa:ae:4d   k225-light-office   .51
+; 40:ae:30:aa:ae:4d   k225-light-workshop .52
+; 40:ae:30:aa:ae:4d   k225-light-outdoor  .53
+
 
 ; xx									solar-esp32c3				.31

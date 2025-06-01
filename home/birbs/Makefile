@@ -8,6 +8,20 @@ install:
 	python3 -m pip install -r requirements.txt
 
 
+MTXDIR=/home/tom/bin/mediamtx
+mediamtx-install:
+	mkdir -p $(MTXDIR)
+	cd $(MTXDIR); wget https://github.com/bluenviron/mediamtx/releases/download/v1.12.0/mediamtx_v1.12.0_linux_amd64.tar.gz
+	cd $(MTXDIR); tar xvf mediamtx*.tar.gz
+
+
+CAM1=rtsp://10.87.1.29:8554/user=admin_password=tlJwpbo6_channel=0_stream=0&onvif=0.sdp
+
+
+
+stream:
+	sudo $(MTXDIR)/mediamtx mediamtx.yml
+
 # IN_USB=-f video4linux2 -i /dev/video0
 IN_IP=-i 'rtsp://10.87.1.29:8554/user=admin_password=tlJwpbo6_channel=0_stream=0&onvif=0.sdp'
 # OUT1=[f=segment:segment_atclocktime=1:segment_time=60:reset_timestamps=1:strftime=1]/home/tom/mnt/desktop/media/Temp/birbs/birbs_%Y%m%d-%H%M.mp4
@@ -18,7 +32,7 @@ OUT2=[f=rtsp:rtsp_transport=tcp]rtsp://10.87.7.1:8554/birbs
 FFMPEG=/home/tom/bin/ffmpeg/ffmpeg
 FFMPEG=/home/tom/bin/ffmpeg-prebuilt/ffmpeg
 
-stream:
+old-stream:
 		$(FFMPEG) \
 		$(IN_IP) \
 		-an \

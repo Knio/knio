@@ -58,8 +58,8 @@ def main():
         grafana.post('rtl',
           interval=300,
           **{
-            f'Temperature_{name}': data['temperature_C'] - t_c,
-            f'Humidity_{name}': data['humidity'] - h_c,
+            f'Temperature_{name}': data['temperature_C'],
+            f'Humidity_{name}': data['humidity'],
           }
         )
     else:

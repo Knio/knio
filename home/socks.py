@@ -76,7 +76,6 @@ def main():
     level=logging.INFO,
     format='%(asctime)s:%(levelname)s %(message)s')
 
-  SocksServer('zkpq.ca').start()
   SocksServer('dfg.hjkl.ca').start()
   SocksServer('cvb.hjkl.ca').start()
 
