@@ -98,7 +98,8 @@
         "tom-server": "linux",
         "10.87.1.3": "linux",
         "10.87.1.4": "linux",
-        "dev.home.zkpq.ca": "linux"
+        "dev.home.zkpq.ca": "linux",
+        "dev": "linux"
     },
 
     "arduino.useArduinoCli": true,
@@ -149,8 +150,6 @@
         "plaintext": true
     },
     "codeium.enableCodeLens": false,
-
-    "python.analysis.autoIndent": false,
     "python.analysis.autoFormatStrings": true,
     "python.analysis.diagnosticSeverityOverrides": {
         "reportMissingImports": "none",
@@ -169,6 +168,20 @@
     "files.eol": "\n",
     "[makefile]": {
     },
+    "editor.suggest.preview": true,
+    "editor.guides.bracketPairs": true,
+    "editor.autoClosingBrackets": "beforeWhitespace",
+    "editor.hover.above": false,
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    "python.languageServer": "Pylance",
+    "editor.autoIndent": "advanced",
+    "editor.inlineSuggest.edits.allowCodeShifting": "never",
+    "rainbow_csv.virtual_alignment_mode": "manual",
 
 
 }
