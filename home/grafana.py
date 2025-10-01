@@ -28,13 +28,24 @@ def post_frame(data):
     LOG.info(p.json())
   except Exception as e:
     LOG.error(e)
+    LOG.error(data)
 
+
+def fix_value(x):
+  if isinstance(x, bool):
+    if x is True:
+      return 1
+    if x is False:
+      return 0
+  if isinstance(x, (int, float)):
+    return x
+  raise ValueError(f'{type(x)} not supported by grafana (v={x!r})')
 
 def post(ns, interval=2, **kv):
   now = int(time.time())
   data = [{
     'name': '.'.join((ns, k)),
-    'value': v,
+    'value': fix_value(v),
     'time': now,
     'interval': interval,
   } for k,v in kv.items()]

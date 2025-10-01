@@ -45,7 +45,7 @@ def upload(url, handler):
     try:
       toirc = msg.pop('toirc')[0]
       toirc = toirc.data.decode('ascii').lower() not in ('', '0', 'no', 'false')
-    except (KeyError, IndexError) as e:
+    except (KeyError, IndexError, AttributeError) as e:
       LOG.debug(e)
       toirc = False
     urls = []

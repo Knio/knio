@@ -61,7 +61,7 @@ class DenonAVR:
 
   def reset(self):
     self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    self.socket.settimeout(0.1) # for connect
+    self.socket.settimeout(0.2) # for connect
     self.socket.connect((self.host, 23))
     self.ser = utils.SocketSerial(self.socket)
     self.queue = []

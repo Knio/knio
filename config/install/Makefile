@@ -1,7 +1,7 @@
 REL = $(shell realpath --relative-to ~ ${PWD}/..)
 HOME = $(shell echo ~)
 
-all: ssh link bash apt fzf
+all: apt fzf py
 
 ssh:
 	cp -R ~/.ssh ~/.ssh.bak
@@ -40,6 +40,9 @@ apt:
 		screen \
 		zsh \
 		curl \
+		unattended-upgrades \
+		apt-listchanges
+	sudo dpkg-reconfigure --priority=low unattended-upgrades
 
 
 fzf:
@@ -54,12 +57,18 @@ bash:
 	grep -qxF $(BASHSTR) ~/.bashrc || echo $(BASHSTR) >> ~/.bashrc
 
 py:
+	pip install rich
 	python3 ../python/usercustomize_install.py
 
 
 systemd:
 	sudo loginctl enable-linger `whoami`
 	sudo systemctl --user daemon-reload
+
+
+host_keys:
+	sudo rm -v /etc/ssh/ssh_host_*key*
+	sudo ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N "" < /dev/null
 
 
 ~/bin/veracrypt-console-%-amd64.deb:

@@ -3,8 +3,18 @@ import logging
 
 import kasa
 
+import config
+
+
+# TODO:
+'''
+Don't use this module? replace with whats in utils and home2.py
+'''
+
 LOG = logging.getLogger(__name__)
 AIOL = asyncio.get_event_loop()
+KC = config.CONF['kasa']
+
 
 class SmartPlug(kasa.SmartPlug):
   def __init__(self, *a, **kw):
@@ -35,7 +45,8 @@ class Synced:
     AIOL.run_until_complete(self.dev.update())
 
   def turn_on(self):
-    AIOL.run_until_complete(self.dev.turn_on())
+    self.dev.turn_on()
+    AIOL.run_until_complete(self.dev.update())
 
   def turn_off(self):
     AIOL.run_until_complete(self.dev.turn_off())
@@ -43,3 +54,4 @@ class Synced:
   def emeter(self):
     return AIOL.run_until_complete(self.dev.get_emeter_realtime())
 
+SmartDimmer = lambda *x,**kw: Synced(kasa.SmartDimmer(*x, **KC, **kw))

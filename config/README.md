@@ -23,7 +23,9 @@ Login as you:
 
 ### Edit ssh config:
 
-`sudo nano /etc/ssh/sshd_config`
+```
+sudo nano /etc/ssh/sshd_config
+```
 
 ```conf
 # HostKey /etc/ssh/ssh_host_rsa_key
@@ -115,13 +117,22 @@ apt install weechat --no-install-recommends
 
 
 ## Fix Apt
-
+Adds non-free, contrib tags, and backports list
 `sudo nano /etc/apt/sources.list`
 ```
-deb http://deb.debian.org/debian bookworm main contrib non-free
-deb http://deb.debian.org/debian bookworm-backports main contrib non-free
-deb http://deb.debian.org/debian bookworm-updates main contrib non-free
-deb http://security.debian.org bookworm-security main contrib non-free
+deb http://mirror.it.ubc.ca/debian/ trixie main non-free-firmware contrib non-free
+deb-src http://mirror.it.ubc.ca/debian/ trixie main non-free-firmware  contrib non-free
+
+deb http://security.debian.org/debian-security trixie-security main non-free-firmware contrib non-free
+deb-src http://security.debian.org/debian-security trixie-security main non-free-firmware contrib non-free
+
+# trixie-updates, to get updates before a point release is made;
+# see https://www.debian.org/doc/manuals/debian-reference/ch02.en.html#_updates_and_backports
+deb http://mirror.it.ubc.ca/debian/ trixie-updates main non-free-firmware contrib non-free
+deb-src http://mirror.it.ubc.ca/debian/ trixie-updates main non-free-firmware contrib non-free
+
+deb http://mirror.it.ubc.ca/debian/ trixie-backports main non-free-firmware contrib non-free
+deb-src http://mirror.it.ubc.ca/debian/ trixie-backports main non-free-firmware contrib non-free
 
 ```
 

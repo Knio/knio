@@ -1,14 +1,28 @@
 #! /usr/bin/python3
 import json
 import logging
-import requests
+import pathlib
 import subprocess
-import time
-import toml
+import sys
+
+
+home = pathlib.Path(__file__).parent.parent
+sys.path.append(str(home))
+
 
 import grafana
 
 LOG = logging.getLogger('weather')
+
+
+
+class LerpSet:
+  def __init__(self, setpoints):
+    pass
+
+  def lerp(self, id, x):
+    return x
+
 
 
 def f_to_c(x):
@@ -17,7 +31,6 @@ def f_to_c(x):
 
 def main():
   cmd = [
-    'sudo',
     'rtl_433',
       '-F', 'json',
       '-C', 'si',
@@ -31,37 +44,62 @@ def main():
   LOG.info(f"cmd: {' '.join(cmd)}")
   rtl = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 
+  lerp = LerpSet(({
+    'A': 18.83,
+    'B': 18.89,
+    'C': 18.94,
+    'D': 18.83,
+    'E': 18.79,
+    'F': 18.88,
+    'G': 18.84,
+    },{
+    'A': 48.14,
+    'B': 48.44,
+    'C': 48.53,
+    'D': 48.33,
+    'E': 48.72,
+    'F': 48.32,
+    'G': 48.16,
+  }))
+
+
   def process(line):
     data = json.loads(line)
     line_s = line.decode('ascii').strip()
     if data.get('model') == 'Ambientweather-F007TH':
-      id_ch_to_name_x = {
-        (1, 201): ('House_Common', -0.200, -7.0),
-        (2, 166): ('Outside_Back',  0.086, -3.0),
-        (3, 38):  ('Bathroom',  0.146,  1.0),
-
-        (1, 97):   ('Room',        -0.034, -1.0),
-        (2, 14):   ('AC_Intake',   -0.114,  1.0),
-        (3, 13):   ('AC_Cool',     -0.084,  0.0),
-
-        (2,   3):  ('Freezer',        0.,  0.0),
-        (1,  14):  ('Fridge',         0.,  0.0),
-        (3, 114):  ('Tom_Cooler',     0.,  0.0),
+      id_ch_to_name = {
+        # 1 bit = 0.056
+        # Ch  ID   SID   Name
+        (1,  61): ('A', 'Office'),
+        (2,  89): ('B', ''),
+        (3, 192): ('C', 'Attic'),
+        (1, 247): ('D', 'Outside'),
+        (2,   8): ('E', 'LivingRoom'),
+        (3, 148): ('F', 'F'),
+        (1, 175): ('G', 'Slab'),
       }
       ch_id = data.get('channel'), data.get('id')
-      namex = id_ch_to_name_x.get(ch_id)
-      if namex is None:
+      sid, name = id_ch_to_name.get(ch_id, (None, 'Unknown'))
+      if sid is None:
         LOG.warning(f'\n\nUnknown sensor: {line_s}\n\n')
-      else:
-        name, t_c, h_c = namex
-        LOG.info(f'{name:<12s} {line_s}')
-        grafana.post('rtl',
-          interval=300,
-          **{
-            f'Temperature_{name}': data['temperature_C'],
-            f'Humidity_{name}': data['humidity'],
-          }
-        )
+        return
+      LOG.info(f'{name:<12s} {line_s}')
+
+      rt = data['temperature_C']
+      rh = data['humidity']
+
+      ct = lerp.lerp(sid, rt)
+      # ch = lerp.lerp(sid, rh)
+      ch = rh
+
+      grafana.post('rtl',
+        interval=300,
+        **{
+          f'Temperature_{name}': ct,
+          f'Humidity_{name}': ch,
+        }
+      )
+
     else:
       LOG.warning(f'\n\nUnknown sensor: {line}\n\n')
 

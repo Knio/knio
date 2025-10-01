@@ -1,3 +1,4 @@
+#include <linux/bpf.h>
 #include <linux/if_ether.h>
 #include <linux/inet.h>
 #include <linux/ip.h>
@@ -15,6 +16,7 @@ struct __attribute__((packed)) Ports {
 struct __attribute__((packed)) Flow4 {
   u32 src;
   u32 dst;
+  u32 cookie;
   struct Ports ports;
 };
 
@@ -22,6 +24,7 @@ struct __attribute__((packed)) Flow6 {
   struct	in6_addr src;
   struct	in6_addr dst;
   struct Ports ports;
+  u32 cookie;
 };
 
 struct __attribute__((packed)) Stat {
@@ -33,6 +36,7 @@ struct ParseState {
   struct __sk_buff *const skb;
   u16 offset;
   u16 protocol;
+  u32 cookie;
   struct iphdr    ip4;
   struct ipv6hdr  ip6;
   struct tcphdr tcp;
@@ -86,6 +90,7 @@ static void log_packet4(struct ParseState* state) {
   struct Stat z = {0,0};
   flow.src = ntohl(state->ip4.saddr);
   flow.dst = ntohl(state->ip4.daddr);
+  flow.cookie = bpf_get_socket_cookie(state->skb);
   get_ports4(state);
   flow.ports = state->ports;
 
@@ -103,6 +108,7 @@ static void log_packet6(struct ParseState* state) {
   struct Stat z = {0,0};
   flow.src = state->ip6.saddr;
   flow.dst = state->ip6.daddr;
+  flow.cookie = bpf_get_socket_cookie(state->skb);
   flow.ports.protocol = 0;
   flow.ports.sport = 0;
   flow.ports.dport = 0;

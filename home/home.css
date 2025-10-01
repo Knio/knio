@@ -35,6 +35,23 @@ h2 {
   letter-spacing: 1px;
 }
 
+
+div.device > details {
+  display: inline-block;
+}
+
+div.device > power {
+  border: 1px solid white;
+  background-color: white;
+}
+div.device > power.on {
+  background-color: aquamarine;
+}
+div.device > power.off {
+  background-color:tomato;
+}
+
+
 /* Section Container */
 section {
   display: flex;
@@ -52,8 +69,10 @@ button-group {
 
 button {
   font-weight: bold;
-  background-color: rgb(134, 151, 164);
-  padding: 0.7em 0.2em;
+  background-color: transparent;
+  border: none;
+  /* background-color: rgb(134, 151, 164); */
+  /* padding: 0.7em 0.2em; */
 }
 
 /*

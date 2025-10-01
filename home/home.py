@@ -55,10 +55,12 @@ def index(url, handler):
         tags.button(s, dx(target='#content', get=f'/avr/si/{s}'))
 
   with tags.div(header('Lights')):
-    for i in range(2):
-      with tags.div(f'light {i}'):
-        tags.button('on', dx(target='#content', get=f'/light/{i}/on'))
-        tags.button('off', dx(target='#content', get=f'/light/{i}/off'))
+    for k, v in home.lights.items():
+      with tags.div(f'light {k}'):
+        tags.p(k)
+        tags.input_(dx(target='#content', get=f'/light/{k}/on'), type="checkbox")
+        tags.button('on', dx(target='#content', get=f'/light/{k}/on'))
+        tags.button('off', dx(target='#content', get=f'/light/{k}/off'))
 
   with tags.div(header('Music')):
     with tags.div():
@@ -115,15 +117,14 @@ def avr_si(url, handler, si):
   tags.p(f'Source set to {si}')
 
 
-@whirl.domx.route(r'^/light/(\d+)/(\w+)$')
+@whirl.domx.route(r'^/light/([\w]+)/(\w+)$')
 def light(url, handler, id, state):
-  l = int(id)
   if state == 'on':
-    home.lights[l].turn_on()
-    tags.p(f'light {l} turned on')
+    home.lights[id].turn_on()
+    tags.p(f'light {id} turned on')
   elif state == 'off':
-    home.lights[l].turn_off()
-    tags.p(f'light {l} turned off')
+    home.lights[id].turn_off()
+    tags.p(f'light {id} turned off')
   else:
     tags.p(f'bad command: {state!r}')
 
@@ -153,11 +154,13 @@ def scene(url, handler, cmd):
 
 class Home:
   def __init__(self):
-    self.amp = denon_avr.DenonAVR('10.87.1.22')
-    self.lights = [
-      kasa.SmartPlug('10.87.1.25'),
-      kasa.SmartPlug('10.87.1.26'),
-    ]
+    self.amp = denon_avr.DenonAVR('10.87.1.17')
+    self.lights = dict(
+      office=kasa.SmartDimmer('10.87.1.51'),
+      shop=kasa.SmartDimmer('10.87.1.52'),
+      outside=kasa.SmartDimmer('10.87.1.53'),
+      # kasa.SmartPlug('10.87.1.42'),
+    )
     self.radar = None
 
   # pylint: disable=no-self-argument

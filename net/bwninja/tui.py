@@ -17,14 +17,25 @@ def dep_check():
 
   try:
     from bcc import BPF
+
+      # TODO trap strerr
+    _ = BPF(text=b'struct foo { int a; };')
+
   except ImportError:
     errors.append(
         f'{NAME} requires python3-bpfcc which may not be satisfiable from pip. \n'
         '    See: https://github.com/iovisor/bcc/blob/master/INSTALL.md')
 
+  except Exception as e:
+    if e.args[0] == "Failed to compile BPF module <text>":
+      errors.append('Failed to compile, you are probably missing linux-headers')
+
+
   if errors:
     errs = "\n\n".join(errors)
     print(f'Unable to run. please correct the following errors:\n\n{errs}', file=sys.stderr)
+
+    print('\n\nmaybe just try this:\nsudo apt-get install -y bpfcc-tools libbpfcc libbpfcc-dev linux-headers-$(uname -r)')
     exit(-1)
 
 dep_check()
@@ -293,7 +304,7 @@ class NetTui:
         d['dst'] = PrettyAddress(d['dst'])
         rows.append(d)
       if rows:
-        df = pandas.DataFrame.from_records(rows, index=['src', 'dst', 'iface'])
+        df = pandas.DataFrame.from_records(rows, index=['src', 'dst', 'iface', 'sport', 'dport'])
         df['timestamp'] = now
         self.log[now] = df
 
@@ -313,16 +324,16 @@ class NetTui:
     window = self.df.loc[self.df['timestamp'] > since]
     if len(window) == 0: return
 
-    grouped = window.groupby(level=['iface', 'src', 'dst'],
+    grouped = window.groupby(level=['iface', 'src', 'dst', 'sport', 'dport'],
       observed=True, sort=False)
     pairs = set()
-    for ifn, *pair in grouped.indices.keys():
-      key = ifn, *sorted(pair)
+    for ifn, s,d, *ex in grouped.indices.keys():
+      key = ifn, *sorted([s,d]), *ex
       pairs.add(key)
 
     def sort_key(x):
-      ifn, a, b = x
-      return PrettyAddress.sort_key(a) + PrettyAddress.sort_key(b) + (ifn,)
+      ifn, a, b, *y = x
+      return PrettyAddress.sort_key(a) + PrettyAddress.sort_key(b) + (ifn, *y)
 
     self.pairs = pairs = sorted(pairs, key=sort_key)
 
@@ -341,7 +352,7 @@ class NetTui:
 
     print(f'{TERM.black_on_white}    Network Flows past {dur}s {s+1}-{e} of {len(pairs)}{TERM.clear_eol}{TERM.normal}')
     for i, key in enumerate(pairs[s:e]):
-      ifn, src, dst = key
+      ifn, src, dst, sport, dport = key
       try:
         tx = grouped.get_group(key)
         tx_bytes = Stats(tx).mean_bytes
@@ -354,8 +365,8 @@ class NetTui:
         rx_bytes = 0
 
       P = 25
-      src_s = TERM.ljust(src.pretty(), W // 2 - P)
-      dst_s = TERM.rjust(dst.pretty(), W // 2 - P)
+      src_s = TERM.ljust(f'{src.pretty()}:{sport}', W // 2 - P)
+      dst_s = TERM.rjust(f'{dst.pretty()}:{dport}', W // 2 - P)
       if self.selected == key:
         sel = f'{TERM.RED}⮞'
       else:

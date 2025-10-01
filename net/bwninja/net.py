@@ -22,6 +22,7 @@ class Flow:
   protocol: int
   sport: int
   dport: int
+  cookie: int
   # payload
   packets: int
   bytes: int
@@ -31,7 +32,12 @@ class Flow:
 def get_bpf():
   src_path = str(pathlib.Path(__file__).parent / 'net.c')
   LOG.info(f'Compiling bpf code from {src_path}')
-  return bcc.BPF(src_file=src_path, debug=0)
+  try:
+    return bcc.BPF(src_file=src_path, debug=0)
+  except Exception as e:
+    if e.args[0].startswith("Failed to compile"):
+      exit(1)
+    raise
 
 
 def monitor(attachment, interface, printk=False):
@@ -71,7 +77,7 @@ def monitor(attachment, interface, printk=False):
         a = ipaddress.ip_address(flow.src)
         b = ipaddress.ip_address(flow.dst)
         LOG.debug(f'{a} -> {b}: {stat}')
-        f = Flow(a, b, flow.ports.protocol, flow.ports.sport, flow.ports.dport, stat.packets, stat.bytes)
+        f = Flow(a, b, flow.ports.protocol, flow.ports.sport, flow.ports.dport, flow.cookie, stat.packets, stat.bytes)
         results.append(f)
 
       flows6 = list(flows6_hash.items_lookup_and_delete_batch())
@@ -80,7 +86,7 @@ def monitor(attachment, interface, printk=False):
         a = ipaddress.ip_address(bytes(flow.src))
         b = ipaddress.ip_address(bytes(flow.dst))
         LOG.debug(f'{a} -> {b}: {stat}')
-        f = Flow(a, b, flow.ports.protocol, flow.ports.sport, flow.ports.dport, stat.packets, stat.bytes)
+        f = Flow(a, b, flow.ports.protocol, flow.ports.sport, flow.ports.dport, flow.cookie, stat.packets, stat.bytes)
         results.append(f)
 
       yield results

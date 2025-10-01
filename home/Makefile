@@ -13,7 +13,11 @@ air:
 	python3 air.py /dev/ttyCH9344USB0
 
 co2:
-	python3 -m devices.arduino_cir_co2 /dev/ttyUSB1
+	sudo chmod o+rw /dev/ttyUSB0
+	python3 -m devices.arduino_cir_co2 /dev/ttyUSB0
+
+power_meter:
+	python3 -m devices.tuya.test
 
 solar:
 	python3 solar.py --port /dev/ttyUSB0

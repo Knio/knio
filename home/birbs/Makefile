@@ -1,5 +1,10 @@
 
 
+
+stream:
+	sudo $(MTXDIR)/mediamtx mediamtx.yml
+
+
 run:
 	python3 birbs.py
 
@@ -11,16 +16,13 @@ install:
 MTXDIR=/home/tom/bin/mediamtx
 mediamtx-install:
 	mkdir -p $(MTXDIR)
-	cd $(MTXDIR); wget https://github.com/bluenviron/mediamtx/releases/download/v1.12.0/mediamtx_v1.12.0_linux_amd64.tar.gz
+	cd $(MTXDIR); wget https://github.com/bluenviron/mediamtx/releases/download/v1.15.0/mediamtx_v1.15.0_linux_amd64.tar.gz
 	cd $(MTXDIR); tar xvf mediamtx*.tar.gz
 
 
 CAM1=rtsp://10.87.1.29:8554/user=admin_password=tlJwpbo6_channel=0_stream=0&onvif=0.sdp
 
 
-
-stream:
-	sudo $(MTXDIR)/mediamtx mediamtx.yml
 
 # IN_USB=-f video4linux2 -i /dev/video0
 IN_IP=-i 'rtsp://10.87.1.29:8554/user=admin_password=tlJwpbo6_channel=0_stream=0&onvif=0.sdp'
@@ -44,3 +46,15 @@ old-stream:
 		-crf 22 -maxrate:v 4M -bufsize:v 5M \
 		-f tee -map 0:v -an \
 		-f tee "$(OUT2)"
+
+alley-day:
+	curl 'http://10.87.1.128/setIRCutManual_DayNight' \
+  -b 'DHLangCookie30=English; ipc_10.87.1.128_webLanguage=en_us; ipc_10.87.1.128_KeepScale=0; ipc_10.87.1.128_username=admin; ipc_10.87.1.128_password=E10ADC3949BA59ABBE56E057F20F883E' \
+  --data-raw '<?xml version="1.0"?><soap:Envelope xmlns:soap="http://www.w3.org/2001/12/soap-envelope"><soap:Header>\u0009<userid>52851dbd7918bbae</userid>\u0009<passwd>a17faccd02661e4c</passwd></soap:Header><soap:Body>DayMode</soap:Body></soap:Envelope>' \
+  --insecure
+
+alley-night:
+	curl 'http://10.87.1.128/setIRCutManual_DayNight' \
+  -b 'DHLangCookie30=English; ipc_10.87.1.128_webLanguage=en_us; ipc_10.87.1.128_KeepScale=0; ipc_10.87.1.128_username=admin; ipc_10.87.1.128_password=E10ADC3949BA59ABBE56E057F20F883E' \
+  --data-raw '<?xml version="1.0"?><soap:Envelope xmlns:soap="http://www.w3.org/2001/12/soap-envelope"><soap:Header>\u0009<userid>52851dbd7918bbae</userid>\u0009<passwd>a17faccd02661e4c</passwd></soap:Header><soap:Body>NightMode</soap:Body></soap:Envelope>' \
+  --insecure
