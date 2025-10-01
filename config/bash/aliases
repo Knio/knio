@@ -14,6 +14,7 @@ alias view="view -S ~/.vim/view.rc -"
 alias watch="watch --differences --color -n 1"
 alias rsync="rsync -avpPh"
 alias ping="ping -DOW0.5"
+alias lsblk="lsblk -e230 -o +pttype,parttypename,fstype,label,model,serial,min-io,log-sec"
 
 # https://github.com/sharkdp/bat/releases
 alias bat="bat --color=always --wrap=never --decorations=always --style=full --wrap never"
