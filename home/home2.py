@@ -123,12 +123,13 @@ class WebUI(utils.Device):
 
 DEVICES = utils.DottedDict(
   home = utils.DottedDict(
-    light_office  = Kasa('10.87.1.51', **KC),
-    light_shop    = Kasa('10.87.1.52', **KC),
-    light_outside = Kasa('10.87.1.53', **KC),
-    kitchen_kettle= Kasa('10.87.1.41', **KC),
-    light_desk    = Kasa('10.87.1.42', **KC),
-    attic_fan = tuya.Tuya(**TD['ATTIC_FAN']),
+    light_office      = Kasa('10.87.1.51', **KC),
+    light_shop        = Kasa('10.87.1.52', **KC),
+    light_desk        = Kasa('10.87.1.42', **KC),
+    light_workbench_n = Kasa('10.87.1.56', **KC),
+    light_outside     = Kasa('10.87.1.53', **KC),
+    kitchen_kettle    = Kasa('10.87.1.41', **KC),
+    attic_fan         = tuya.Tuya(**TD['ATTIC_FAN']),
   ),
   power = utils.DottedDict(
     meter = tuya.Tuya(**TD['GARAGE_METER'])
