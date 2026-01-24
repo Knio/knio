@@ -5,7 +5,9 @@ import argparse
 import datetime
 import logging
 import pathlib
+import time
 
+import urllib
 import whirl
 import whirl.parsers
 
@@ -48,6 +50,16 @@ def upload(url, handler):
     except (KeyError, IndexError, AttributeError) as e:
       LOG.debug(e)
       toirc = False
+
+    # pop iphone txt filename
+    try:
+      if handler.headers.get('User-Agent', '').startswith('BackgroundShortcutRunner') \
+        and (m_txt := msg['txt'][0]) and (m_value := msg['value'][0]) \
+        and (m_value.disposition.get('filename','').startswith(m_txt.data.decode('utf8'))):
+          msg.pop('txt')
+    except Exception as e:
+      LOG.debug(e)
+
     urls = []
     for k, items in msg.items():
       for v in items:
@@ -69,22 +81,28 @@ def upload(url, handler):
 def save_msg(msg, toirc):
   ct = msg.headers.get('Content-Type', '')
   now = datetime.datetime.now()
-  dir = ARGS.dir / now.date().isoformat()
+  dir = ARGS.dir / now.strftime('%Y-%m-%d')
 
   fn = msg.disposition.get('filename')
-  is_file = fn is not None
+  nowtime = now.strftime('%Y%m%d-%H%M%S')
   if fn is None:
-    dt = datetime.datetime.now().isoformat()
-    fn = f'{dt}.{ct.split("/")[-1]}'
+    fn = f'{nowtime}.{msg.name}'
   fn = pathlib.Path(fn).name
   f = dir / fn
-  while f.exists():
-    f = f.with_stem(f.stem + '.1')
+  if f.exists():
+    os = f.stem
+    f = f.with_stem(os + '.' + nowtime)
+    i = 1
+    while f.exists():
+      i += 1
+      f = f.with_stem(f'{os}.{nowtime}.{i}')
+
   f.parent.mkdir(parents=True, exist_ok=True)
   f.write_bytes(msg.data)
   LOG.info(f'saved {f}')
-  url = f'https://img.zkpq.ca/{f.relative_to(ARGS.dir)}'
-  if is_file and toirc:
+  path = urllib.parse.quote(str(f.relative_to(ARGS.dir)))
+  url = f'https://img.zkpq.ca/{path}'
+  if toirc:
     post_irc(url)
   return url
 

@@ -1,6 +1,7 @@
 print("Installing usercustomize.py")
 
 import pathlib
+import shutil
 import site
 import os
 import sys
@@ -15,4 +16,9 @@ if dst.is_symlink():
 dst.parent.mkdir(exist_ok=True, parents=True)
 
 print(f"Linking {dst} to {src}")
-os.link(src, dst)
+
+
+if sys.platform == 'win32':
+  shutil.copy(src, dst)
+else:
+  os.link(src, dst)

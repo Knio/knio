@@ -23,10 +23,11 @@
 	autoSetupRemote = true
 
 [core]
-	editor = vim
+	editor = nano
 	autocrlf = false
 	# pager = bat -l diff
 	pager = less -mmSRj.5
+	symlinks = false
 
 [help]
 	autoCorrect = 1

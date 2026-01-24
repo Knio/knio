@@ -18,10 +18,24 @@ class uploadui(dominate.document):
     with self.body:
       with div(id='upload'):
         with form(action='/updo', method='post', enctype='multipart/form-data'):
-          input_(type='file', name='file', multiple=True)
           input_(type='checkbox', id='toirc', name='toirc', checked=True)
-          label('Post to IRC?', for_='toirc')
+          label('Post to IRC?', fr='toirc')
+          p('Share something')
+
+          SEP = i('～ or ～')
+          p('————————————')
+          input_(type='file', name='file', multiple=True)
           input_(type='submit', value='Upload')
+
+          p(SEP)
+          p(i('Paste (ctrl-v) or Drag file here'))
+
+          p(SEP)
+          p("\n$ curl https://img.zkpq.ca/updo -X POST -F 'file=@your_file.jpg' ")
+
+          p(SEP)
+          p("\n$ wget https://img.zkpq.ca/updo --method=POST --body-file 'your_file.jpg' ")
+
 
         div(id='preview')
         div(id='log')

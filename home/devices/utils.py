@@ -51,6 +51,10 @@ class Serial:
     self.timeout = timeout
     self.set_timeout(timeout)
 
+  def push(self, data):
+    if data:
+      self.rq.insert(0, data)
+
   def read(self, timeout=None):
     '''
     return the next available bytes
@@ -102,7 +106,7 @@ class Serial:
     while b := self.read(timeout):
       r.append(b)
     r = b''.join(r)
-    LOG.debug(f'flush: {r!r}')
+    # LOG.debug(f'flush: {r!r}')
     return r
 
   def set_timeout(self, t):

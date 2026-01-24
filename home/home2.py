@@ -123,12 +123,18 @@ class WebUI(utils.Device):
 
 DEVICES = utils.DottedDict(
   home = utils.DottedDict(
-    light_office      = Kasa('10.87.1.51', **KC),
-    light_shop        = Kasa('10.87.1.52', **KC),
-    light_desk        = Kasa('10.87.1.42', **KC),
-    light_workbench_n = Kasa('10.87.1.56', **KC),
-    light_outside     = Kasa('10.87.1.53', **KC),
-    kitchen_kettle    = Kasa('10.87.1.41', **KC),
+    light_garage      = Kasa('10.87.3.101', **KC),
+    light_office      = Kasa('10.87.3.104', **KC),
+    light_workbench_se= Kasa('10.87.3.105', **KC),
+    light_workbench_ne= Kasa('10.87.3.103', **KC),
+    light_desk        = Kasa('10.87.3.107', **KC),
+    light_outside_e   = Kasa('10.87.3.183', **KC),
+    light_outside_s   = Kasa('10.87.3.182', **KC),
+    light_outside_n   = Kasa('10.87.3.181', **KC),
+    light_front_porch = Kasa('10.87.3.184', **KC),
+    light_back_deck   = Kasa('10.87.3.185', **KC),
+    kitchen_kettle    = Kasa('10.87.3.205', **KC),
+    office_heater     = Kasa('10.87.3.206', **KC),
     attic_fan         = tuya.Tuya(**TD['ATTIC_FAN']),
   ),
   power = utils.DottedDict(

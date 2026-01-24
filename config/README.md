@@ -136,11 +136,6 @@ deb-src http://mirror.it.ubc.ca/debian/ trixie-backports main non-free-firmware 
 
 ```
 
-## AWS Docs Volume
-- snapshot existing docs EBS volume
-- create new volume
-- mount to new instance
-
 
 ### Build VeraCrypt
 ```

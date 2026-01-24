@@ -32,6 +32,7 @@ def f_to_c(x):
 def main():
   cmd = [
     'rtl_433',
+      # '-d', '1',
       '-F', 'json',
       '-C', 'si',
       '-f', '433.926M',
@@ -68,14 +69,14 @@ def main():
     line_s = line.decode('ascii').strip()
     if data.get('model') == 'Ambientweather-F007TH':
       id_ch_to_name = {
-        # 1 bit = 0.056
+        # 1 bit = 0.056 degC
         # Ch  ID   SID   Name
-        (1,  61): ('A', 'Office'),
-        (2,  89): ('B', ''),
-        (3, 192): ('C', 'Attic'),
+        (1,  61): ('A', 'LivingRoom'),
+        (2,  89): ('B', 'idk'),
+        (3, 107): ('C', 'Attic'),
         (1, 247): ('D', 'Outside'),
-        (2,   8): ('E', 'LivingRoom'),
-        (3, 148): ('F', 'F'),
+        (2, 117): ('E', 'Garage'),
+        (3,  83): ('F', '3DPrint'),
         (1, 175): ('G', 'Slab'),
       }
       ch_id = data.get('channel'), data.get('id')

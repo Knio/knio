@@ -9,8 +9,8 @@ body {
 
 html, body {
   background-color: #2c2c2c;
-  margin: 0;
-  height: 100%;
+  position: absolute;
+  inset: 0;
 }
 
 body {
@@ -35,6 +35,5 @@ div#preview {
 div#log {
   grid-area: log;
   text-align: center;
-  overflow-y: scroll;
   white-space: pre-wrap;
 }

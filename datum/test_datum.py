@@ -3,6 +3,8 @@ import pytest
 import datum
 
 
+# pyright: reportInvalidTypeForm=false
+
 
 def test_normal():
   class Test(datum.Datum):
@@ -17,8 +19,8 @@ def test_normal():
 
 def test_datum():
   class TestDatum(datum.Datum):
-      x: datum.i8
-      y: datum.u32
+      x: datum.i8()
+      y: datum.u32()
 
   d = TestDatum(-1, 1)
   assert d.x == -1
@@ -27,6 +29,8 @@ def test_datum():
   assert d.x == 2
 
 
+# TODO test enums
+
 def test_serialize():
   class Point(datum.Datum):
       x: datum.i32()
@@ -34,7 +38,7 @@ def test_serialize():
 
   p = Point(14, 37)
   assert p.size() == 8
-  p2 = Point.deserialize_new(p.serialize())
+  p2, _ex = Point.deserialize_new(p.serialize())
   assert p2.x == 14
   assert p2.y == 37
   assert p2.values() == (14, 37)
@@ -43,7 +47,7 @@ def test_serialize():
   p2.y = 38
   with pytest.raises(AttributeError):
     p2.z = 3
-  p3 = Point.deserialize_new(p2.serialize())
+  p3, _ex = Point.deserialize_new(p2.serialize())
   assert f'{p3}' == '<Point x=14 y=38>'
 
 
@@ -61,14 +65,14 @@ def test_inheritance():
   assert t.b == "foo"
   assert t.c == 2.71
   t.a = 3
-  assert f'{t}' == "<C b='foo' a=3 c=2.71>"
+  assert f'{t}' == "<C a=3 b='foo' c=2.71>"
 
 
 def test_defaults():
   class A(datum.Datum):
     x: int = 4
   class B(A):
-    x = 5
+    x: int = 5
 
   assert B._defaults == {'x': 5}
 
@@ -88,7 +92,7 @@ def test_basic_types():
   def check(cls, v, buf):
     d = cls(v)
     assert d.serialize() == buf
-    assert cls.deserialize_new(buf).value() == v
+    assert cls.deserialize_new(buf)[0].value() == v
 
   check(datum.i8(), 1, b'\1')
   check(datum.i8(), 127, b'\x7f')
@@ -114,20 +118,55 @@ def test_basic_types():
 
 def test_nesting():
   class Point(datum.Datum):
-    x: datum.i32
+    x: datum.i32()
     y: datum.i32
 
   a = Point(1, 2)
+  assert a.x == 1
+  assert a.y == 2
 
   class Triangle(datum.Datum):
     a: Point
     b: Point
     c: Point
 
-  # t = Triangle(Point(1, 2), Point(3, 4), Point(5, 6))
-  assert a.x == 1
-  assert a.y == 2
-  # assert repr(t) == "<Triangle a=<Point x=1 y=2> b=<Point x=3 y=4> c=<Point x=5 y=6>>"
+  t = Triangle(Point(1, 2), Point(3, 4), Point(5, 6))
+  assert t.b.x == 3
+  assert t.b.y == 4
+
+
+  assert repr(t) == "<Triangle a=<Point x=1 y=2> b=<Point x=3 y=4> c=<Point x=5 y=6>>"
+
+
+def test_array():
+  class Point(datum.Datum):
+    x: datum.i16()
+    y: datum.i16
+
+  # TODO test fixed-length arrays
+
+  class PA(datum.Datum):
+    n: datum.u8
+    points: datum.array(Point, length='n', bias=-1)
+
+  p1 = Point(1,2)
+  p2 = Point(3,4)
+  pa = PA(0, [p1, p2])
+  assert repr(pa) == "<PA n=0 points=[<Point x=1 y=2>, <Point x=3 y=4>]>"
+
+  pa.pre_serialize()
+  assert repr(pa) == "<PA n=3 points=[<Point x=1 y=2>, <Point x=3 y=4>]>"
+
+  b = pa.serialize()
+  assert b == b'\x03\x00\x01\x00\x02\x00\x03\x00\x04'
+
+  pa, _ex = PA.deserialize_new(b)
+  assert pa.n == 3
+  assert len(pa.points) == 2
+  assert pa.points[0].x == 1
+  assert pa.points[0].y == 2
+  assert pa.points[1].x == 3
+  assert pa.points[1].y == 4
 
 
 if __name__ == "__main__":

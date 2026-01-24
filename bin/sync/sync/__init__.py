@@ -85,7 +85,7 @@ def sync(filepath, src, dst):
             st = os.stat(new)
             mode = stat.S_IMODE(st.st_mode)
             os.utime(f, ns=(st.st_atime_ns, st.st_mtime_ns))
-            os.chmod(f, mode)
+            # os.chmod(f, mode) ########## REEEEEEEEEE this fucks up truenas
             ctime(f, st.st_ctime_ns)
 
         except IOError as e:

@@ -34,6 +34,7 @@ class RadarLD2420:
       except:
         LOG.info('corrupted data: %r', data)
         continue
+      LOG.debug(f'{data=}')
       if data in {None, 'ON', 'OFF'}:
         continue
       if m := re.match(r'^Range (\d+)$', data):
@@ -63,10 +64,14 @@ def main(args):
 
   def loop(radar, name):
     last = time.time()
+    frame = None
     while 1:
       now = time.time()
-      frame = radar.poll()
-      print(f'{name}: {frame}')
+      new = radar.poll()
+      if new == frame:
+        continue
+      frame = new
+
       if frame and now > last + 0.25:
         grafana.post(f'radar.{name}', range=frame)
         last = now
@@ -92,6 +97,7 @@ def main(args):
       time.sleep(1)
   except KeyboardInterrupt:
     pass
+
 
 if __name__ == '__main__':
   logging.basicConfig(
