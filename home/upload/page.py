@@ -25,7 +25,7 @@ class uploadui(dominate.document):
           SEP = i('～ or ～')
           p('————————————')
           input_(type='file', name='file', multiple=True)
-          input_(type='submit', value='Upload')
+          # input_(type='submit', value='Upload')
 
           p(SEP)
           p(i('Paste (ctrl-v) or Drag file here'))

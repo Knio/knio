@@ -29,7 +29,19 @@ def test_datum():
   assert d.x == 2
 
 
-# TODO test enums
+def test_bigint():
+  i = datum.u16()(5)
+  assert i.serialize() == b'\x00\x05'
+  i.set_value(4)
+  assert i.serialize() == b'\x00\x04'
+  buf = bytearray(4)
+  assert i.serialize_into(buf, 2) == 2
+  assert bytes(buf) == b'\x00\x00\x00\x04'
+
+
+def test_enum():
+  # TODO
+  pass
 
 def test_serialize():
   class Point(datum.Datum):
@@ -38,7 +50,9 @@ def test_serialize():
 
   p = Point(14, 37)
   assert p.size() == 8
-  p2, _ex = Point.deserialize_new(p.serialize())
+  b = p.serialize()
+  assert b == b'\x00\x00\x00\x0e\x00\x00\x00\x25'
+  p2, _ex = Point.deserialize_new(b)
   assert p2.x == 14
   assert p2.y == 37
   assert p2.values() == (14, 37)

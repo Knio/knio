@@ -3,11 +3,6 @@ const preview = document.getElementById('preview');
 const log = document.getElementById('log');
 
 
-
-
-
-
-
 function postForm(data) {
 
   fetch('/updo', {
@@ -23,8 +18,6 @@ function postForm(data) {
   });
 
 }
-
-
 
 
 const handleFile = (file) => {
@@ -83,3 +76,12 @@ document.body.addEventListener('drop', (e) => {
       handleFile(file);
   }
 });
+
+
+const file = document.getElementsByName('file')[0];
+file.addEventListener('change', (e) => {
+  const formData = new FormData(file.form);
+  postForm(formData);
+  file.form.reset();
+});
+

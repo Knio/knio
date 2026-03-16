@@ -66,11 +66,12 @@ class Serial:
     self.set_timeout(timeout)
     return self.read_raw(1024)
 
-  def write(self, data):
+  def write_all(self, data):
     # LOG.debug(f'write: {data!r}')
     while data:
       n = self.write_raw(data)
       data = data[n:]
+  write = write_all
 
   def read_until(self, footer, timeout=None):
     if timeout is None:

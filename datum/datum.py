@@ -59,20 +59,34 @@ class DatumBase:
   def __init__(self, *a, **kw):
     self.set_value(*a, **kw)
 
-  def pre_serialize(self, parent=None):
+  def pre_serialize(self, parent=None) -> int:
     pass
 
-  def serialize(self):
-    pass
+  def serialize(self) -> bytes:
+    raise NotImplementedError(self)
 
-  def deserialize_into(self, buf, parent=None):
+  def serialize_into(self, buf: bytearray, i: int, parent=None) -> int:
+    raise NotImplementedError(self)
+
+  def _trivial_serialize_into(self, buf, i, parent=None):
+    b = self.serialize()
+    n = len(b)
+    buf[i:i+n] = b
+    return n
+
+  def _trivial_serialize(self):
+    buf = bytearray(self.size())
+    self.serialize_into(buf, 0, None)
+    return bytes(buf)
+
+  def deserialize_into(self, buf: bytearray, parent=None):
     raise NotImplementedError()
 
   def post_deserialize(self, parent=None):
     pass
 
   @classmethod
-  def deserialize_new(cls, buf, parent=None):
+  def deserialize_new(cls, buf: bytearray, parent=None):
     d = cls()
     n = d.deserialize_into(buf)
     assert n <= len(buf), f'need {n} bytes, got {len(buf)}'
@@ -163,8 +177,16 @@ class Datum(DatumBase, metaclass=DatumMeta):
     return sz
 
   def serialize(self):
-    self.pre_serialize()
-    return b''.join(v.serialize() for v in self._items.values())
+    buf = bytearray(self.size())
+    self.serialize_into(buf)
+    return bytes(buf)
+  serialize = DatumBase._trivial_serialize
+
+  def serialize_into(self, buf, i, parent=None):
+    j = i
+    for v in self._items.values():
+      i += v.serialize_into(buf, i, self)
+    return i - j
 
   def deserialize_into(self, buf, parent=None):
     i = 0
@@ -221,6 +243,13 @@ class BigIntDatum(DatumBase):
       signed=self._signed
     )
 
+  # serialize_into = DatumBase._trivial_serialize_into
+  def serialize_into(self, buf, i, parent=None):
+    if (f := self._cb):
+      f(self, buf, i, parent)
+    return DatumBase._trivial_serialize_into(self, buf, i, parent)
+
+
   def deserialize_into(self, buf, parent=None):
     sz = self.size()
     assert len(buf) >= sz
@@ -236,13 +265,13 @@ class BigIntDatum(DatumBase):
   def size(cls):
     return cls._size
 
+
 class BigIntEnumDatum(BigIntDatum):
   def value(self):
     return self._enum(self.v)
 
 
-
-def datum_bigint(size=1, endian='big', signed=True, enum=None):
+def datum_bigint(size=1, endian='big', signed=False, enum=None, cb=None):
   if endian == 'native':
     endian = sys.byteorder
   if endian == 'network':
@@ -256,13 +285,13 @@ def datum_bigint(size=1, endian='big', signed=True, enum=None):
     _byteorder = endian
     _signed = signed
     _enum = enum
+    _cb = staticmethod(cb)
   return BI
 
 
-i8  = functools.partial(datum_struct, 'b')
-u32 = functools.partial(datum_struct, 'I')
-i32 = functools.partial(datum_struct, 'i')
-u128= functools.partial(datum_bigint, size=16, signed=False)
+# i8  = functools.partial(datum_struct, 'b')
+# u32 = functools.partial(datum_struct, 'I')
+# i32 = functools.partial(datum_struct, 'i')
 fp32= functools.partial(datum_struct, 'f')
 
 # u8  = uint8  = datum_struct('B')
@@ -275,11 +304,12 @@ u8  = functools.partial(datum_bigint, size=1, signed=False)
 u16 = functools.partial(datum_bigint, size=2, signed=False)
 u32 = functools.partial(datum_bigint, size=4, signed=False)
 u64 = functools.partial(datum_bigint, size=8, signed=False)
+u128= functools.partial(datum_bigint, size=16,signed=False)
 
-i8  = functools.partial(datum_bigint, size=1)
-i16 = functools.partial(datum_bigint, size=2)
-i32 = functools.partial(datum_bigint, size=4)
-i64 = functools.partial(datum_bigint, size=8)
+i8  = functools.partial(datum_bigint, size=1, signed=True)
+i16 = functools.partial(datum_bigint, size=2, signed=True)
+i32 = functools.partial(datum_bigint, size=4, signed=True)
+i64 = functools.partial(datum_bigint, size=8, signed=True)
 
 u16le = functools.partial(u16, endian='little')
 u32le = functools.partial(u16, endian='little')
@@ -310,8 +340,11 @@ class Array(DatumBase, list):
       return
     self._get_length_item(parent).set_value(len(self) - self._bias)
 
-  def serialize(self):
-    return b''.join(v.serialize() for v in self)
+
+  def serialize_into(self, buf, i, parent=None):
+    for v in self:
+      i += v.serialize_into(buf, i, self)
+    return self.size()
 
   def deserialize_into(self, buf, parent):
     n = self.get_length(parent)
@@ -340,6 +373,6 @@ def array(child_type=u8(), length=None, bias=0):
 
 
 # TODO: (oneof type) if field a is X, interpret field b as Y
-# TODO: make crc type that sets/validates itself
+# TODO: make crc type that -sets-/validates itself
 # TODO: make start/header type that -sets-/validates itself
 

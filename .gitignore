@@ -21,6 +21,9 @@
 !rebugger/
 !rebugger/**
 
+!enorm/
+!enorm/**
+
 # python
 *.egg
 *.egg-info
