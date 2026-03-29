@@ -16,7 +16,8 @@ install:
 MTXDIR=/home/tom/bin/mediamtx
 mediamtx-install:
 	mkdir -p $(MTXDIR)
-	cd $(MTXDIR); wget https://github.com/bluenviron/mediamtx/releases/download/v1.15.0/mediamtx_v1.15.0_linux_amd64.tar.gz
+	cd $(MTXDIR); rm mediamtx*.tar.gz
+	cd $(MTXDIR); wget https://github.com/bluenviron/mediamtx/releases/download/v1.16.3/mediamtx_v1.16.3_linux_amd64.tar.gz
 	cd $(MTXDIR); tar xvf mediamtx*.tar.gz
 
 

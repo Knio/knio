@@ -24,6 +24,10 @@
 !enorm/
 !enorm/**
 
+!whirl/
+!whirl/**
+
+
 # python
 *.egg
 *.egg-info

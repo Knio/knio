@@ -134,7 +134,8 @@ DEVICES = utils.DottedDict(
     light_front_porch = Kasa('10.87.3.184', **KC),
     light_back_deck   = Kasa('10.87.3.185', **KC),
     kitchen_kettle    = Kasa('10.87.3.205', **KC),
-    office_heater     = Kasa('10.87.3.206', **KC),
+    garage_heater     = Kasa('10.87.3.206', **KC),
+    garage_airscrubber= Kasa('10.87.3.210', **KC),
     attic_fan         = tuya.Tuya(**TD['ATTIC_FAN']),
   ),
   power = utils.DottedDict(

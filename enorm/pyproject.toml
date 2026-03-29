@@ -1,0 +1,35 @@
+[project]
+name = "enorm"
+description = "A tiny ORM"
+readme = {file = "README.md", content-type = "text/markdown"}
+authors = [
+    {name = "Tom Flanagan", email = "tom@zkpq.ca"},
+]
+requires-python = ">=3.9"
+keywords = ["database", "sql", "ORM", "sqlite"]
+license = {text = "LGPL-3.0-or-newer"}
+classifiers = [
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/Knio/knio/enorm"
+Source = "https://github.com/Knio/knio/enorm"
+
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["enorm"]
+
+[tool.setuptools.dynamic]
+version = {attr = "enorm.version"}

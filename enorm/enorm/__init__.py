@@ -8,7 +8,16 @@ import re
 import sqlite3
 
 
+from .version import *
+
+
 LOG = logging.getLogger('enorm')
+
+
+class UnboundDBError:
+  def __get__(self, obj, cls):
+    n = cls.__name__
+    raise UnboundLocalError(f'Attempted to access static `{cls!r}.db`; {obj} is not bound to a database instance. Instead use `mydb.{n}`')
 
 
 R = typing.TypeVar('R', bound='Row')
@@ -19,6 +28,8 @@ class Row(sqlite3.Row):
   def __repr__(self):
     kv = ', '.join(f'{k}={self[k]!r}' for k in self.keys())
     return f'<{type(self).__name__} {kv}>'
+
+  db = UnboundDBError()
 
   @classmethod
   @functools.cache
@@ -106,17 +117,22 @@ class DB(metaclass=DBMeta):
   def __init__(self, con):
     self.con = con
 
+  def bind_row(self, row_type):
+    if 'db' in row_type.__dict__:
+      return row_type
+    BoundRow = type(row_type.__name__, (row_type,), dict(db=self))
+    return BoundRow
+
 
   def __getattr__(self, name):
     # TODO: bind ourselves (db instance with con) & DBRow types into scope
-    try:
-      T = type(self).row_types[name]
-      class BoundRow:
-        db = self
-      BoundRow = type(T.__name__, (T,), dict(db=self))
-      return BoundRow
-    except KeyError:
-      raise AttributeError(name)
+    for db_type in type(self).__mro__:
+      if not (dct := getattr(db_type, 'row_types')):
+        continue
+      if not (row_type := dct.get(name)):
+        continue
+      return self.bind_row(row_type)
+    raise AttributeError(name)
 
 
   def exec(self, row, sql, _many=None, _params=None, _script=None, **kw):
@@ -124,7 +140,7 @@ class DB(metaclass=DBMeta):
     backoff = 0.09
     while 1:
       cur = self.con.cursor()
-      cur.row_factory = row
+      cur.row_factory = self.bind_row(row)
       cur.arraysize = 1000
       try:
         if _script:
